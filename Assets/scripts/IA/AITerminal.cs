@@ -6,6 +6,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using System.Collections; // Ajout de la bibliothèque pour les coroutines
 
 
 [RequireComponent(typeof(AudioSource))]
@@ -24,11 +25,11 @@ public class AITerminal : MonoBehaviour
 
     [Header("Ressources requises")]
     // Nombre d'unités d'eau nécessaires pour activer l'IA
-    public int besoinEau = 1;
+    public int besoinEau;
     // Nombre de graines nécessaires
-    public int besoinGraines = 1;
+    public int besoinGraines;
     // Nombre de fertilisant nécessaires
-    public int besoinFertilisant = 1;
+    public int besoinFertilisant;
 
     [Header("Audio")]
     // Permet de jouer des sons dans le jeu
@@ -40,6 +41,46 @@ public class AITerminal : MonoBehaviour
 
     // Indique si le joueur est proche du terminal IA
     private bool joueurDansZone = false;
+
+    // Booléen pour savoir si l'objectif est atteint
+    private bool objectifAtteint = false;
+
+    // --- DEBUT DES MODIFICATIONS
+    // Contrôles du joueur (pour détecter les actions)
+    private PlayerControls controls;
+
+    // Permet de gérer l'action d'interaction
+    private System.Action<UnityEngine.InputSystem.InputAction.CallbackContext> interactionAction;
+    void Awake()
+    {
+        // Initialisation des contrôles du joueur
+        controls = new PlayerControls();
+
+        // On stocke l'action dans une variable pour pouvoir s'y désabonner
+        interactionAction = ctx =>
+        {
+            if (joueurDansZone)
+                ActiverIA();
+        };
+    }
+
+    void OnEnable()
+    {
+        // Active les contrôles du joueur
+        controls.Enable();
+        // Abonnement à l'action d'interaction
+        controls.Player.Interact.performed += interactionAction;
+    }
+
+    void OnDisable()
+    {
+        // On se désabonne de l'action d'interaction
+        controls.Player.Interact.performed -= interactionAction;
+        // Désactive les contrôles du joueur
+        controls.Disable();
+    }
+
+    // --- FIN DES MODIFICATIONS
 
 
     // Cette fonction est appelée au début du jeu, une seule fois
@@ -56,6 +97,11 @@ public class AITerminal : MonoBehaviour
             // On s'assure qu'aucun son ne joue automatiquement au lancement
             audioSource.playOnAwake = false;
         }
+
+        // On affiche un message au joueur dès le début du jeu pour lui indiquer l'objectif.
+        // Les variables besoinEau, besoinGraines, et besoinFertilisant sont publiques et peuvent être
+        // ajustées dans l'éditeur Unity pour chaque niveau.
+        AfficherMessage($"[ I.A LOG ] Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, et {besoinFertilisant} fertilisants.");
     }
 
 
@@ -79,35 +125,44 @@ public class AITerminal : MonoBehaviour
         }
     }
 
+     // Ajout d'une fonction centrale pour afficher les messages
+    // Cela rend le code plus propre et plus facile à maintenir
+    public void AfficherMessage(string message)
+    {
+        if (messageUI != null)
+        {
+            messageUI.text = message;
+        }
+    }
+
+
     // Cette fonction tente d'activer l'IA si le joueur a assez de ressources
+     // Fonction qui vérifie si le joueur a assez de ressources pour activer les zones 
     void ActiverIA()
     {
-        // On vérifie que l'inventaire du joueur est bien assigné
-        if (playerInventory == null)
-        {
-            Debug.LogWarning("[AITerminal] Aucun inventaire assigné.");
-            return;
-        }
+        // Inventaire du joueur (pour vérifier les ressources)
+        if (playerInventory == null) return;
 
-        // On récupère le nombre d'unités de chaque ressource dans l'inventaire du joueur
+        // On récupère le nombre de ressources du joueur en temps réel
         int eau = playerInventory.GetWaterDropCount();
         int graines = playerInventory.GetSeedCount();
         int fertil = playerInventory.GetFertilizerCount();
 
         Debug.Log($"[DEBUG] Inventaire : Eau={eau}, Graines={graines}, Fertilisant={fertil}");
 
-        // Si le joueur a assez de chaque ressource...
+        // On vérifie si le joueur a toutes les ressources NECESSAIRES
         if (eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
         {
-            // On active toutes les zones à revitaliser (elles deviennent visibles ou accessibles)
+            // Le joueur a les ressources nécessaires, on lance le processus
+            // On active toutes les zones à revitaliser
             foreach (GameObject zone in zonesARevitaliser)
             {
                 if (zone != null)
                     zone.SetActive(true);
             }
 
-            // On affiche un message de succès à l'écran
-            messageUI.text = "[ I.A LOG ] Ressources suffisantes.\nRevitalisation en cours ... trouvez la porte de sortie";
+            // On affiche le message de succès en utilisant notre nouvelle fonction
+            AfficherMessage("[ I.A LOG ] Ressources suffisantes.\nRevitalisation en cours ... trouvez la porte de sortie");
 
             // On joue un son de succès si tout est bien configuré
             if (audioSource != null && iaInteractionSound != null)
@@ -119,7 +174,7 @@ public class AITerminal : MonoBehaviour
         else
         {
             // Sinon, on affiche un message d'échec
-            messageUI.text = "[ I.A LOG ] Ressources insuffisantes.\nAnalyse en attente...";
+            AfficherMessage("[ I.A LOG ] Ressources insuffisantes.\nAnalyse en attente...");
 
             // Et on joue un son d'échec si tout est bien configuré
             if (audioSource != null && ressourcesInsuffisantesSound != null)
@@ -130,28 +185,58 @@ public class AITerminal : MonoBehaviour
         }
     }
 
-
-    // Cette fonction est appelée quand le joueur entre dans la zone du terminal IA
-    void OnTriggerEnter2D(Collider2D other)
+    // Appeler cette fonction à chaque fois qu'une ressource est collectée
+    public void AjouterRessource()
     {
-        // On vérifie que c'est bien le joueur qui entre dans la zone
-        if (other.CompareTag("Player"))
+        if (playerInventory == null) return;
+
+        // On récupère le nombre de ressources du joueur en temps réel
+        int eau = playerInventory.GetWaterDropCount();
+        int graines = playerInventory.GetSeedCount();
+        int fertil = playerInventory.GetFertilizerCount();
+
+        // Si l'objectif n'est pas encore atteint et que les conditions sont remplis
+        if (!objectifAtteint && eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
         {
-            joueurDansZone = true;
-            // On affiche un message pour expliquer comment interagir
-            messageUI.text = "[ I.A LOG ] Appuyer sur E (clavier) ou A ou triangle (manette) pour interagir.";
+            // Les objectifs sont atteints
+            objectifAtteint = true;
+
+            // On affiche le message d'objectif atteint
+            AfficherMessage("[ I.A LOG ] Objectif atteint. Parlez à l'IA pour continuer !");
         }
     }
 
-    // Cette fonction est appelée quand le joueur sort de la zone du terminal IA
+    // Fonction appelée quand le joueur sort de la zone du terminal
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // On vérifie que le joueur se trouve dans la zone du terminal IA
+            joueurDansZone = true;
+            // On vérifie les ressources du joueur
+            int eau = playerInventory.GetWaterDropCount();
+            int graines = playerInventory.GetSeedCount();
+            int fertil = playerInventory.GetFertilizerCount();
+
+            if (eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
+            {
+                AfficherMessage("[ I.A LOG ] Objectif atteint. Appuyer sur la touche A pour continuer.");
+            }
+            else
+            {
+                AfficherMessage("[ I.A. LOG] Appuyer sur la touche A pour interagir.");
+            }
+        }
+    }
+
+    // Fonction appelée quand le joueur sort de la zone du terminal
     void OnTriggerExit2D(Collider2D other)
     {
-        // On vérifie que c'est bien le joueur qui sort de la zone
         if (other.CompareTag("Player"))
         {
             joueurDansZone = false;
-            // On efface le message d'interaction
-            messageUI.text = "";
+            AfficherMessage("");
         }
     }
+
 }
