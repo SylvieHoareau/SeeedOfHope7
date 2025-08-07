@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "SeedOfHopeV7.sln"
+    "dotnet.defaultSolution": "SeeedOfHope7.sln"
 }
