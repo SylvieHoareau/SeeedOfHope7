@@ -101,9 +101,14 @@ public class AITerminal : MonoBehaviour
         // On affiche un message au joueur dès le début du jeu pour lui indiquer l'objectif.
         // Les variables besoinEau, besoinGraines, et besoinFertilisant sont publiques et peuvent être
         // ajustées dans l'éditeur Unity pour chaque niveau.
-        AfficherMessage($"[ I.A LOG ] Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, et {besoinFertilisant} fertilisants.");
+        AfficherObjectif();
     }
 
+     // NOUVELLE FONCTION : pour afficher le message de l'objectif initial
+    private void AfficherObjectif()
+    {
+        AfficherMessage($"[ I.A LOG ] Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, et {besoinFertilisant} fertilisants.");
+    }
 
     // Cette fonction est appelée à chaque image du jeu (60 fois par seconde environ)
     void Update()
@@ -174,7 +179,8 @@ public class AITerminal : MonoBehaviour
         else
         {
             // Sinon, on affiche un message d'échec
-            AfficherMessage("[ I.A LOG ] Ressources insuffisantes.\nAnalyse en attente...");
+            // On lance la Coroutine pour afficher le message d'erreur temporairement
+            StartCoroutine(AfficherMessageTemporaire("[ I.A LOG ] Ressources insuffisantes.\nAnalyse en attente...", 3.0f));
 
             // Et on joue un son d'échec si tout est bien configuré
             if (audioSource != null && ressourcesInsuffisantesSound != null)
@@ -183,6 +189,19 @@ public class AITerminal : MonoBehaviour
                 Debug.Log("[AITerminal] Son échec joué.");
             }
         }
+    }
+
+      // NOUVELLE FONCTION : Coroutine pour afficher un message temporairement
+    IEnumerator AfficherMessageTemporaire(string message, float duree)
+    {
+        // On affiche le message d'erreur
+        AfficherMessage(message);
+
+        // On attend un certain temps
+        yield return new WaitForSeconds(duree);
+
+        // Après le temps d'attente, on affiche à nouveau l'objectif initial
+        AfficherObjectif();
     }
 
     // Appeler cette fonction à chaque fois qu'une ressource est collectée
