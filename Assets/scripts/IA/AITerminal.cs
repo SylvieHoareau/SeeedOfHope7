@@ -107,7 +107,7 @@ public class AITerminal : MonoBehaviour
      // NOUVELLE FONCTION : pour afficher le message de l'objectif initial
     private void AfficherObjectif()
     {
-        AfficherMessage($"[ I.A LOG ] Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, et {besoinFertilisant} fertilisants.");
+        AfficherMessage($"[ I.A LOG ] Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, et {besoinFertilisant} engrais.");
     }
 
     // Cette fonction est appelée à chaque image du jeu (60 fois par seconde environ)
@@ -153,7 +153,7 @@ public class AITerminal : MonoBehaviour
         int graines = playerInventory.GetSeedCount();
         int fertil = playerInventory.GetFertilizerCount();
 
-        Debug.Log($"[DEBUG] Inventaire : Eau={eau}, Graines={graines}, Fertilisant={fertil}");
+        Debug.Log($"[DEBUG] Inventaire : Eau={eau}, Graines={graines}, Engrais={fertil}");
 
         // On vérifie si le joueur a toutes les ressources NECESSAIRES
         if (eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
@@ -239,7 +239,7 @@ public class AITerminal : MonoBehaviour
 
             if (eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
             {
-                AfficherMessage("[ I.A LOG ] Objectif atteint. Appuyer sur la touche A pour continuer.");
+                AfficherMessage("[ I.A LOG ] Objectif atteint. Appuyer sur la touche E (clavier) ou A (manette) pour continuer.");
             }
             else
             {
