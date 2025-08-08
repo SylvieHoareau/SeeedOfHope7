@@ -8071,6 +8071,14 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 6079467990664938580, guid: cece9ce3d390b7a8e8c630837e12e81a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079467990664938580, guid: cece9ce3d390b7a8e8c630837e12e81a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 685
+      objectReference: {fileID: 0}
     - target: {fileID: 6922108620175927308, guid: cece9ce3d390b7a8e8c630837e12e81a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

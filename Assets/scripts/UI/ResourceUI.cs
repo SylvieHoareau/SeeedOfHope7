@@ -25,7 +25,7 @@ public class ResourceUI : MonoBehaviour
         
          if (inventory != null && fertilizerText != null)
         {
-            fertilizerText.text = "Engrais bio : " + inventory.GetFertilizerCount();
+            fertilizerText.text = "Engrais : " + inventory.GetFertilizerCount();
         }
     }
 }
