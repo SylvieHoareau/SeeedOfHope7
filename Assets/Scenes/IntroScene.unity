@@ -464,6 +464,7 @@ GameObject:
   - component: {fileID: 1172896953}
   - component: {fileID: 1172896952}
   - component: {fileID: 1172896951}
+  - component: {fileID: 1172896954}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -514,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1311247791}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1172896953
@@ -532,6 +533,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1172896954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172896950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1 &1311247791
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,10 +613,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.6981132, g: 0.21338914, b: 0, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.58513975, b: 0, a: 1}
-    m_PressedColor: {r: 0.9716981, g: 0.71907455, b: 0, a: 1}
-    m_SelectedColor: {r: 0.764151, g: 0.28148347, b: 0, a: 1}
+    m_NormalColor: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
+    m_HighlightedColor: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
+    m_PressedColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+    m_SelectedColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -676,6 +697,8 @@ GameObject:
   - component: {fileID: 1348431713}
   - component: {fileID: 1348431712}
   - component: {fileID: 1348431711}
+  - component: {fileID: 1348431715}
+  - component: {fileID: 1348431714}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -757,6 +780,147 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1348431714
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348431710}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 857ecc54aa874bef99e45313b5aab0d0, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1348431715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348431710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &1452116051
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +1007,7 @@ GameObject:
   - component: {fileID: 1453934707}
   - component: {fileID: 1453934709}
   - component: {fileID: 1453934708}
+  - component: {fileID: 1453934710}
   m_Layer: 5
   m_Name: IntroText
   m_TagString: Untagged
@@ -866,7 +1031,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -65, y: 289}
+  m_AnchoredPosition: {x: -71, y: 351}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1453934708
@@ -889,14 +1054,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\"Bienvenue, gardien. Je suis Gaia, ce qui reste de la conscience de la
-    Terre.\n\nLa Rouille a d\xE9truit notre monde, mais la vie ne s'\xE9teint jamais
-    compl\xE8tement. Elle s'est fragment\xE9e en \xC9clats de Vie.\n\nVotre mission
-    est de les collecter et de les ramener \xE0 mon terminal. Chaque \xE9clat que
-    vous rapportez nous aide \xE0 r\xE9g\xE9n\xE9rer la nature.\n\nLe chemin est
-    sem\xE9 de dangers. Des cr\xE9atures de pierre, engendr\xE9es par la Rouille,
-    cherchent \xE0 nous arr\xEAter. Vous devez les \xE9viter.\n\nLa survie de la
-    Terre d\xE9pend de vous. Cherchez l'espoir. Cherchez les \xC9clats de Vie.\""
+  m_text: '
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -975,6 +1135,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453934706}
   m_CullTransparentMesh: 1
+--- !u!114 &1453934710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453934706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c7b602eaedb7dd09cbf3bba0c54b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 1453934708}
+  lignesIntro:
+  - Bienvenue, gardien(ne). Je suis GaIA, ce qui reste de la conscience de la Terre.
+  - "La Rouille a d\xE9truit notre monde, mais la vie ne s'\xE9teint jamais compl\xE8tement.
+    Elle s'est fragment\xE9e en \xC9clats de Vie."
+  - "Votre mission est de les collecter et de les ramener \xE0 mon terminal. Chaque
+    \xE9clat que vous rapportez nous aide \xE0 r\xE9g\xE9n\xE9rer la nature."
+  - "Le chemin est sem\xE9 de dangers. Des cr\xE9atures de pierre et des robots,
+    engendr\xE9s par la Rouille, cherchent \xE0 nous arr\xEAter. Vous devez les \xE9viter."
+  - "La survie de la Terre d\xE9pend de vous. Cherchez l'espoir. Cherchez les \xC9clats
+    de Vie."
+  delayBetweenLines: 2.5
+  charDelay: 0.02
 --- !u!1 &1492312551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,7 +1472,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3658959735351096356, guid: 669ad7f2df0aa63448397f7fc6efb831, type: 3}
+  m_Sprite: {fileID: 5327402585253708592, guid: a55591195f9ad9deba09b28faaf2c847, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

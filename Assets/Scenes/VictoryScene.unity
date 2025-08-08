@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 166647761}
   - component: {fileID: 166647760}
   - component: {fileID: 166647759}
+  - component: {fileID: 166647762}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -180,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 2037806826}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &166647761
@@ -198,6 +199,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &166647762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166647758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1 &460223185
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,6 +821,22 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8300400473399338263, guid: c027461e00466f246bc7cc9a04b9a284, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300400473399338263, guid: c027461e00466f246bc7cc9a04b9a284, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.2790139
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300400473399338263, guid: c027461e00466f246bc7cc9a04b9a284, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.2790139
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300400473399338263, guid: c027461e00466f246bc7cc9a04b9a284, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.2830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300400473399338263, guid: c027461e00466f246bc7cc9a04b9a284, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 870221872}
@@ -959,6 +996,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868894681}
   m_CullTransparentMesh: 1
+--- !u!1 &2037806826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5705691331258175607, guid: c027461e00466f246bc7cc9a04b9a284, type: 3}
+  m_PrefabInstance: {fileID: 1543957395}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

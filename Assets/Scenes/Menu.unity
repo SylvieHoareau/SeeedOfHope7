@@ -392,7 +392,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: b98bb0cc0d92a7d41be9402fe85e283e, type: 3}
     - target: {fileID: 180481610140614465, guid: 84e4078d63799ff4b8cee7dc25417cbd, type: 3}
       propertyPath: playlist.Array.size
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 180481610140614465, guid: 84e4078d63799ff4b8cee7dc25417cbd, type: 3}
       propertyPath: 'playlist.Array.data[0]'
@@ -413,7 +413,19 @@ PrefabInstance:
     - target: {fileID: 180481610140614465, guid: 84e4078d63799ff4b8cee7dc25417cbd, type: 3}
       propertyPath: 'playlist.Array.data[4]'
       value: 
-      objectReference: {fileID: 8300000, guid: f6e4d57775fbbb04bb7ea645e8c01e36, type: 3}
+      objectReference: {fileID: 8300000, guid: e7f786d0172b7b114890f6c46bd7f640, type: 3}
+    - target: {fileID: 180481610140614465, guid: 84e4078d63799ff4b8cee7dc25417cbd, type: 3}
+      propertyPath: 'playlist.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: bf25c5edbccde7b5faaa505c2dcf2c05, type: 3}
+    - target: {fileID: 180481610140614465, guid: 84e4078d63799ff4b8cee7dc25417cbd, type: 3}
+      propertyPath: 'playlist.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 27b25a299a4b16d3eabe61b4a07e8707, type: 3}
+    - target: {fileID: 180481610140614465, guid: 84e4078d63799ff4b8cee7dc25417cbd, type: 3}
+      propertyPath: 'playlist.Array.data[7]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 17ba6f45467041f5b87b98423507781c, type: 3}
     - target: {fileID: 314268794238947536, guid: 84e4078d63799ff4b8cee7dc25417cbd, type: 3}
       propertyPath: m_Name
       value: Audio Manager
