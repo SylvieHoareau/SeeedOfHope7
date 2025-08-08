@@ -1158,6 +1158,7 @@ MonoBehaviour:
     engendr\xE9s par la Rouille, cherchent \xE0 nous arr\xEAter. Vous devez les \xE9viter."
   - "La survie de la Terre d\xE9pend de vous. Cherchez l'espoir. Cherchez les \xC9clats
     de Vie."
+  - Vous pouvez commencer l'aventure !
   delayBetweenLines: 2.5
   charDelay: 0.02
 --- !u!1 &1492312551
