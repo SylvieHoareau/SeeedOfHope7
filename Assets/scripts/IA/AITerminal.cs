@@ -21,7 +21,8 @@ public class AITerminal : MonoBehaviour
 
     [Header("UI")]
     // Message affiché à l'écran pour informer le joueur
-    public TextMeshProUGUI messageUI;
+    // public TextMeshProUGUI messageUI;
+    public MessageManager messageManager;
 
     [Header("Ressources requises")]
     // Nombre d'unités d'eau nécessaires pour activer l'IA
@@ -134,9 +135,10 @@ public class AITerminal : MonoBehaviour
     // Cela rend le code plus propre et plus facile à maintenir
     public void AfficherMessage(string message)
     {
-        if (messageUI != null)
+        if (messageManager != null)
         {
-            messageUI.text = message;
+            // On délègue l'afficahge du message au MessageManager
+            messageManager.ShowMessage(message);
         }
     }
 

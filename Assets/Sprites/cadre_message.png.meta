@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c8f36ba695705f245b55edc37b880912
+guid: 0b6e5bb38b39d114a8a08f1fce26fd1e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7404588604615989143
-    second: cadre_0
+      213: 3337471296342379982
+    second: cadre_message_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cadre_0
+      name: cadre_message_0
       rect:
         serializedVersion: 2
         x: 32
-        y: 85
-        width: 1154
-        height: 610
+        y: 86
+        width: 1161
+        height: 613
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7979a0eca1262c660800000000000000
-      internalID: 7404588604615989143
+      spriteID: ecdcc8a1674115e20800000000000000
+      internalID: 3337471296342379982
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cadre_0: 7404588604615989143
+      cadre_message_0: 3337471296342379982
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
