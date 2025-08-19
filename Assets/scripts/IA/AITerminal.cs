@@ -23,6 +23,8 @@ public class AITerminal : MonoBehaviour
     // Message affiché à l'écran pour informer le joueur
     // public TextMeshProUGUI messageUI;
     public MessageManager messageManager;
+    // Pour afficher l'objectif en continu
+    public TextMeshProUGUI objectifText;
 
     [Header("Ressources requises")]
     // Nombre d'unités d'eau nécessaires pour activer l'IA
@@ -102,13 +104,40 @@ public class AITerminal : MonoBehaviour
         // On affiche un message au joueur dès le début du jeu pour lui indiquer l'objectif.
         // Les variables besoinEau, besoinGraines, et besoinFertilisant sont publiques et peuvent être
         // ajustées dans l'éditeur Unity pour chaque niveau.
-        AfficherObjectif();
+        // AfficherObjectif();
+        // On affiche l'objectif dès le début et on le met à jour
+        MettreAJourObjectifUI();
+    }
+
+    // Fonction qui affiche l'objectif et les ressources actuelles
+    private void MettreAJourObjectifUI()
+    {
+        if (objectifText == null || playerInventory == null) return;
+
+        int eau = playerInventory.GetWaterDropCount();
+        int graines = playerInventory.GetSeedCount();
+        int fertil = playerInventory.GetFertilizerCount();
+
+        // On met à jour le texte de l'objectif en permanence
+        string objectifMessage = $"Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, {besoinFertilisant} engrais.\n" +
+                                 $"Actuellement : Eau ({eau}/{besoinEau}), Graines ({graines}/{besoinGraines}), Engrais ({fertil}/{besoinFertilisant})";
+
+        objectifText.text = objectifMessage;
     }
 
      // NOUVELLE FONCTION : pour afficher le message de l'objectif initial
-    private void AfficherObjectif()
+    // private void AfficherObjectif()
+    // {
+    //     AfficherMessage($"[ I.A LOG ] Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, et {besoinFertilisant} engrais.");
+    // }
+
+    // Nouvelle fonction centrale pour les messages temporaires
+    public void AfficherMessageTemporaire(string message)
     {
-        AfficherMessage($"[ I.A LOG ] Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, et {besoinFertilisant} engrais.");
+        if (messageManager != null)
+        {
+            messageManager.ShowMessage(message);
+        }
     }
 
     // Cette fonction est appelée à chaque image du jeu (60 fois par seconde environ)
