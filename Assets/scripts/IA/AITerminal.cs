@@ -8,7 +8,6 @@ using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections; // Ajout de la bibliothèque pour les coroutines
 
-
 [RequireComponent(typeof(AudioSource))]
 public class AITerminal : MonoBehaviour
 {
@@ -21,10 +20,16 @@ public class AITerminal : MonoBehaviour
 
     [Header("UI")]
     // Message affiché à l'écran pour informer le joueur
-    // public TextMeshProUGUI messageUI;
     public MessageManager messageManager;
     // Pour afficher l'objectif en continu
     public TextMeshProUGUI objectifText;
+
+    // --- NOUVELLE SECTION POUR LES DIALOGUES ---
+    [Header("Dialogues")]
+    public Dialogue dialogueIntroduction;
+    public Dialogue dialogueRessourcesInsuffisantes;
+    public Dialogue dialogueSucces;
+    public Dialogue dialogueObjectifAtteint;
 
     [Header("Ressources requises")]
     // Nombre d'unités d'eau nécessaires pour activer l'IA
@@ -48,10 +53,8 @@ public class AITerminal : MonoBehaviour
     // Booléen pour savoir si l'objectif est atteint
     private bool objectifAtteint = false;
 
-    // --- DEBUT DES MODIFICATIONS
     // Contrôles du joueur (pour détecter les actions)
     private PlayerControls controls;
-
     // Permet de gérer l'action d'interaction
     private System.Action<UnityEngine.InputSystem.InputAction.CallbackContext> interactionAction;
     void Awake()
@@ -83,9 +86,6 @@ public class AITerminal : MonoBehaviour
         controls.Disable();
     }
 
-    // --- FIN DES MODIFICATIONS
-
-
     // Cette fonction est appelée au début du jeu, une seule fois
     void Start()
     {
@@ -101,12 +101,14 @@ public class AITerminal : MonoBehaviour
             audioSource.playOnAwake = false;
         }
 
-        // On affiche un message au joueur dès le début du jeu pour lui indiquer l'objectif.
-        // Les variables besoinEau, besoinGraines, et besoinFertilisant sont publiques et peuvent être
-        // ajustées dans l'éditeur Unity pour chaque niveau.
-        // AfficherObjectif();
         // On affiche l'objectif dès le début et on le met à jour
         MettreAJourObjectifUI();
+
+        // Ajouter un message d'introduction
+        if (messageManager != null)
+        {
+            messageManager.StartDialogue(dialogueIntroduction);
+        }
     }
 
     // Fonction qui affiche l'objectif et les ressources actuelles
@@ -125,20 +127,6 @@ public class AITerminal : MonoBehaviour
         objectifText.text = objectifMessage;
     }
 
-     // NOUVELLE FONCTION : pour afficher le message de l'objectif initial
-    // private void AfficherObjectif()
-    // {
-    //     AfficherMessage($"[ I.A LOG ] Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, et {besoinFertilisant} engrais.");
-    // }
-
-    // Nouvelle fonction centrale pour les messages temporaires
-    public void AfficherMessageTemporaire(string message)
-    {
-        if (messageManager != null)
-        {
-            messageManager.ShowMessage(message);
-        }
-    }
 
     // Cette fonction est appelée à chaque image du jeu (60 fois par seconde environ)
     void Update()
@@ -159,18 +147,6 @@ public class AITerminal : MonoBehaviour
             ActiverIA();
         }
     }
-
-     // Ajout d'une fonction centrale pour afficher les messages
-    // Cela rend le code plus propre et plus facile à maintenir
-    public void AfficherMessage(string message)
-    {
-        if (messageManager != null)
-        {
-            // On délègue l'afficahge du message au MessageManager
-            messageManager.ShowMessage(message);
-        }
-    }
-
 
     // Cette fonction tente d'activer l'IA si le joueur a assez de ressources
      // Fonction qui vérifie si le joueur a assez de ressources pour activer les zones 
@@ -193,12 +169,11 @@ public class AITerminal : MonoBehaviour
             // On active toutes les zones à revitaliser
             foreach (GameObject zone in zonesARevitaliser)
             {
-                if (zone != null)
-                    zone.SetActive(true);
+                if (zone != null) zone.SetActive(true);
             }
 
-            // On affiche le message de succès en utilisant notre nouvelle fonction
-            AfficherMessage("[ I.A LOG ] Ressources suffisantes.\nRevitalisation en cours ... trouvez la porte de sortie");
+            // Affiche le message de succès pendant 5 secondes
+            messageManager.StartDialogue(dialogueSucces);
 
             // On joue un son de succès si tout est bien configuré
             if (audioSource != null && iaInteractionSound != null)
@@ -210,8 +185,8 @@ public class AITerminal : MonoBehaviour
         else
         {
             // Sinon, on affiche un message d'échec
-            // On lance la Coroutine pour afficher le message d'erreur temporairement
-            StartCoroutine(AfficherMessageTemporaire("[ I.A LOG ] Ressources insuffisantes.\nAnalyse en attente...", 3.0f));
+                        // Affiche le message d'échec pendant 3 secondes
+            messageManager.ShowMessage("[ I.A LOG ] Ressources insuffisantes.\nAnalyse en attente...", 3.0f);
 
             // Et on joue un son d'échec si tout est bien configuré
             if (audioSource != null && ressourcesInsuffisantesSound != null)
@@ -222,23 +197,13 @@ public class AITerminal : MonoBehaviour
         }
     }
 
-      // NOUVELLE FONCTION : Coroutine pour afficher un message temporairement
-    IEnumerator AfficherMessageTemporaire(string message, float duree)
-    {
-        // On affiche le message d'erreur
-        AfficherMessage(message);
-
-        // On attend un certain temps
-        yield return new WaitForSeconds(duree);
-
-        // Après le temps d'attente, on affiche à nouveau l'objectif initial
-        AfficherObjectif();
-    }
-
     // Appeler cette fonction à chaque fois qu'une ressource est collectée
     public void AjouterRessource()
     {
         if (playerInventory == null) return;
+
+        // Mise à jour de l'affichage de l'objectif
+        MettreAJourObjectifUI();
 
         // On récupère le nombre de ressources du joueur en temps réel
         int eau = playerInventory.GetWaterDropCount();
@@ -252,7 +217,7 @@ public class AITerminal : MonoBehaviour
             objectifAtteint = true;
 
             // On affiche le message d'objectif atteint
-            AfficherMessage("[ I.A LOG ] Objectif atteint. Parlez à l'IA pour continuer !");
+             messageManager.ShowMessage("[ I.A LOG ] Objectif atteint. Parlez à l'IA pour continuer !", 5.0f);
         }
     }
 
@@ -268,13 +233,13 @@ public class AITerminal : MonoBehaviour
             int graines = playerInventory.GetSeedCount();
             int fertil = playerInventory.GetFertilizerCount();
 
-            if (eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
+            if (objectifAtteint)
             {
-                AfficherMessage("[ I.A LOG ] Objectif atteint. Appuyer sur la touche E (clavier) ou A (manette) pour continuer.");
+                messageManager.ShowMessage("[ I.A LOG ] Objectif atteint. Appuyer sur la touche A pour interagir.", 5.0f);
             }
             else
             {
-                AfficherMessage("[ I.A. LOG] Appuyer sur la touche A pour interagir.");
+                messageManager.ShowMessage("[ I.A. LOG] Appuyer sur la touche A pour interagir.", 5.0f);
             }
         }
     }
@@ -285,7 +250,11 @@ public class AITerminal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             joueurDansZone = false;
-            AfficherMessage("");
+            // On peut appeler une fonction dans le MessageManager pour cacher le panel.
+            if (messageManager != null)
+            {
+                messageManager.HidePanel();
+            }
         }
     }
 
