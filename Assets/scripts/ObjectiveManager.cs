@@ -25,7 +25,7 @@ public class ObjectiveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inventory == null || objectiveText === null) return;
+        if (inventory == null || objectiveText == null) return;
 
         // Vérifie la progression
         int currentWater = inventory.GetWaterDropCount();
