@@ -5,7 +5,7 @@ using UnityEngine;
 public class Dialogue
 {
     // Nom du personnage qui parle (ex: "I.A LOG", "Player")
-    public string speakerName;
+    // public string speakerName;
 
     // Tableau pour écrire toutes les phrases du dialogue dans l'inspecteur Unity
     [TextArea(3, 10)] // Permet d'avoir une zone de texte plus grande dans l'inspecteur

@@ -3,15 +3,23 @@ using UnityEngine.EventSystems;
 
 public class OptionPanelSelector : MonoBehaviour
 {
-    public EventSystem eventSystem;       // référence vers ton EventSystem
-    public GameObject firstSelected;      // bouton à sélectionner par défaut
+    public EventSystem eventSystem;
+    public GameObject firstSelected;  // bouton volume ou retour
+    public GameObject backButton;     // la croix "Quitter"
 
     void OnEnable()
     {
-        // On reset la sélection actuelle
         eventSystem.SetSelectedGameObject(null);
-
-        // On force la sélection sur ton bouton du panel
         eventSystem.SetSelectedGameObject(firstSelected);
+    }
+
+    void Update()
+    {
+        // Si j’appuie sur "Cancel" (B sur Xbox, rond sur PS, ou Esc clavier)
+        if (Input.GetButtonDown("Cancel"))
+        {
+            eventSystem.SetSelectedGameObject(null);
+            eventSystem.SetSelectedGameObject(backButton);
+        }
     }
 }

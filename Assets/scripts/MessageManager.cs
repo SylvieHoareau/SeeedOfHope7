@@ -8,7 +8,7 @@ public class MessageManager : MonoBehaviour
     public GameObject messagePanel;
     public TextMeshProUGUI messageText;
     // Pour afficher le nom qui parle
-    public TextMeshProUGUI speakerNameText; 
+    // public TextMeshProUGUI speakerNameText; 
     private Coroutine hideCoroutine;
     // File d'attente pour les phrases
     private Queue<string> sentencesQueue;
@@ -56,7 +56,7 @@ public class MessageManager : MonoBehaviour
         messagePanel.SetActive(true);
 
         // Affiche le nom du locuteur
-        if (speakerNameText != null) speakerNameText.text = dialogue.speakerName;
+        // if (speakerNameText != null) speakerNameText.text = dialogue.speakerName;
 
         // On vide la file d'attente au cas où
         sentencesQueue.Clear();
