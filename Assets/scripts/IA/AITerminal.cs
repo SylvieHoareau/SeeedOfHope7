@@ -167,6 +167,7 @@ public class AITerminal : MonoBehaviour
             if (messageManager != null && dialogue != null)
             {
                 messageManager.StartDialogue(dialogue[2]);
+                messageManager.StartDialogue(dialogue[3]);
             }
         }
     }
