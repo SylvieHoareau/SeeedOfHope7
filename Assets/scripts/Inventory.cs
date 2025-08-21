@@ -3,60 +3,44 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // Dictionnaire pour stocker les objets et leur quantité
-    [SerializeField]
-    private Dictionary<string, int> items = new Dictionary<string, int>();
+    // Cette action permet de prévenir d'autres scripts quand une ressource est ajoutée
+    public event System.Action onResourceChanged;
 
-    // Nombre de gouttes collectées (exposé dans l'inspecteur Unity)
-    [SerializeField]
-    private int waterDropCount = 0;
-
-    [SerializeField]
-    private int seedCount = 0;
-
-    [SerializeField]
-    private int fertilizerCount = 0;
+    // Variables pour stocker le nombre de chaque ressource collectée
+    [SerializeField] private int waterDropCount = 0; // Eau
+    [SerializeField] private int seedCount = 0;      // Graines
+    [SerializeField] private int fertilizerCount = 0;// Engrais
 
     public void AddItem(string itemName)
     {
-        if (items.ContainsKey(itemName))
-        {
-            items[itemName]++;
-        }
-        else
-        {
-            items[itemName] = 1;
-        }
-
-        // Si l'objet est une goutte d'eau, incrémente la variable dédiée
+        // Selon le nom de l'objet, on ajoute 1 à la ressource correspondante
         switch (itemName)
         {
-
             case "Water Drop":
                 waterDropCount++;
                 break;
-
             case "Seed":
                 seedCount++;
                 break;
-
             case "Fertilizer":
                 fertilizerCount++;
                 break;
         }
 
-        Debug.Log("Objet ajouté à l’inventaire : " + itemName + " (x" + items[itemName] + ")");
+        // Affiche dans la console ce qui a été ramassé
+        Debug.Log($"Objet ajouté à l’inventaire : {itemName}");
+
+        // Préviens les autres scripts qu'une ressource a été ajoutée
+        if (onResourceChanged != null)
+            onResourceChanged.Invoke();
     }
 
     public void ShowInventory()
     {
-        Debug.Log("Inventaire :");
-        foreach (var kvp in items)
-        {
-            Debug.Log($"- {kvp.Key} x{kvp.Value}");
-        }
-
-        Debug.Log("Gouttes d'eau collectées : " + waterDropCount);
+        // Affiche le contenu de l'inventaire dans la console Unity
+        Debug.Log($"Eau : {waterDropCount}");
+        Debug.Log($"Graines : {seedCount}");
+        Debug.Log($"Engrais : {fertilizerCount}");
     }
 
     // Accesseur public pour d'autres scripts (UI par exemple)

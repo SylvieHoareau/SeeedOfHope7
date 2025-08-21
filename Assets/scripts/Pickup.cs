@@ -44,28 +44,39 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Quelque chose est entrée : " + other.name);
-
+        // Vérifie si c'est le joueur qui touche l'objet
         if (other.CompareTag("Player"))
         {
-            Debug.Log("C’est le joueur !");
+            // Récupère l'inventaire du joueur
             Inventory inventory = other.GetComponent<Inventory>();
             if (inventory != null)
             {
+                // Détermine le nom de l'objet ramassé
                 string itemName = ConvertItemTypeToName(itemType);
+                // Ajoute l'objet à l'inventaire
                 inventory.AddItem(itemName);
 
-                // Joue le son localement depuis l'objet (non dépendant de la caméra)
+                // Préviens le terminal IA qu'une ressource a été collectée (pour mettre à jour l'UI)
+                // Utilise la méthode recommandée par Unity pour trouver le terminal IA
+                AITerminal terminal = FindFirstObjectByType<AITerminal>();
+                if (terminal != null)
+                {
+                    terminal.OnResourceCollected();
+                }
+
+                // Joue le son de ramassage si défini
                 if (pickupSound != null)
                 {
                     AudioSource.PlayClipAtPoint(pickupSound, Camera.main.transform.position, pickupVolume);
                 }
-                Destroy(gameObject); // Supprime l’objet une fois ramassé
+
+                // Supprime l'objet de la scène après ramassage
+                Destroy(gameObject); 
             }
         }
     }
 
-    private string ConvertItemTypeToName(ItemType type)
+    public string ConvertItemTypeToName(ItemType type)
     {
         switch (type)
         {
