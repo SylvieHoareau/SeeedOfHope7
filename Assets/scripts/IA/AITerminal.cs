@@ -6,7 +6,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
-using System.Collections; // Ajout de la bibliothèque pour les coroutines
+using System.Collections;
+using System.Collections.Generic;
+using System; // Ajout de la bibliothèque pour les coroutines
 
 [RequireComponent(typeof(AudioSource))]
 public class AITerminal : MonoBehaviour
@@ -26,10 +28,8 @@ public class AITerminal : MonoBehaviour
 
     // --- NOUVELLE SECTION POUR LES DIALOGUES ---
     [Header("Dialogues")]
-    public Dialogue dialogueIntroduction;
-    public Dialogue dialogueRessourcesInsuffisantes;
-    // public Dialogue dialogueSucces;
-    public Dialogue dialogueObjectifAtteint;
+    [TextArea(3,10)]
+    public List<String> dialogue = new();
 
     [Header("Ressources requises")]
     // Nombre d'unités d'eau nécessaires pour activer l'IA
@@ -127,7 +127,7 @@ public class AITerminal : MonoBehaviour
         // Ajouter un message d'introduction
         if (messageManager != null)
         {
-            messageManager.StartDialogue(dialogueIntroduction);
+            messageManager.StartDialogue(dialogue[0]);
         }
     }
 
@@ -164,9 +164,9 @@ public class AITerminal : MonoBehaviour
         if (!objectifAtteint && eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
         {
             objectifAtteint = true;
-            if (messageManager != null && dialogueObjectifAtteint != null)
+            if (messageManager != null && dialogue != null)
             {
-                messageManager.StartDialogue(dialogueObjectifAtteint);
+                messageManager.StartDialogue(dialogue[2]);
             }
         }
     }
@@ -184,9 +184,9 @@ public class AITerminal : MonoBehaviour
         if (!objectifAtteint && eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
         {
             objectifAtteint = true;
-            if (messageManager != null && dialogueObjectifAtteint != null)
+            if (messageManager != null && dialogue != null)
             {
-                messageManager.StartDialogue(dialogueObjectifAtteint);
+                messageManager.StartDialogue(dialogue[2]);
             }
         }
     }
@@ -235,10 +235,10 @@ public class AITerminal : MonoBehaviour
             // Le joueur a les ressources nécessaires, on lance le processus
 
             // C'est ici que le dialogue de succès doit apparaître !
-            // if (messageManager != null && dialogueSucces != null)
-            // {
-            //     messageManager.StartDialogue(dialogueSucces);
-            // }
+            if (messageManager != null && dialogue != null)
+            {
+                messageManager.StartDialogue(dialogue[2]);
+            }
 
             // On active toutes les zones à revitaliser
             foreach (GameObject zone in zonesARevitaliser)
@@ -260,9 +260,9 @@ public class AITerminal : MonoBehaviour
         {
             // Sinon, on affiche un message d'échec
             // Le joueur n'a pas assez de ressources
-            if (messageManager != null && dialogueRessourcesInsuffisantes != null)
+            if (messageManager != null && dialogue != null)
             {
-                messageManager.StartDialogue(dialogueRessourcesInsuffisantes);
+                messageManager.StartDialogue(dialogue[1]);
             };
 
             // Et on joue un son d'échec si tout est bien configuré

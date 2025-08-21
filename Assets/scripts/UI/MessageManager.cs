@@ -50,7 +50,7 @@ public class MessageManager : MonoBehaviour
     /// Démarre un dialogue basé sur un ScriptableObject Dialogue
     /// (Ici, on affiche seulement la première phrase pour simplifier)
     /// </summary>
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(string dialogue)
     {
         if (messagePanel == null || messageText == null)
         {
@@ -58,7 +58,7 @@ public class MessageManager : MonoBehaviour
             return;
         }
 
-        if (dialogue == null || dialogue.sentences.Length == 0)
+        if (dialogue == null || dialogue.Length == 0)
         {
             Debug.LogWarning("[MessageManager] Dialogue vide ou non assigné");
             return;
@@ -69,7 +69,7 @@ public class MessageManager : MonoBehaviour
             StopCoroutine(currentCoroutine);
 
         messagePanel.SetActive(true);
-        messageText.text = dialogue.sentences[0]; // Pour l’instant une phrase simple
+        messageText.text = dialogue; // Pour l’instant une phrase simple
     }
 
     /// <summary>
