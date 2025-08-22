@@ -434,7 +434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &188730864
 RectTransform:
   m_ObjectHideFlags: 0
@@ -829,7 +829,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29298df3f037c3a4b85c4d8cb953a0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 0
+  resourceType: 0
+  amount: 1
   pickupSound: {fileID: 8300000, guid: 789ac5b6f3514f39baabb93be3fe70cd, type: 3}
   pickupVolume: 1
 --- !u!70 &324645753
@@ -26311,7 +26312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29298df3f037c3a4b85c4d8cb953a0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
+  resourceType: 2
+  amount: 1
   pickupSound: {fileID: 8300000, guid: 789ac5b6f3514f39baabb93be3fe70cd, type: 3}
   pickupVolume: 1
 --- !u!1001 &483092834
@@ -26536,7 +26538,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -2515868770249690931, guid: 756d560614ffb5443a951747ceb85753, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -26625,21 +26627,23 @@ MonoBehaviour:
   - {fileID: 1054184022}
   - {fileID: 2131918388}
   messageManager: {fileID: 1127724148}
-  objectifText: {fileID: 1909824583}
   dialogue:
-  - "[ I.A. LOG ] Bienvenue, explorateur. Utilise les fl\xE8ches du clavier ou le
-    joystick gauche pour te d\xE9placer. Avance, et d\xE9couvre ce monde en ruines..."
-  - "[ I.A. LOG ] Analyse en cours... Ressources insuffisantes. Continue ton exploration
-    et collecte davantage d\u2019eau, de graines et d\u2019engrais. Tu es sur la
-    bonne voie."
-  - "[ I.A. LOG ] Objectifs atteints. Ressources suffisantes d\xE9tect\xE9es. Les
-    syst\xE8mes de revitalisation sont maintenant activ\xE9s. Bravo, explorateur."
-  - "[ I.A. LOG ]  Le monde rena\xEEt peu \xE0 peu gr\xE2ce \xE0 toi Une issue a
-    \xE9t\xE9 localis\xE9e. Trouve la porte de sortie. Bonne chance, explorateur."
+    sentences:
+    - "[ I.A. LOG ] Bienvenue, explorateur. Utilise les fl\xE8ches du clavier ou
+      le joystick gauche pour te d\xE9placer. Appuie sur E au clavier ou A \xE0 la
+      manette pour interagir avec moi. Avance, et d\xE9couvre ce monde en ruines..."
+    - "[ I.A. LOG ] Analyse en cours... Ressources insuffisantes. Continue ton exploration
+      et collecte davantage d\u2019eau, de graines et d\u2019engrais. Tu es sur la
+      bonne voie."
+    - "[ I.A. LOG ] Objectifs atteints. Ressources suffisantes d\xE9tect\xE9es. Va
+      les apporter \xE0 mon terminal."
+    - "[ I.A. LOG ]\_ Le monde rena\xEEt peu \xE0 peu gr\xE2ce \xE0 toi. Les syst\xE8mes
+      de revitalisation sont maintenant activ\xE9s. Bravo, explorateur. Une issue
+      a \xE9t\xE9 localis\xE9e. Trouve la porte de sortie. Bonne chance, explorateur."
   besoinEau: 1
   besoinGraines: 1
   besoinFertilisant: 1
-  iaInteractionSound: {fileID: 8300000, guid: 2bc8cf5b6c502ee499938ea895277227, type: 3}
+  activationSound: {fileID: 0}
   ressourcesInsuffisantesSound: {fileID: 8300000, guid: 46192435ac65db94c8bc058e2dc94643, type: 3}
 --- !u!61 &525291238
 BoxCollider2D:
@@ -28441,6 +28445,14 @@ PrefabInstance:
       propertyPath: gameOverUI
       value: 
       objectReference: {fileID: 785984883}
+    - target: {fileID: 2563909766150207839, guid: e87dec6c5a942e8a6a31c0bd9f26cd7f, type: 3}
+      propertyPath: m_Size.y
+      value: 0.20200884
+      objectReference: {fileID: 0}
+    - target: {fileID: 2563909766150207839, guid: e87dec6c5a942e8a6a31c0bd9f26cd7f, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.4023919
+      objectReference: {fileID: 0}
     - target: {fileID: 6439625210001596891, guid: e87dec6c5a942e8a6a31c0bd9f26cd7f, type: 3}
       propertyPath: m_Name
       value: Player 1
@@ -28931,7 +28943,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29298df3f037c3a4b85c4d8cb953a0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
+  resourceType: 1
+  amount: 1
   pickupSound: {fileID: 8300000, guid: 789ac5b6f3514f39baabb93be3fe70cd, type: 3}
   pickupVolume: 1
 --- !u!58 &1151364745
@@ -75964,7 +75977,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.05280912, y: 0.01689881}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -75974,7 +75987,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.43811297, y: 1.0844945}
   m_EdgeRadius: 0
 --- !u!1 &1841395085 stripped
 GameObject:
@@ -78529,9 +78542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e33c23206a10c4bbb6e7583f0d04f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterDropCount: 0
-  seedCount: 0
-  fertilizerCount: 0
 --- !u!1001 &3971674070976050377
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,61 +1,82 @@
+// Ce script gère l'inventaire du joueur, en gardant une trace des ressources collectées.
+// Il utilise un dictionnaire pour une gestion flexible des différents types d'objets.
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+// L'enum (énumération) nous permet de définir des types de ressources
+// prédéfinis pour éviter les erreurs de frappe.
+public enum ResourceType
+{
+    WaterDrop,
+    Seed,
+    Fertilizer
+}
 
 public class Inventory : MonoBehaviour
 {
+    // Le dictionnaire qui stocke les ressources.
+    // La "clé" est le type de ressource, et la "valeur" est la quantité.
+    private Dictionary<ResourceType, int> resources = new Dictionary<ResourceType, int>();
+
     // Cette action permet de prévenir d'autres scripts quand une ressource est ajoutée
-    public event System.Action onResourceChanged;
+    public event Action onResourceChanged;
 
-    // Variables pour stocker le nombre de chaque ressource collectée
-    [SerializeField] private int waterDropCount = 0; // Eau
-    [SerializeField] private int seedCount = 0;      // Graines
-    [SerializeField] private int fertilizerCount = 0;// Engrais
-
-    public void AddItem(string itemName)
+    void Start()
     {
-        // Selon le nom de l'objet, on ajoute 1 à la ressource correspondante
-        switch (itemName)
+        // On initialise l'inventaire en ajoutant les types de ressources
+        // avec une quantité de 0 pour commencer.
+        foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
         {
-            case "Water Drop":
-                waterDropCount++;
-                break;
-            case "Seed":
-                seedCount++;
-                break;
-            case "Fertilizer":
-                fertilizerCount++;
-                break;
+            resources[type] = 0;
+        }
+    }
+
+    /// <summary>
+    /// Ajoute une ressource à l'inventaire du joueur.
+    /// Cette fonction est appelée par le script "Pickup".
+    /// </summary>
+    /// <param name="type">Le type de ressource à ajouter (ex: WaterDrop, Seed)</param>
+    /// <param name="amount">La quantité à ajouter</param>
+    public void AddResource(ResourceType type, int amount)
+    {
+        // On s'assure que la quantité est positive
+        if (amount <= 0) return;
+
+        // On vérifie si la ressource est déjà dans le dictionnaire
+        if (resources.ContainsKey(type))
+        {
+            // Si oui, on ajoute la nouvelle quantité à l'ancienne
+            resources[type] += amount;
+        }
+        else
+        {
+            // Sinon, on ajoute la nouvelle ressource avec la quantité donnée
+            resources[type] = amount;
         }
 
-        // Affiche dans la console ce qui a été ramassé
-        Debug.Log($"Objet ajouté à l’inventaire : {itemName}");
-
-        // Préviens les autres scripts qu'une ressource a été ajoutée
-        if (onResourceChanged != null)
-            onResourceChanged.Invoke();
+        Debug.Log($"[Inventaire] {type} ajouté. Quantité actuelle : {resources[type]}");
+        
+        // On déclenche l'événement pour que les autres scripts soient informés du changement
+        onResourceChanged?.Invoke();
     }
 
-    public void ShowInventory()
-    {
-        // Affiche le contenu de l'inventaire dans la console Unity
-        Debug.Log($"Eau : {waterDropCount}");
-        Debug.Log($"Graines : {seedCount}");
-        Debug.Log($"Engrais : {fertilizerCount}");
-    }
+    // Vous pouvez ajouter d'autres fonctions pour obtenir le compte des ressources si vous en avez besoin.
+    // Par exemple, pour que le Terminal IA puisse vérifier si l'objectif est atteint.
 
-    // Accesseur public pour d'autres scripts (UI par exemple)
     public int GetWaterDropCount()
     {
-        return waterDropCount;
+        return resources.GetValueOrDefault(ResourceType.WaterDrop, 0);
     }
 
     public int GetSeedCount()
     {
-        return seedCount;
+        return resources.GetValueOrDefault(ResourceType.Seed, 0);
     }
 
     public int GetFertilizerCount()
     {
-        return fertilizerCount;
+        return resources.GetValueOrDefault(ResourceType.Fertilizer, 0);
     }
 }

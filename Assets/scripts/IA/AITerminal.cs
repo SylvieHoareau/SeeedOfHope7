@@ -1,346 +1,215 @@
-
 // Ce script gère le terminal d'intelligence artificielle (IA) dans le jeu.
-// Il permet au joueur d'utiliser des ressources pour revitaliser des zones, avec des sons et des messages d'interface.
-// Les commentaires sont adaptés pour être compris par tous, même sans connaissances en programmation !
+// Il gère la détection des ressources, les interactions et l'affichage des dialogues.
 
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
-using System.Collections;
 using System.Collections.Generic;
-using System; // Ajout de la bibliothèque pour les coroutines
+using System;
 
 [RequireComponent(typeof(AudioSource))]
 public class AITerminal : MonoBehaviour
 {
-    // L'inventaire du joueur (ce qu'il possède)
+    [Header("Inventaire du joueur")]
     public Inventory playerInventory;
 
     [Header("Zones à revitaliser")]
-    // Liste des zones du jeu qui peuvent être "revitalisées" (réactivées) par l'IA
     public GameObject[] zonesARevitaliser;
 
     [Header("UI")]
-    // Message affiché à l'écran pour informer le joueur
     public MessageManager messageManager;
-    // Pour afficher l'objectif en continu
-    public TextMeshProUGUI objectifText;
 
-    // --- NOUVELLE SECTION POUR LES DIALOGUES ---
     [Header("Dialogues")]
-    [TextArea(3,10)]
-    public List<String> dialogue = new();
+    public Dialogue dialogue;
 
     [Header("Ressources requises")]
-    // Nombre d'unités d'eau nécessaires pour activer l'IA
     public int besoinEau;
-    // Nombre de graines nécessaires
     public int besoinGraines;
-    // Nombre de fertilisant nécessaires
     public int besoinFertilisant;
 
     [Header("Audio")]
-    // Permet de jouer des sons dans le jeu
     private AudioSource audioSource;
-    // Son joué quand l'IA est activée avec succès
-    public AudioClip iaInteractionSound;
-    // Son joué si le joueur n'a pas assez de ressources
+    public AudioClip activationSound;
     public AudioClip ressourcesInsuffisantesSound;
 
-    // Indique si le joueur est proche du terminal IA
     private bool joueurDansZone = false;
-
-    // Booléen pour savoir si l'objectif est atteint
     private bool objectifAtteint = false;
+    private bool dialogueInitialAffiche = false;
+    private bool dialogueObjectifAffiche = false;
 
-    // Contrôles du joueur (pour détecter les actions)
     private PlayerControls controls;
-    // Permet de gérer l'action d'interaction
-    private System.Action<UnityEngine.InputSystem.InputAction.CallbackContext> interactionAction;
-    void Awake()
+
+    private void Awake()
     {
-        // Initialisation des contrôles du joueur
         controls = new PlayerControls();
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource != null)
+            audioSource.playOnAwake = false;
+    }
 
-        // On stocke l'action dans une variable pour pouvoir s'y désabonner
-        interactionAction = ctx =>
+    private void OnEnable()
+    {
+        controls.Player.Interact.performed += OnInteractPerformed;
+        controls.Player.Interact.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Player.Interact.performed -= OnInteractPerformed;
+        controls.Player.Interact.Disable();
+    }
+
+    private void OnInteractPerformed(InputAction.CallbackContext context)
+    {
+        if (joueurDansZone)
         {
-            if (joueurDansZone)
-                ActiverIA();
-        };
+            ActiverIA();
+        }
     }
 
-    void OnEnable()
-    {
-        // Active les contrôles du joueur
-        controls.Enable();
-        // Abonnement à l'action d'interaction
-        controls.Player.Interact.performed += interactionAction;
-    }
-
-    void OnDisable()
-    {
-        // On se désabonne de l'action d'interaction
-        controls.Player.Interact.performed -= interactionAction;
-        // Désactive les contrôles du joueur
-        controls.Disable();
-        // Se désabonner de l'inventaire pour éviter les fuites d'événements
-        if (playerInventory != null)
-            playerInventory.onResourceChanged -= MettreAJourObjectifUI;
-    }
-
-    // Cette fonction est appelée au début du jeu, une seule fois
     void Start()
     {
-        // On récupère le composant AudioSource pour pouvoir jouer des sons
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            Debug.LogError("[AITerminal] Aucun AudioSource trouvé sur ce GameObject.");
-        }
-        else
-        {
-            // On s'assure qu'aucun son ne joue automatiquement au lancement
-            audioSource.playOnAwake = false;
-        }
-
-        // On affiche l'objectif dès le début et on le met à jour
-        // Si l'inventaire du joueur n'est pas assigné dans l'inspecteur, on tente de le trouver
         if (playerInventory == null)
         {
             var player = GameObject.FindWithTag("Player");
-            if (player != null)
-                playerInventory = player.GetComponent<Inventory>();
-            if (playerInventory != null)
-                Debug.Log("AITerminal: playerInventory trouvé automatiquement.");
-            else
-                Debug.LogWarning("AITerminal: playerInventory non défini. Assignez l'Inventory du joueur dans l'inspecteur.");
-        }
+            if (player != null) playerInventory = player.GetComponent<Inventory>();
 
-        // S'abonner aux changements d'inventaire pour mettre à jour l'affichage automatiquement
-        if (playerInventory != null)
-            playerInventory.onResourceChanged += MettreAJourObjectifUI;
-
-        // Met à jour l'affichage initial
-        MettreAJourObjectifUI();
-
-        // Ajouter un message d'introduction
-        if (messageManager != null)
-        {
-            messageManager.StartDialogue(dialogue[0]);
-        }
-    }
-
-    // Fonction qui affiche l'objectif et les ressources actuelles
-    private void MettreAJourObjectifUI()
-    {
-        if (objectifText == null || playerInventory == null) return;
-
-        int eau = playerInventory.GetWaterDropCount();
-        int graines = playerInventory.GetSeedCount();
-        int fertil = playerInventory.GetFertilizerCount();
-
-        // Format progress bar-like
-        string objectifMessage = $"OBJECTIFS:\n";
-        objectifMessage += $"Eau: {eau}/{besoinEau} {(eau >= besoinEau ? "✓" : "")}\n";
-        objectifMessage += $"Graines: {graines}/{besoinGraines} {(graines >= besoinGraines ? "✓" : "")}\n";
-        objectifMessage += $"Engrais: {fertil}/{besoinFertilisant} {(fertil >= besoinFertilisant ? "✓" : "")}";
-
-        // On met à jour le texte de l'objectif en permanence
-        // string objectifMessage = $"Objectif : Collecter {besoinEau} eau, {besoinGraines} graines, {besoinFertilisant} engrais.\n" +
-        //                          $"Actuellement : Eau ({eau}/{besoinEau}), Graines ({graines}/{besoinGraines}), Engrais ({fertil}/{besoinFertilisant})";
-
-        objectifText.text = objectifMessage;
-
-        // Met également à jour l'objectif principal
-        if (objectifText != null)
-        {
-            int totalRequis = besoinEau + besoinGraines + besoinFertilisant;
-            int totalActuel = Mathf.Min(eau, besoinEau) + Mathf.Min(graines, besoinGraines) + Mathf.Min(fertil, besoinFertilisant);
-            objectifText.text = $"Revitalisation: {totalActuel}/{totalRequis}";
-        }
-
-        // Vérifier si l'objectif est atteint
-        if (!objectifAtteint && eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
-        {
-            objectifAtteint = true;
-            if (messageManager != null && dialogue != null)
+            if (playerInventory == null)
             {
-                messageManager.StartDialogue(dialogue[2]);
-                messageManager.StartDialogue(dialogue[3]);
+                Debug.LogWarning("[AITerminal] Aucun inventaire de joueur trouvé. Assignez l'Inventory du joueur dans l'inspecteur.");
             }
         }
-    }
-
-    // Ajoutez cette méthode pour être appelée quand une ressource est collectée
-    public void OnResourceCollected()
-    {
-        MettreAJourObjectifUI();
         
-        // Vérifie si l'objectif est atteint
+        // On s'abonne à l'événement de changement d'inventaire
+        if (playerInventory != null)
+        {
+            playerInventory.onResourceChanged += CheckForObjectives;
+        }
+    }
+
+    void OnDestroy()
+    {
+        // On se désabonne pour éviter les erreurs
+        if (playerInventory != null)
+        {
+            playerInventory.onResourceChanged -= CheckForObjectives;
+        }
+    }
+
+    /// <summary>
+    /// Vérifie si l'objectif est atteint et affiche le dialogue approprié.
+    /// Ce dialogue est passif, il n'y a pas besoin d'interaction du joueur.
+    /// </summary>
+    private void CheckForObjectives()
+    {
+        // Si l'objectif est déjà atteint ou le dialogue déjà affiché, on ne fait rien
+        if (objectifAtteint || dialogueObjectifAffiche) return;
+
         int eau = playerInventory.GetWaterDropCount();
         int graines = playerInventory.GetSeedCount();
         int fertil = playerInventory.GetFertilizerCount();
 
-        if (!objectifAtteint && eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
-        {
-            objectifAtteint = true;
-            if (messageManager != null && dialogue != null)
-            {
-                messageManager.StartDialogue(dialogue[2]);
-            }
-        }
-    }
-
-
-    // Cette fonction est appelée à chaque image du jeu (60 fois par seconde environ)
-    void Update()
-    {
-        // Si le joueur est proche du terminal et appuie sur la touche E, on tente d'activer l'IA
-        if (joueurDansZone && Input.GetKeyDown(KeyCode.E))
-        {
-            ActiverIA();
-        }
-    }
-
-    // Cette fonction est appelée quand le joueur utilise le bouton d'interaction (manette ou clavier)
-    public void OnInteract(InputValue value)
-    {
-        // On vérifie que le joueur est bien dans la zone et qu'il vient d'appuyer sur le bouton
-        if (joueurDansZone && value.isPressed)
-        {
-            ActiverIA();
-        }
-    }
-
-    // Cette fonction tente d'activer l'IA si le joueur a assez de ressources
-     // Fonction qui vérifie si le joueur a assez de ressources pour activer les zones 
-    void ActiverIA()
-    {
-        // Inventaire du joueur (pour vérifier les ressources)
-        if (playerInventory == null) return;
-
-        // On récupère le nombre de ressources du joueur en temps réel
-        int eau = playerInventory.GetWaterDropCount();
-        int graines = playerInventory.GetSeedCount();
-        int fertil = playerInventory.GetFertilizerCount();
-
-        Debug.Log($"[DEBUG] Inventaire : Eau={eau}, Graines={graines}, Engrais={fertil}");
-
-        // On vérifie si le joueur a toutes les ressources NECESSAIRES
-        // On vérifie si l'objectif est atteint
         bool aToutesLesRessources = eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant;
 
+        // Si le joueur a toutes les ressources, on affiche le dialogue 3
         if (aToutesLesRessources)
         {
-            // Le joueur a les ressources nécessaires, on lance le processus
-
-            // C'est ici que le dialogue de succès doit apparaître !
-            if (messageManager != null && dialogue != null)
+            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 2)
             {
-                messageManager.StartDialogue(dialogue[2]);
+                // Affiche le 3ème dialogue
+                messageManager.ShowMessage(dialogue.sentences[2]);
+                dialogueObjectifAffiche = true;
             }
+        }
+    }
 
-            // On active toutes les zones à revitaliser
+    /// <summary>
+    /// Logique pour l'interaction avec le terminal IA (quand le joueur appuie sur "E").
+    /// </summary>
+    void ActiverIA()
+    {
+        if (playerInventory == null) return;
+        
+        int eau = playerInventory.GetWaterDropCount();
+        int graines = playerInventory.GetSeedCount();
+        int fertil = playerInventory.GetFertilizerCount();
+
+        bool aToutesLesRessources = eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant;
+
+        // Si l'objectif est déjà atteint, on affiche le dialogue 4 et on sort
+        if (objectifAtteint)
+        {
+            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 3)
+            {
+                // Affiche le 4ème dialogue
+                messageManager.ShowMessage(dialogue.sentences[3]);
+            }
+            return;
+        }
+        // Sinon, si les ressources sont suffisantes (on vient de le vérifier)
+        else if (aToutesLesRessources)
+        {
+            // On joue le son de succès
+            if (audioSource != null && activationSound != null)
+            {
+                audioSource.PlayOneShot(activationSound);
+            }
+            
+            // On active les zones
             foreach (GameObject zone in zonesARevitaliser)
             {
                 if (zone != null) zone.SetActive(true);
             }
-
-            // On joue un son de succès si tout est bien configuré
-            if (audioSource != null && iaInteractionSound != null)
-            {
-                audioSource.PlayOneShot(iaInteractionSound);
-                Debug.Log("[AITerminal] Son succès joué.");
-            }
-
-            // Optionnel : Désactiver le terminal une fois l'objectif atteint pour éviter des activations répétées
+            
+            // On met à jour le statut de l'objectif
+            objectifAtteint = true;
+            
+            // On désactive ce script, car le terminal a déjà été activé
             this.enabled = false;
+
+            // Affiche le 4ème dialogue
+            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 3)
+            {
+                messageManager.ShowMessage(dialogue.sentences[3]);
+            }
         }
         else
         {
-            // Sinon, on affiche un message d'échec
-            // Le joueur n'a pas assez de ressources
-            if (messageManager != null && dialogue != null)
+            // Sinon, les ressources sont insuffisantes, on affiche le dialogue 2
+            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 1)
             {
-                messageManager.StartDialogue(dialogue[1]);
-            };
-
-            // Et on joue un son d'échec si tout est bien configuré
+                messageManager.ShowMessage(dialogue.sentences[1]);
+            }
+            
+            // On joue le son d'échec
             if (audioSource != null && ressourcesInsuffisantesSound != null)
             {
                 audioSource.PlayOneShot(ressourcesInsuffisantesSound);
-                Debug.Log("[AITerminal] Son échec joué.");
             }
         }
     }
 
-    // Appeler cette fonction à chaque fois qu'une ressource est collectée
-    // public void AjouterRessource()
-    // {
-    //     if (playerInventory == null) return;
-
-    //     // Mise à jour de l'affichage de l'objectif
-    //     MettreAJourObjectifUI();
-
-    //     // On récupère le nombre de ressources du joueur en temps réel
-    //     int eau = playerInventory.GetWaterDropCount();
-    //     int graines = playerInventory.GetSeedCount();
-    //     int fertil = playerInventory.GetFertilizerCount();
-
-    //     // Si l'objectif n'est pas encore atteint et que les conditions sont remplis
-    //     if (!objectifAtteint && eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant)
-    //     {
-    //         // Les objectifs sont atteints
-    //         objectifAtteint = true;
-
-    //         // On affiche le message d'objectif atteint
-    //          messageManager.ShowMessage("[ I.A LOG ] Objectif atteint. Parlez à l'IA pour continuer !", 5.0f);
-    //     }
-    // }
-
-    // Fonction appelée quand le joueur sort de la zone du terminal
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            // On vérifie que le joueur se trouve dans la zone du terminal IA
             joueurDansZone = true;
-            // On vérifie les ressources du joueur
-            Inventory inventory = other.GetComponent<Inventory>();
-            if (inventory != null)
+            // On affiche le dialogue 1 si ce n'est pas déjà fait
+            if (!dialogueInitialAffiche && messageManager != null && dialogue != null && dialogue.sentences.Length > 0)
             {
-                // string itemName = ConvertItemTypeToName(itemType);
-                // inventory.AddItem(itemName);
-
-                // Notifie le terminal IA de la collecte
-                AITerminal terminal = FindFirstObjectByType<AITerminal>();
-                if (terminal != null)
-                {
-                    terminal.OnResourceCollected();
-                }
-
-                // if (pickupSound != null)
-                // {
-                //     AudioSource.PlayClipAtPoint(pickupSound, Camera.main.transform.position, pickupVolume);
-                // }
-                // Destroy(gameObject);
+                // Affiche le 1er dialogue (d'introduction)
+                messageManager.ShowMessage(dialogue.sentences[0]);
+                dialogueInitialAffiche = true;
             }
         }
     }
 
-    // Fonction appelée quand le joueur sort de la zone du terminal
-        void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             joueurDansZone = false;
-            // On peut appeler une fonction dans le MessageManager pour cacher le panel.
-            if (messageManager != null)
-            {
-                messageManager.HidePanel();
-            }
+            if (messageManager != null) messageManager.HidePanel();
         }
     }
-
 }
