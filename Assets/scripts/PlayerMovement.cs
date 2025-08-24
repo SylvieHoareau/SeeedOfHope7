@@ -1,165 +1,123 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Ce script gère le déplacement et l'attaque du joueur
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
-
-    // Réfère l'objet "PlayerControls" qui gère les entrées du joueur
     private PlayerControls controls;
-    // Physique du joueur
     private Rigidbody2D rb;
+    private Animator animator;
 
-    // Vitesse de déplacement du joueur
     [Header("Paramètres de mouvement")]
     [SerializeField] private float moveSpeed = 5f;
 
-    // Direction du mouvement
+
+    // 'movement' stocke la direction lue à chaque frame
     private Vector2 movement;
-    // Denière direction utilisée
-    private Vector2 lastMovement;
-
-    // Vecteur qui stocke la direction du mouvement (lecture de l'entrée du clavier/joystick)
-    // private Vector2 moveInput;
-
-
-    // Animation du joueur
-    [Header("Composants")]
-    [SerializeField] private Animator animator;
-
-    // Indique si le joueur marche
+    // Pour les animations quand le joueur est à l'arrêt
+    public Vector2 LastMovement { get; private set; }
     private bool isWalking = false;
-    // Indique si le joueur attaque
-    private bool isAttacking = false;
-    // Durée de l'animation d'attaque
-    private float attackDuration = 0.5f;
-    // Timer pour l'attaque
-    private float attackTimer;
 
-    // Game Object contenant le BoxCollider
-    public GameObject Attackhitbox;
-    // Script qui gère l'activation 
-    private AttackHitboxController attackController;
-
-    // Distance de décalage de la hitbox par rapport au joueur
-    public float hitboxOffset = 0.5f;
-
-    // Début des modifications 
-    void Awake()
+    private void Awake()
     {
-        // Initialise les contrôles
+        // Initialisation des contrôles
         controls = new PlayerControls();
 
-        // On récupère les composants nécessaires (Rigidbody2D et Animator)
+        // Récupération des composants
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        // Si le Rigidbody2D est manquant, on le signale
+        // Mettre la gravité à 0 pour un jeu en vue de dessus
+        rb.gravityScale = 0;
+
         if (rb == null)
-        {
-            Debug.LogError("Rigidbody2D non trouvé sur le joueur. Veuillez en ajouter un.");
-        }
+            Debug.LogError("Rigidbody2D non trouvé sur le joueur !");
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        // On active l'action "Move" pour que le joueur puisse bouger.
+        // On active le groupe d'action Player
         controls.Player.Enable();
 
-        // On s'abonne aux événements de mouvement pour mettre à jour la variable "movement"
-        controls.Player.Move.performed += OnMovement;
-        controls.Player.Move.canceled += OnMovement;
-        // controls.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
-        // controls.Player.Move.canceled += ctx => movement = Vector2.zero;
+        // Abonnement aux événements de mouvement
+        // controls.Player.Move.performed += OnMove;
+        // controls.Player.Move.canceled += OnMove;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        // On se désabonne pour éviter les fuites de mémoire (très important !)
-        controls.Player.Move.performed -= OnMovement;
-        controls.Player.Move.canceled -= OnMovement;
+        // controls.Player.Move.performed -= OnMove;
+        // controls.Player.Move.canceled -= OnMove;
 
-        // On désactive l'action "Move" quand le script est désactivé
-        // (par exemple, si le joueur est dans un menu)
+        // Désactivation des contrôles
         controls.Player.Disable();
     }
 
-    void Start()
+    // private void OnMove(InputAction.CallbackContext ctx)
+    // {
+    //     movement = ctx.ReadValue<Vector2>();
+
+    //     // Debug : afficher les valeurs de mouvement dans la console
+    //     Debug.Log($"Move input: {movement} | Magnitude: {movement.magnitude}");
+
+    //     // Mise à jour de la dernière direction si le joueur bouge
+    //     if (movement.sqrMagnitude > 0.01f)
+    //     {
+    //         LastMovement = movement.normalized;
+    //     }
+
+    //     // Mise à jour de l'animator
+    //     isWalking = movement.sqrMagnitude > 0.01f;
+    //     animator.SetBool("IsWalking", isWalking);
+    //     animator.SetFloat("X", isWalking ? movement.x : LastMovement.x);
+    //     animator.SetFloat("Y", isWalking ? movement.y : LastMovement.y);
+    // }
+
+    // La méthode Update est appelée à chaque frame.
+    // Idéale pour lire les inputs qui doivent être réactifs.
+    private void Update()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        // On lit la valeur de l'action 'Move' à chaque frame.
+        // Si une touche est pressée, ça retournera (par ex.) (1, 0).
+        // Si rien n'est pressé, ça retournera (0, 0).
+        movement = controls.Player.Move.ReadValue<Vector2>();
 
-        // Pas besoin de gravité pour un jeu 2D isométrique
-        rb.gravityScale = 0;
-
-        // Récupération du controller de la hitbox
-        attackController = Attackhitbox.GetComponent<AttackHitboxController>();
-
-        // Assure que le GameObject est actif (mais le collider est désactiver par le controller)
-        Attackhitbox.SetActive(true);
+        // On met à jour les animations en fonction du mouvement.
+        UpdateAnimator();
     }
 
-    // Méthode appelée par le système d'input pour le déplacement
-    // La méthode qui sera appelée par le système d'entrée
-    private void OnMovement(InputAction.CallbackContext value)
+    private void FixedUpdate()
     {
-        movement = value.ReadValue<Vector2>();
-
-        // La dernière direction est mise à jour uniquement si le joueur bouge
-        if (movement.sqrMagnitude > 0.01f)
-        {
-            lastMovement = movement.normalized;
-        }
-
-        // On met à jour l'état "IsWalking" de l'animator ici, directement
-        isWalking = movement.sqrMagnitude > 0.01f;
-        animator.SetBool("IsWalking", isWalking);
-    }
-
-    // Méthode appelée par le système d'input pour l'attaque
-    public void OnAttack(InputValue value)
-    {
-        if (!isAttacking && value.isPressed)
-        {
-            // Met à jour la direction de l'attaque dans l'animator
-            animator.SetFloat("X", lastMovement.x);
-            animator.SetFloat("Y", lastMovement.y);
-
-            isAttacking = true;
-            attackTimer = attackDuration;
-            animator.SetBool("IsAttacking", true);
-
-            // Positionne la hitbox dans la bonne direction
-            Vector3 offset = new Vector3(lastMovement.x, lastMovement.y, 0).normalized * hitboxOffset;
-            Attackhitbox.transform.localPosition = offset;
-
-            // Active la hitbox temporairement via le controller
-            attackController.ActivateHitbox();
-        }
-    }
-
-    void FixedUpdate()
-    {
-        // Applique le mouvement au Rigidbody 2D
+        // On applique le mouvement au Rigidbody2D.
+        // On normalise le vecteur pour que le mouvement en diagonale ne soit pas plus rapide.
         rb.linearVelocity = movement.normalized * moveSpeed;
     }
-    
-    void Update()
+
+    // Une petite fonction pour garder le code de l'animation propre.
+    private void UpdateAnimator()
     {
-        // Gestion du timer d'attaque
-        if (isAttacking)
+        // On vérifie si le joueur est en train de bouger.
+        // 'sqrMagnitude' est un peu plus performant que 'magnitude'. Bon réflexe !
+        bool isWalking = movement.sqrMagnitude > 0.01f;
+
+        // On passe l'information à l'Animator.
+        animator.SetBool("IsWalking", isWalking);
+
+        // Si le joueur bouge, on met à jour la direction de l'animation.
+        if (isWalking)
         {
-            attackTimer -= Time.deltaTime;
-            if (attackTimer <= 0f)
-            {
-                isAttacking = false;
-                animator.SetBool("IsAttacking", false);
-            }
+            LastMovement = movement.normalized; // On sauvegarde la dernière direction
+            animator.SetFloat("X", movement.x);
+            animator.SetFloat("Y", movement.y);
         }
-
-        // Mets à jour les paramètres du blend tree pour l'animation
-        animator.SetFloat("X", isWalking ? movement.x : lastMovement.x);
-        animator.SetFloat("Y", isWalking ? movement.y : lastMovement.y);
+        // Si le joueur est à l'arrêt, l'animation d'idle utilisera la dernière direction connue.
+        else
+        {
+            // On s'assure que les paramètres X et Y ne changent pas quand on s'arrête
+            // pour que l'animation "idle" regarde dans la bonne direction.
+            animator.SetFloat("X", LastMovement.x);
+            animator.SetFloat("Y", LastMovement.y);
+        }
     }
-
 }

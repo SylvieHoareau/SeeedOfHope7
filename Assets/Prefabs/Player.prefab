@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3819502881158425339}
   - component: {fileID: 7551523579058190315}
   - component: {fileID: 4884925205209892775}
-  - component: {fileID: 3571837510958194236}
   - component: {fileID: 2496167563644014240}
   - component: {fileID: 4489334933595901533}
   - component: {fileID: 2973217350754228587}
   - component: {fileID: 3112245903356233397}
-  - component: {fileID: 6746856422479252597}
+  - component: {fileID: 7979294644157043009}
+  - component: {fileID: 3010960421984156456}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -170,21 +170,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.27372095, y: 0.08549023}
   m_EdgeRadius: 0
---- !u!114 &3571837510958194236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5031831007638486253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d2046ed813532b43901dac61d60de22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  Attackhitbox: {fileID: 6165110858458500595}
-  hitboxOffset: 0.5
 --- !u!95 &2496167563644014240
 Animator:
   serializedVersion: 7
@@ -224,9 +209,9 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   InvincibilityTimeAfterHit: 3
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 8518256406807153026, guid: f64e34050ce325b4c827642b7ec5aa42, type: 3}
   hitSound: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
-  gameOverUI: {fileID: 0}
+  gameOverUI: {fileID: 5057509148430671452, guid: 23738f1558f660945990e000a093b729, type: 3}
   InvincibilityFlashDelay: 0.15
 --- !u!114 &2973217350754228587
 MonoBehaviour:
@@ -240,9 +225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e33c23206a10c4bbb6e7583f0d04f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterDropCount: 0
-  seedCount: 0
-  fertilizerCount: 0
 --- !u!114 &3112245903356233397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: f5bf7f6cee537c04c8af927c2ab74b94, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 0c5101ad5ea70f2418594056fcd8f540, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -273,20 +255,34 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &6746856422479252597
+--- !u!114 &7979294644157043009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5031831007638486253}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12db24dd9cc10d34abdbebb7071a5374, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d2046ed813532b43901dac61d60de22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackHitbox: {fileID: 0}
-  attackDuration: 0.3
+  moveSpeed: 5
+--- !u!114 &3010960421984156456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031831007638486253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8b3a044434bbf48a34f3d65f9fb71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDuration: 0.5
+  attackHitbox: {fileID: 6165110858458500595}
+  hitboxOffset: 0.5
 --- !u!1 &5815696848494638837
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,8 +324,8 @@ GameObject:
   m_Component:
   - component: {fileID: 498854944456398196}
   - component: {fileID: 7860374072463691222}
-  - component: {fileID: 4765964843531278339}
-  - component: {fileID: 7367877429870221648}
+  - component: {fileID: 6518488208777554977}
+  - component: {fileID: 2864299748755924808}
   m_Layer: 0
   m_Name: Attackhitbox
   m_TagString: Player
@@ -398,7 +394,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 25.012115, y: 25.656258}
   m_EdgeRadius: 0
---- !u!114 &4765964843531278339
+--- !u!114 &6518488208777554977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,11 +403,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6165110858458500595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4c19aea6bc9e3428647f89d397b671, type: 3}
+  m_Script: {fileID: 11500000, guid: 02992d79184319946a5f0b49becab3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackForce: 4
---- !u!114 &7367877429870221648
+  knockbackForce: 5
+--- !u!114 &2864299748755924808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,7 +416,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6165110858458500595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae80174a49fee89478ed919e65556425, type: 3}
+  m_Script: {fileID: 11500000, guid: 67f618e65f5ba0f488404c1d7494ce52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeTime: 0.3
+  activeTime: 0.2

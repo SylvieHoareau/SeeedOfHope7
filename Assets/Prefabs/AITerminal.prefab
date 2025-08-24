@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2266961427065098304}
   - component: {fileID: 335928710325099789}
   - component: {fileID: 7631144928558325965}
+  - component: {fileID: 6199589801128405128}
   m_Layer: 0
   m_Name: AITerminal
   m_TagString: Untagged
@@ -86,7 +87,7 @@ SpriteRenderer:
   m_Size: {x: 2.65, y: 4.49}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &335928710325099789
@@ -101,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0027285ffb505e43a4bc740c644e4e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInventory: {fileID: 2333427901499328512, guid: f64be6296afe54d41a4963c78ff5dfdf, type: 3}
+  playerInventory: {fileID: 4888670594243561060, guid: e87dec6c5a942e8a6a31c0bd9f26cd7f, type: 3}
   zonesARevitaliser:
   - {fileID: 0}
   - {fileID: 0}
@@ -149,12 +150,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  messageUI: {fileID: 0}
-  terminalUI: {fileID: 1394412482876311875, guid: 0fdbc72443e16e54a8c9cf937d5ba95d, type: 3}
+  messageManager: {fileID: 0}
+  dialogue:
+    sentences: []
   besoinEau: 1
   besoinGraines: 1
   besoinFertilisant: 1
-  objectiveUI: {fileID: 1755270302677691125, guid: 70a4d181c6710e7689d43a5581300f5b, type: 3}
+  activationSound: {fileID: 0}
+  ressourcesInsuffisantesSound: {fileID: 0}
 --- !u!61 &7631144928558325965
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -201,3 +204,100 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.65, y: 4.49}
   m_EdgeRadius: 0
+--- !u!82 &6199589801128405128
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5845868460458784171}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

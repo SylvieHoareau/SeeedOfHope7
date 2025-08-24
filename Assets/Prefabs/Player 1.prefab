@@ -213,8 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  Attackhitbox: {fileID: 0}
-  hitboxOffset: 0.5
+  animator: {fileID: 1358178699471156813}
 --- !u!114 &4888670594243561060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,9 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e33c23206a10c4bbb6e7583f0d04f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterDropCount: 0
-  seedCount: 0
-  fertilizerCount: 0
 --- !u!114 &1072697133634848365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +243,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   InvincibilityTimeAfterHit: 3
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 8518256406807153026, guid: f64e34050ce325b4c827642b7ec5aa42, type: 3}
   hitSound: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
   gameOverUI: {fileID: 0}
   InvincibilityFlashDelay: 0.2
@@ -342,6 +338,7 @@ GameObject:
   - component: {fileID: 6554499562014705435}
   - component: {fileID: 2940423359555698852}
   - component: {fileID: 9008436100761973103}
+  - component: {fileID: 2018533800305922394}
   m_Layer: 0
   m_Name: Attackhitbox
   m_TagString: Untagged
@@ -390,3 +387,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeTime: 0.2
+--- !u!61 &2018533800305922394
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6876179159256478705}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.059278548, y: 0.1086773}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.525772, y: 0.9209619}
+  m_EdgeRadius: 0
