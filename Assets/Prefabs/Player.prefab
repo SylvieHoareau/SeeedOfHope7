@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 4884925205209892775}
   - component: {fileID: 2496167563644014240}
   - component: {fileID: 4489334933595901533}
-  - component: {fileID: 2973217350754228587}
   - component: {fileID: 3112245903356233397}
   - component: {fileID: 7979294644157043009}
   - component: {fileID: 3010960421984156456}
+  - component: {fileID: 7226566392952568119}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -213,18 +213,6 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
   gameOverUI: {fileID: 5057509148430671452, guid: 23738f1558f660945990e000a093b729, type: 3}
   InvincibilityFlashDelay: 0.15
---- !u!114 &2973217350754228587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5031831007638486253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14e33c23206a10c4bbb6e7583f0d04f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3112245903356233397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +271,18 @@ MonoBehaviour:
   attackDuration: 0.5
   attackHitbox: {fileID: 6165110858458500595}
   hitboxOffset: 0.5
+--- !u!114 &7226566392952568119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031831007638486253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e33c23206a10c4bbb6e7583f0d04f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5815696848494638837
 GameObject:
   m_ObjectHideFlags: 0
