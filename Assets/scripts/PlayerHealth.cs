@@ -21,6 +21,8 @@ public class PlayerHealth : MonoBehaviour
 
     // Son joué quand le joueur est touché
     public AudioClip hitSound; // glisser le son dans l'inspecteur
+    public AudioClip healSound; // glisser le son dans l'inspecteur
+
 
     // Permet de jouer le son
     private AudioSource audioSource;
@@ -65,23 +67,23 @@ public class PlayerHealth : MonoBehaviour
         if (!isInvincible)
         {
             // On joue le son de coup reçu
-        if (hitSound != null)
-        {
-            if (audioSource != null)
+            if (hitSound != null)
             {
-                Debug.Log("Joue hitSound via audioSource : " + hitSound.name);
-                audioSource.PlayOneShot(hitSound);
+                if (audioSource != null)
+                {
+                    Debug.Log("Joue hitSound via audioSource : " + hitSound.name);
+                    audioSource.PlayOneShot(hitSound);
+                }
+                else
+                {
+                    Debug.LogWarning("Pas d'audioSource trouvé sur le Player !");
+                    AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, hitVolume);
+                }
             }
             else
             {
-                Debug.LogWarning("Pas d'audioSource trouvé sur le Player !");
-                AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, hitVolume);
+                Debug.LogWarning("hitSound n’est pas assigné !");
             }
-        }
-        else
-        {
-            Debug.LogWarning("hitSound n’est pas assigné !");
-        }
 
             // On enlève les points de vie
             currentHealth = Math.Max(0, currentHealth - damage);
@@ -151,5 +153,23 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         healthBar.SetHealth(currentHealth); // si tu as une barre de vie
     }
+    
+    // Ajoute de la vie au joueur, sans dépasser la vie maximale
+    public void AddHealth(int amount)
+    {
+        if (amount <= 0)
+            return;
+
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
+
+        // Joue un son de soin si disponible
+        if (healSound != null && audioSource != null)
+            audioSource.PlayOneShot(healSound);
+
+        Debug.Log("Vie ajoutée : " + amount + " | Vie actuelle : " + currentHealth);
+    }
+
 
 }

@@ -10704,6 +10704,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4489334933595901533, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: healSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c80033248bc895298afde4ce51bd9823, type: 3}
+    - target: {fileID: 4489334933595901533, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1224503542}
@@ -12371,6 +12375,10 @@ PrefabInstance:
       propertyPath: messageManager
       value: 
       objectReference: {fileID: 466589938}
+    - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
+      propertyPath: activationSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2bc8cf5b6c502ee499938ea895277227, type: 3}
     - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
       propertyPath: playerInventory
       value: 
@@ -64070,6 +64078,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -4890969658053316441, guid: 63d7a6232060ab74aa67c55d92145d10, type: 3}
+    - target: {fileID: 4693218048404031585, guid: 9ec53e8f2f2656f458a027f5bef993a7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4693218048404031585, guid: 9ec53e8f2f2656f458a027f5bef993a7, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
