@@ -101,6 +101,15 @@ public class AITerminal : MonoBehaviour
 
     void Start()
     {
+
+        // Affiche le message de bienvenue dès le lancement du niveau
+        // Le dialogue.sentences[0] doit contenir le message de bienvenue dans l'inspecteur.
+        if (messageManager != null && dialogue != null && dialogue.sentences.Length > 0)
+        {
+            // Affiche la première phrase d'introduction et la garde 20 secondes.
+            messageManager.ShowMessage(dialogue.sentences[0], 20f); 
+        }
+
         if (playerInventory == null)
         {
             var player = GameObject.FindWithTag("Player");
@@ -111,7 +120,7 @@ public class AITerminal : MonoBehaviour
                 Debug.LogWarning("[AITerminal] Aucun inventaire de joueur trouvé. Assignez l'Inventory du joueur dans l'inspecteur.");
             }
         }
-        
+
         // On s'abonne à l'événement de changement d'inventaire
         if (playerInventory != null)
         {
@@ -119,6 +128,8 @@ public class AITerminal : MonoBehaviour
             // dès que le joueur ramasse quelque chose (sans attendre une interaction).
             playerInventory.onResourceChanged += CheckForObjectives;
         }
+        
+
     }
 
     void OnDestroy()
