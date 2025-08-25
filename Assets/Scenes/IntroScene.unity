@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -330,7 +330,7 @@ RectTransform:
   m_GameObject: {fileID: 794657544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.3496, y: 2.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 61889099}
@@ -1150,14 +1150,16 @@ MonoBehaviour:
   textComponent: {fileID: 1453934708}
   lignesIntro:
   - Bienvenue, gardien(ne). Je suis GaIA, ce qui reste de la conscience de la Terre.
+    ...
   - "La Rouille a d\xE9truit notre monde, mais la vie ne s'\xE9teint jamais compl\xE8tement.
-    Elle s'est fragment\xE9e en \xC9clats de Vie."
+    Elle s'est fragment\xE9e en \xC9clats de Vie. ..."
   - "Votre mission est de les collecter et de les ramener \xE0 mon terminal. Chaque
-    \xE9clat que vous rapportez nous aide \xE0 r\xE9g\xE9n\xE9rer la nature."
+    \xE9clat que vous rapportez nous aide \xE0 r\xE9g\xE9n\xE9rer la nature. ..."
   - "Le chemin est sem\xE9 de dangers. Des cr\xE9atures de pierre et des robots,
-    engendr\xE9s par la Rouille, cherchent \xE0 nous arr\xEAter. Vous devez les \xE9viter."
+    engendr\xE9s par la Rouille, cherchent \xE0 nous arr\xEAter. Vous devez les \xE9viter.
+    ..."
   - "La survie de la Terre d\xE9pend de vous. Cherchez l'espoir. Cherchez les \xC9clats
-    de Vie."
+    de Vie. ..."
   - Vous pouvez commencer l'aventure !
   delayBetweenLines: 2.5
   charDelay: 0.02

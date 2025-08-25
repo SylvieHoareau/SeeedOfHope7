@@ -1020,6 +1020,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8441181998236806965, guid: 4af2c09d691b9f1b1be5108d8fe7a84e, type: 3}
+      propertyPath: m_Size.x
+      value: 0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 8441181998236806965, guid: 4af2c09d691b9f1b1be5108d8fe7a84e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 8441181998236806965, guid: 4af2c09d691b9f1b1be5108d8fe7a84e, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 343678044019789644, guid: 132f2119da30e7c4cb4361c21b83b97c, type: 3}
@@ -9660,17 +9668,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9010275077677706544, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
   m_PrefabInstance: {fileID: 1356647604}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1356647609 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7226566392952568119, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
-  m_PrefabInstance: {fileID: 1356647604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761850866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14e33c23206a10c4bbb6e7583f0d04f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1362629350
 GameObject:
   m_ObjectHideFlags: 0
@@ -10858,7 +10855,7 @@ PrefabInstance:
     - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
       propertyPath: playerInventory
       value: 
-      objectReference: {fileID: 1356647609}
+      objectReference: {fileID: 0}
     - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
       propertyPath: 'dialogue.sentences.Array.data[0]'
       value: "[ I.A. LOG ] Alerte, des ennemis approchent ! Un nouveau pouvoir a
@@ -12282,7 +12279,7 @@ PrefabInstance:
     - target: {fileID: 2290174607141458430, guid: ec8bf37b7835cf0458059a2d3e9a9ac9, type: 3}
       propertyPath: inventory
       value: 
-      objectReference: {fileID: 1356647609}
+      objectReference: {fileID: 0}
     - target: {fileID: 2290174607141458430, guid: ec8bf37b7835cf0458059a2d3e9a9ac9, type: 3}
       propertyPath: waterText
       value: 
