@@ -15,17 +15,22 @@ public class PlayerAttack : MonoBehaviour
     private float attackTimer;
     private bool isAttacking = false;
 
+    [Header("Hitbox")]
+    // GameObject qui contient le script AttackHitbox et le BoxCollider2D
+    public GameObject hitboxObject; 
+
     // Game Object contenant le BoxCollider
-    public GameObject attackHitbox;
+    private AttackHitbox attackHitbox;
     // Script qui gère l'activation
-    private AttackHitboxController attackController;
+    // private AttackHitboxController attackController;
     // Distance de décalage de la hitbox par rapport au joueur
-    public float hitboxOffset = 0.5f;
+    // public float hitboxOffset = 0.5f;
 
     void Awake()
     {
         controls = new PlayerControls();
         animator = GetComponent<Animator>();
+         // On récupère la référence au script de mouvement sur le même GameObject
         playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -43,11 +48,16 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
-        if (attackHitbox != null)
+        if (hitboxObject != null)
         {
-            attackController = attackHitbox.GetComponent<AttackHitboxController>();
-            attackHitbox.SetActive(true);
+            attackHitbox = hitboxObject.GetComponent<AttackHitbox>();
+            hitboxObject.SetActive(true);
         }
+        else
+        {
+            Debug.LogError("L'objet de la hitbox n'est pas assigné dans l'inspecteur !");
+        }
+
     }
 
     void Update()
@@ -68,34 +78,35 @@ public class PlayerAttack : MonoBehaviour
     /// </summary>
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
-        if (!isAttacking && context.performed)
+        if (!isAttacking && playerMovement.CurrentMovement.sqrMagnitude > 0.01f)
         {
             isAttacking = true;
             attackTimer = attackDuration;
             animator.SetBool("IsAttacking", true);
 
-            // Met à jour la direction de l'attaque en utilisant la dernière direction du mouvement
+            // On utilise la dernière direction connue du script de mouvement
             Vector2 attackDirection = playerMovement.LastMovement;
-            if (attackDirection == Vector2.zero)
-            {
-                // Si le joueur ne bouge pas, on utilise la dernière direction connue
-                // (peut-être initialisée à une valeur par défaut comme Vector2.down)
-                attackDirection = new Vector2(animator.GetFloat("X"), animator.GetFloat("Y"));
-            }
 
             // Met à jour l'animator pour la direction de l'attaque
             animator.SetFloat("X", attackDirection.x);
             animator.SetFloat("Y", attackDirection.y);
             
-            // Positionne la hitbox dans la bonne direction
-            Vector3 offset = (Vector3)attackDirection.normalized * hitboxOffset;
-            attackHitbox.transform.localPosition = offset;
-
-            // Active la hitbox temporairement
-            if (attackController != null)
+            // On appelle la méthode Activate de notre hitbox
+            // en lui passant la direction de l'attaque.
+            if (attackHitbox != null)
             {
-                attackController.ActivateHitbox();
+                attackHitbox.Activate(attackDirection);
             }
+
+            // Positionne la hitbox dans la bonne direction
+            // Vector3 offset = (Vector3)attackDirection.normalized * hitboxOffset;
+            // Attackhitbox.transform.localPosition = offset;
+
+            // // Active la hitbox temporairement
+            // if (attackController != null)
+            // {
+            //     attackController.ActivateHitbox();
+            // }
         }
     }
 }

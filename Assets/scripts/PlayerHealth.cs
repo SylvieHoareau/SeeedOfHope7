@@ -148,11 +148,11 @@ public class PlayerHealth : MonoBehaviour
     }
 
     // Cette fonction gère le soin du joueur pendant le niveau 4
-    public void Heal(int amount)
-    {
-        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        healthBar.SetHealth(currentHealth); // si tu as une barre de vie
-    }
+    // public void Heal(int amount)
+    // {
+    //     currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+    //     healthBar.SetHealth(currentHealth); // si tu as une barre de vie
+    // }
     
     // Ajoute de la vie au joueur, sans dépasser la vie maximale
     public void AddHealth(int amount)

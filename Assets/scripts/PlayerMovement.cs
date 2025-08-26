@@ -13,8 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
 
 
-    // 'movement' stocke la direction lue à chaque frame
-    private Vector2 movement;
+     // Propriété publique pour le mouvement actuel
+    public Vector2 CurrentMovement { get; private set; }
     // Pour les animations quand le joueur est à l'arrêt
     public Vector2 LastMovement { get; private set; }
     private bool isWalking = false;
@@ -81,7 +81,12 @@ public class PlayerMovement : MonoBehaviour
         // On lit la valeur de l'action 'Move' à chaque frame.
         // Si une touche est pressée, ça retournera (par ex.) (1, 0).
         // Si rien n'est pressé, ça retournera (0, 0).
-        movement = controls.Player.Move.ReadValue<Vector2>();
+        CurrentMovement = controls.Player.Move.ReadValue<Vector2>();
+
+        if (CurrentMovement.sqrMagnitude > 0.01f)
+        {
+            LastMovement = CurrentMovement.normalized;
+        }
 
         // On met à jour les animations en fonction du mouvement.
         UpdateAnimator();
@@ -91,7 +96,13 @@ public class PlayerMovement : MonoBehaviour
     {
         // On applique le mouvement au Rigidbody2D.
         // On normalise le vecteur pour que le mouvement en diagonale ne soit pas plus rapide.
-        rb.linearVelocity = movement.normalized * moveSpeed;
+        rb.linearVelocity = CurrentMovement.normalized * moveSpeed;
+    }
+
+     // Cette méthode est appelée par le Player Input component
+    public void OnMovement(InputValue value)
+    {
+        CurrentMovement = value.Get<Vector2>();
     }
 
     // Une petite fonction pour garder le code de l'animation propre.
@@ -99,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // On vérifie si le joueur est en train de bouger.
         // 'sqrMagnitude' est un peu plus performant que 'magnitude'. Bon réflexe !
-        bool isWalking = movement.sqrMagnitude > 0.01f;
+        bool isWalking = CurrentMovement.sqrMagnitude > 0.01f;
 
         // On passe l'information à l'Animator.
         animator.SetBool("IsWalking", isWalking);
@@ -107,9 +118,9 @@ public class PlayerMovement : MonoBehaviour
         // Si le joueur bouge, on met à jour la direction de l'animation.
         if (isWalking)
         {
-            LastMovement = movement.normalized; // On sauvegarde la dernière direction
-            animator.SetFloat("X", movement.x);
-            animator.SetFloat("Y", movement.y);
+            LastMovement = CurrentMovement.normalized; // On sauvegarde la dernière direction
+            animator.SetFloat("X", CurrentMovement.x);
+            animator.SetFloat("Y", CurrentMovement.y);
         }
         // Si le joueur est à l'arrêt, l'animation d'idle utilisera la dernière direction connue.
         else

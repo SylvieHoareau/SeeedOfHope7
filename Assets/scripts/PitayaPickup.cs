@@ -13,7 +13,10 @@ public class PitayaPickup : MonoBehaviour
 
             // Jouer un effet de burst
             if (pickupEffect != null)
-                Instantiate(pickupEffect, transform.position, Quaternion.identity);
+            {
+                GameObject PickupParticule= Instantiate(pickupEffect, transform.position, Quaternion.identity).gameObject;
+                Destroy(PickupParticule, pickupEffect.main.duration);
+            }
 
             Destroy(gameObject); // supprime le pitaya
         }

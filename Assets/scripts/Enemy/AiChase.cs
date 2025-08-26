@@ -1,72 +1,100 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System.Collections;
 
 public class AiChase : MonoBehaviour
 {
     public GameObject player;
-    public float speed = 2f;
+    public float speed = 7f;
+    public float animationSmooth = 0.1f;
 
-    private float distance;
     private Animator animator;
-    private Vector2 movement;
+    private Rigidbody2D rb;
 
     private bool isTouchingPlayer = false;
-    private Rigidbody2D rb;
+    private bool isStunned = false;
+
+    private float currentX = 0f;
+    private float currentY = 0f;
+    private float velocityX = 0f;
+    private float velocityY = 0f;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-    }
 
-    private void OnMovement(InputValue value)
-    {
-        movement = value.Get<Vector2>();
-
-        if (movement.x != 0 || movement.y != 0)
+        if (player == null)
         {
-            animator.SetFloat("X", movement.x);
-            animator.SetFloat("Y", movement.y);
+            GameObject playerObj = GameObject.FindWithTag("Player");
+            if (playerObj != null)
+                player = playerObj;
         }
     }
 
     void Update()
     {
-        if (isTouchingPlayer) return;
+        if (isTouchingPlayer || isStunned || player == null) 
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
 
-        distance = Vector2.Distance(transform.position, player.transform.position);
+        Vector2 direction = ((Vector2)player.transform.position - rb.position).normalized;
+        float distance = Vector2.Distance(transform.position, player.transform.position);
 
         if (distance < 3f)
         {
-            Vector2 direction = (player.transform.position - transform.position).normalized;
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            // Axe dominant pour Blend Tree (animation)
+            Vector2 snapDir = Mathf.Abs(direction.x) > Mathf.Abs(direction.y)
+                ? new Vector2(Mathf.Sign(direction.x), 0)
+                : new Vector2(0, Mathf.Sign(direction.y));
+
+            currentX = Mathf.SmoothDamp(currentX, snapDir.x, ref velocityX, animationSmooth);
+            currentY = Mathf.SmoothDamp(currentY, snapDir.y, ref velocityY, animationSmooth);
+
+            animator.SetFloat("X", currentX);
+            animator.SetFloat("Y", currentY);
+
+            // Déplacement via velocity
+            rb.linearVelocity = direction * speed;
+        }
+        else
+        {
+            // Trop loin : stop
+            rb.linearVelocity = Vector2.zero;
+
+            // Idle : ramène X/Y à 0
+            currentX = Mathf.SmoothDamp(currentX, 0, ref velocityX, animationSmooth);
+            currentY = Mathf.SmoothDamp(currentY, 0, ref velocityY, animationSmooth);
+
+            animator.SetFloat("X", currentX);
+            animator.SetFloat("Y", currentY);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
             isTouchingPlayer = true;
-
-            if (rb != null)
-            {
-                rb.linearVelocity = Vector2.zero;
-                rb.bodyType = RigidbodyType2D.Kinematic;
-            }
-        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
             isTouchingPlayer = false;
+    }
 
-            if (rb != null)
-            {
-                rb.bodyType = RigidbodyType2D.Dynamic;
-            }
-        }
+    // Fonction publique pour hit stun
+    public void Stun(float duration)
+    {
+        StartCoroutine(StunRoutine(duration));
+    }
+
+    private IEnumerator StunRoutine(float duration)
+    {
+        isStunned = true;
+        rb.linearVelocity = Vector2.zero;
+        yield return new WaitForSeconds(duration);
+        isStunned = false;
     }
 }
