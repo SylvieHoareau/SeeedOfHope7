@@ -11,7 +11,7 @@ public class PlayerAttack : MonoBehaviour
     private PlayerMovement playerMovement;
 
     [Header("Attaque")]
-    public float attackDuration = 0.5f;
+    public float attackDuration = 0.2f;
     private float attackTimer;
     private bool isAttacking = false;
 

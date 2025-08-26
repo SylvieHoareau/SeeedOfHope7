@@ -29,6 +29,7 @@ public class AITerminal : MonoBehaviour
     // Liste des objets/éléments de la scène qui seront activés quand
     // le terminal sera déclenché (ex : portes, lumières, mécanismes).
     public GameObject[] zonesARevitaliser;
+    public GameObject porte;
 
     [Header("UI")]
     // Composant qui affiche les messages à l'écran (fenêtre, bulles de texte, etc.).
@@ -209,6 +210,8 @@ public class AITerminal : MonoBehaviour
             {
                 if (zone != null) zone.SetActive(true);
             }
+
+            if (porte != null) porte.SetActive(true);
             
             // On met à jour le statut de l'objectif
             objectifAtteint = true;

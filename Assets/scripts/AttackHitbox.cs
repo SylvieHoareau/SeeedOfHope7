@@ -69,7 +69,7 @@ public class AttackHitbox : MonoBehaviour
         Rigidbody2D enemyRb = collision.attachedRigidbody;
         if (enemyRb != null)
         {
-            Vector2 knockbackDir = (collision.transform.position - transform.position).normalized;
+            Vector2 knockbackDir = -(collision.transform.position - transform.position).normalized;
             Vector2 targetPos = (Vector2)collision.transform.position + knockbackDir * pushDistance;
             StartCoroutine(PushEnemy(enemyRb, targetPos, pushDuration));
         }

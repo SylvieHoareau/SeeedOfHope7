@@ -211,6 +211,7 @@ MonoBehaviour:
   InvincibilityTimeAfterHit: 3
   healthBar: {fileID: 8518256406807153026, guid: f64e34050ce325b4c827642b7ec5aa42, type: 3}
   hitSound: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
+  healSound: {fileID: 0}
   gameOverUI: {fileID: 5057509148430671452, guid: 23738f1558f660945990e000a093b729, type: 3}
   InvincibilityFlashDelay: 0.15
 --- !u!114 &3112245903356233397
@@ -269,8 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDuration: 0.5
-  attackHitbox: {fileID: 6165110858458500595}
-  hitboxOffset: 0.5
+  hitboxObject: {fileID: 0}
 --- !u!114 &7226566392952568119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +325,6 @@ GameObject:
   - component: {fileID: 498854944456398196}
   - component: {fileID: 7860374072463691222}
   - component: {fileID: 6518488208777554977}
-  - component: {fileID: 2864299748755924808}
   m_Layer: 0
   m_Name: Attackhitbox
   m_TagString: Player
@@ -406,17 +405,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02992d79184319946a5f0b49becab3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackForce: 5
---- !u!114 &2864299748755924808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6165110858458500595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67f618e65f5ba0f488404c1d7494ce52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeTime: 0.2
+  pushDistance: 0.5
+  damageAmount: 0.1
+  pushDuration: 0.1
+  verticalSize: {x: 1.5, y: 2}
+  horizontalSize: {x: 2, y: 1.5}
+  offsetRight: {x: 1, y: 0}
+  offsetLeft: {x: -1, y: 0}
+  offsetUp: {x: 0, y: 1}
+  offsetDown: {x: 0, y: -1}
