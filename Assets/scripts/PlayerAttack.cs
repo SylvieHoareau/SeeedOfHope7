@@ -80,12 +80,22 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!isAttacking && playerMovement.CurrentMovement.sqrMagnitude > 0.01f)
         {
+            // On peut attaquer même à l'arrêt.
+            if (isAttacking) return;
+
             isAttacking = true;
             attackTimer = attackDuration;
             animator.SetBool("IsAttacking", true);
 
             // On utilise la dernière direction connue du script de mouvement
+                // LastMovement conserve la dernière direction même quand le joueur s'arrête.
             Vector2 attackDirection = playerMovement.LastMovement;
+
+            // S'assure qu'il y a une direction par défaut si le jeu commence sans bouger.
+            if (attackDirection.sqrMagnitude < 0.01f)
+            {
+                attackDirection = Vector2.down; // ou une autre direction par défaut
+            }
 
             // Met à jour l'animator pour la direction de l'attaque
             animator.SetFloat("X", attackDirection.x);
@@ -98,15 +108,6 @@ public class PlayerAttack : MonoBehaviour
                 attackHitbox.Activate(attackDirection);
             }
 
-            // Positionne la hitbox dans la bonne direction
-            // Vector3 offset = (Vector3)attackDirection.normalized * hitboxOffset;
-            // Attackhitbox.transform.localPosition = offset;
-
-            // // Active la hitbox temporairement
-            // if (attackController != null)
-            // {
-            //     attackController.ActivateHitbox();
-            // }
         }
     }
 }
