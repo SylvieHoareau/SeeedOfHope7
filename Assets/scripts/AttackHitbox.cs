@@ -67,7 +67,7 @@ public class AttackHitbox : MonoBehaviour
 
         // On lance une routine pour désactiver la hitbox après un court instant
         // Cela crée l'effet d'un "coup rapide"
-        StartCoroutine(DisableHitboxAfter(pushDuration));
+        StartCoroutine(ActivateAndDisable());
     }
 
     // Gère l'activation et la désactivation de la hitbox après la durée de l'attaque
@@ -112,12 +112,16 @@ public class AttackHitbox : MonoBehaviour
         // Gérer les dégâts
         EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
+        {
             enemyHealth.Damage(damageAmount);
+        }
 
         // Gérer l'etourdissement de l'IA
         AiChase enemyAi = collision.GetComponent<AiChase>();
         if (enemyAi != null)
+        {
             enemyAi.Stun(pushDuration);
+        }
     }
 
     // Cette routine gère le mouvement de l'ennemi pour le repousser en douceur
@@ -130,10 +134,11 @@ public class AttackHitbox : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            // On déplace l'ennemi en le "malangeant" entre les positions de départ et la position cible
+            // On déplace l'ennemi en le "malangeant" entre les positions de
             enemyRb.MovePosition(Vector2.Lerp(startPos, targetPos, elapsed / duration));
             yield return null;
         }
+
         // Pour s'assurer que l'ennemi arrive bien à la position finale
         enemyRb.MovePosition(targetPos);
     }

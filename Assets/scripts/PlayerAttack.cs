@@ -87,8 +87,8 @@ public class PlayerAttack : MonoBehaviour
             attackTimer = attackDuration;
             animator.SetBool("IsAttacking", true);
 
-            // On utilise la dernière direction connue du script de mouvement
-                // LastMovement conserve la dernière direction même quand le joueur s'arrête.
+            // On utilise la dernière direction connue du script de mouvement.
+            // LastMovement conserve la dernière direction même quand le joueur s'arrête.
             Vector2 attackDirection = playerMovement.LastMovement;
 
             // S'assure qu'il y a une direction par défaut si le jeu commence sans bouger.

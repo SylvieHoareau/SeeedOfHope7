@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDuration: 0.5
-  hitboxObject: {fileID: 0}
+  hitboxObject: {fileID: 6165110858458500595}
 --- !u!114 &7226566392952568119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +295,7 @@ GameObject:
   m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 7860374072463691222}
   - component: {fileID: 6518488208777554977}
   m_Layer: 0
-  m_Name: Attackhitbox
+  m_Name: AttackHitbox
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

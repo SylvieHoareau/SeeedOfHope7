@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 8129521016893900756}
   - component: {fileID: 9049336811260229406}
   m_Layer: 0
-  m_Name: HealthSlider
+  m_Name: HealthbarEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

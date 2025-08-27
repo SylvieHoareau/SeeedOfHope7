@@ -144,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 5031831007638486253, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
   speed: 1
+  animationSmooth: 0.1
 --- !u!61 &8580771910579339956
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -379,7 +380,7 @@ GameObject:
   - component: {fileID: 7023772436019609249}
   - component: {fileID: 5224782523282002049}
   m_Layer: 0
-  m_Name: HealthSlider
+  m_Name: HealthbarEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
