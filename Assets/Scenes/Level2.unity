@@ -11439,11 +11439,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6518488208777554977, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: damageAmount
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6518488208777554977, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: pushDistance
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6518488208777554977, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: pushDuration
