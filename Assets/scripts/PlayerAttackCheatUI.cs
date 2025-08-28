@@ -1,37 +1,36 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using UnityEngine.UI;
 
 public class PlayerAttackCheatUI : MonoBehaviour
 {
     [Header("Cheat Settings")]
     public float normalDamage = 1f;
     public float boostedDamage = 5f;
-    public float damageMultiplier = 1f;
-
+    
     [Header("UI Elements")]
-    public TMP_Text cheatText;       // Texte qui s’affiche temporairement
+    public TMP_Text cheatText;       // Texte temporaire
     public GameObject fireIcon;      // Icône feu affichée quand boost actif
 
+    [Header("References")]
+    public PlayerAttack playerAttack; // Référence au script de dégâts du joueur
+
     private Coroutine cheatMessageCoroutine;
-    private string cheatSequence = "ABXY"; // exemple pour manette
+    private string cheatSequence = "ABXY"; // Séquence de touches
     private string currentInput = "";
 
     private void Start()
     {
-        if (cheatText != null)
-            cheatText.gameObject.SetActive(false);
+        if (cheatText != null) cheatText.gameObject.SetActive(false);
+        if (fireIcon != null) fireIcon.SetActive(false);
 
-        if (fireIcon != null)
-            fireIcon.SetActive(false);
-
-        damageMultiplier = normalDamage;
+        if (playerAttack != null)
+            playerAttack.damageMultiplier = normalDamage;
     }
 
     private void Update()
     {
-        // On capte les touches (clavier + manette)
+        // Clavier
         if (Keyboard.current != null)
         {
             if (Keyboard.current.aKey.wasPressedThisFrame) AddInput("A");
@@ -40,6 +39,7 @@ public class PlayerAttackCheatUI : MonoBehaviour
             if (Keyboard.current.yKey.wasPressedThisFrame) AddInput("Y");
         }
 
+        // Manette
         if (Gamepad.current != null)
         {
             if (Gamepad.current.buttonSouth.wasPressedThisFrame) AddInput("A"); // A
@@ -53,11 +53,11 @@ public class PlayerAttackCheatUI : MonoBehaviour
     {
         currentInput += key;
 
-        // Si la séquence devient trop longue, on coupe
+        // Limiter la taille
         if (currentInput.Length > cheatSequence.Length)
             currentInput = currentInput.Substring(currentInput.Length - cheatSequence.Length);
 
-        // Vérifie si le cheat code correspond
+        // Vérifier la séquence
         if (currentInput == cheatSequence)
         {
             ToggleCheat();
@@ -67,15 +67,17 @@ public class PlayerAttackCheatUI : MonoBehaviour
 
     private void ToggleCheat()
     {
-        if (damageMultiplier == normalDamage)
+        if (playerAttack == null) return;
+
+        if (playerAttack.damageMultiplier == normalDamage)
         {
-            damageMultiplier = boostedDamage;
+            playerAttack.damageMultiplier = boostedDamage;
             ShowCheatMessage("Boost d'attaque ACTIVÉ (x5)");
             if (fireIcon != null) fireIcon.SetActive(true);
         }
         else
         {
-            damageMultiplier = normalDamage;
+            playerAttack.damageMultiplier = normalDamage;
             ShowCheatMessage("Boost désactivé");
             if (fireIcon != null) fireIcon.SetActive(false);
         }
@@ -83,14 +85,14 @@ public class PlayerAttackCheatUI : MonoBehaviour
 
     private void ShowCheatMessage(string message)
     {
-        if (cheatMessageCoroutine != null)
-            StopCoroutine(cheatMessageCoroutine);
-
+        if (cheatMessageCoroutine != null) StopCoroutine(cheatMessageCoroutine);
         cheatMessageCoroutine = StartCoroutine(CheatMessageRoutine(message));
     }
 
     private System.Collections.IEnumerator CheatMessageRoutine(string message)
     {
+        if (cheatText == null) yield break;
+
         cheatText.text = message;
         cheatText.gameObject.SetActive(true);
 

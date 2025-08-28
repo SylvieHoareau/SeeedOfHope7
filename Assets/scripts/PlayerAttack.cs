@@ -164,9 +164,13 @@ public class PlayerAttack : MonoBehaviour
         // 3. Active la hitbox
         if (attackHitbox != null)
         {
+            // Applique le multiplicateur de dégâts
+            attackHitbox.damage = baseDamage * damageMultiplier;
+
             hitboxObject.SetActive(true);
             attackHitbox.Activate(attackDirection);
         }
+
         if (showDebugLogs)
             Debug.Log("Hitbox activée dans la direction: " + attackDirection);
 
@@ -177,15 +181,11 @@ public class PlayerAttack : MonoBehaviour
         if (hitboxObject != null)
         {
             hitboxObject.SetActive(false);
-
-            // Applique le multiplicateur de dégâts
-            attackHitbox.damage = baseDamage * damageMultiplier;
-
-            attackHitbox.Activate(attackDirection);
         }
 
         isAttacking = false;
         animator.SetBool("IsAttacking", false);
+        
         if (showDebugLogs)
             Debug.Log("Attaque terminée.");
     
