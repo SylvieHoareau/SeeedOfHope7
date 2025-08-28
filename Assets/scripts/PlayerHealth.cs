@@ -39,8 +39,14 @@ public class PlayerHealth : MonoBehaviour
     public void Start()
     {
         // Le joueur commence avec toute sa vie
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+        }
+        else
+        {
+            Debug.LogWarning("HealthBar n'est pas assigné sur PlayerHealth !");
+        }
         // On cache l'interface de Game Over au début
         if (gameOverUI != null)
             gameOverUI.SetActive(false);
