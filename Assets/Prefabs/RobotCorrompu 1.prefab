@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8802428063567066699}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,13 +46,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1286369209816090173}
   - component: {fileID: 6779512123460324343}
-  - component: {fileID: 2025023773908934324}
   - component: {fileID: 8580771910579339956}
   - component: {fileID: 545282212116136705}
   - component: {fileID: 3817672945119220632}
+  - component: {fileID: 2748649271482831121}
   - component: {fileID: 5197280304298409071}
   - component: {fileID: 5721572424889414296}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RobotCorrompu 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -130,21 +130,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2025023773908934324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817847191061955212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f3c8f4a433fd174fa8a97a425561e76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 5031831007638486253, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
-  speed: 1
-  animationSmooth: 0.1
 --- !u!61 &8580771910579339956
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -240,6 +225,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2748649271482831121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817847191061955212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041a0c0234e63f808ad3d7101134a7c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5031831007638486253, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+  speed: 2
 --- !u!114 &5197280304298409071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +277,7 @@ GameObject:
   - component: {fileID: 1207179103438087986}
   - component: {fileID: 1243281634081411811}
   - component: {fileID: 968692012281680107}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EnemyHealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +378,7 @@ GameObject:
   - component: {fileID: 4074377988111388483}
   - component: {fileID: 7023772436019609249}
   - component: {fileID: 5224782523282002049}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HealthbarEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,8 +404,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11.974, y: 1.5275}
-  m_SizeDelta: {x: 472.8, y: 59.455}
+  m_AnchoredPosition: {x: 10.503, y: 1.5275}
+  m_SizeDelta: {x: 414.7, y: 59.5}
   m_Pivot: {x: 0.52532595, y: 0.5}
 --- !u!114 &7023772436019609249
 MonoBehaviour:
@@ -512,7 +511,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5926445408659150677}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +549,7 @@ GameObject:
   - component: {fileID: 8313742841457820505}
   - component: {fileID: 4952447486023692309}
   - component: {fileID: 2625206583337878565}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,7 +624,7 @@ GameObject:
   - component: {fileID: 6151493135753297579}
   - component: {fileID: 8739565787471192842}
   - component: {fileID: 3164678010700915538}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -648,8 +647,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_AnchoredPosition: {x: 4.8, y: 0}
+  m_SizeDelta: {x: 19.6, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8739565787471192842
 CanvasRenderer:
@@ -700,7 +699,7 @@ GameObject:
   - component: {fileID: 308623132008422282}
   - component: {fileID: 5115718677894280048}
   - component: {fileID: 4733089825811045226}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}

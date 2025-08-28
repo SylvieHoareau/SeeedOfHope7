@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 CurrentMovement { get; private set; }
     // Pour les animations quand le joueur est à l'arrêt
     public Vector2 LastMovement { get; private set; }
-    private bool isWalking = false;
+    // private bool isWalking = false;
 
     private void Awake()
     {
@@ -54,26 +54,6 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.Disable();
     }
 
-    // private void OnMove(InputAction.CallbackContext ctx)
-    // {
-    //     movement = ctx.ReadValue<Vector2>();
-
-    //     // Debug : afficher les valeurs de mouvement dans la console
-    //     Debug.Log($"Move input: {movement} | Magnitude: {movement.magnitude}");
-
-    //     // Mise à jour de la dernière direction si le joueur bouge
-    //     if (movement.sqrMagnitude > 0.01f)
-    //     {
-    //         LastMovement = movement.normalized;
-    //     }
-
-    //     // Mise à jour de l'animator
-    //     isWalking = movement.sqrMagnitude > 0.01f;
-    //     animator.SetBool("IsWalking", isWalking);
-    //     animator.SetFloat("X", isWalking ? movement.x : LastMovement.x);
-    //     animator.SetFloat("Y", isWalking ? movement.y : LastMovement.y);
-    // }
-
     // La méthode Update est appelée à chaque frame.
     // Idéale pour lire les inputs qui doivent être réactifs.
     private void Update()
@@ -83,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         // Si rien n'est pressé, ça retournera (0, 0).
         CurrentMovement = controls.Player.Move.ReadValue<Vector2>();
 
+        // On met à jour la dernière direction si le joueur bouge
         if (CurrentMovement.sqrMagnitude > 0.01f)
         {
             LastMovement = CurrentMovement.normalized;
@@ -92,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         UpdateAnimator();
     }
 
+    // Réservé à la physique
     private void FixedUpdate()
     {
         // On applique le mouvement au Rigidbody2D.
@@ -100,10 +82,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
      // Cette méthode est appelée par le Player Input component
-    public void OnMovement(InputValue value)
-    {
-        CurrentMovement = value.Get<Vector2>();
-    }
+    // public void OnMovement(InputValue value)
+    // {
+    //     CurrentMovement = value.Get<Vector2>();
+    // }
 
     // Une petite fonction pour garder le code de l'animation propre.
     private void UpdateAnimator()
@@ -116,19 +98,10 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsWalking", isWalking);
 
         // Si le joueur bouge, on met à jour la direction de l'animation.
-        if (isWalking)
-        {
-            LastMovement = CurrentMovement.normalized; // On sauvegarde la dernière direction
-            animator.SetFloat("X", CurrentMovement.x);
-            animator.SetFloat("Y", CurrentMovement.y);
-        }
-        // Si le joueur est à l'arrêt, l'animation d'idle utilisera la dernière direction connue.
-        else
-        {
-            // On s'assure que les paramètres X et Y ne changent pas quand on s'arrête
-            // pour que l'animation "idle" regarde dans la bonne direction.
-            animator.SetFloat("X", LastMovement.x);
-            animator.SetFloat("Y", LastMovement.y);
-        }
+        
+        // On utilise LastMovement pour définir la direction, que le joueur soit en mouvement ou à l'arrêt.
+        // C'est plus simple et évite les changements brusques à l'arrêt.
+        animator.SetFloat("X", LastMovement.x);
+        animator.SetFloat("Y", LastMovement.y);
     }
 }

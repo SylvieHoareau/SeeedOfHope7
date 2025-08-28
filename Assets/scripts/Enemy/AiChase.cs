@@ -1,28 +1,25 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections;
 
 public class AiChase : MonoBehaviour
 {
     public GameObject player;
-    public float speed = 7f;
-    public float animationSmooth = 0.1f;
+    public float speed = 2f;
 
+    private float distance;
     private Animator animator;
-    private Rigidbody2D rb;
-
+    private Vector2 movement;
     private bool isTouchingPlayer = false;
-    private bool isStunned = false;
-
-    private float currentX = 0f;
-    private float currentY = 0f;
-    private float velocityX = 0f;
-    private float velocityY = 0f;
+    private bool isStunned = false; // ⭐ AJOUTÉ : État de stun
+    private Rigidbody2D rb;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
+        // Auto-find player si non assigné
         if (player == null)
         {
             GameObject playerObj = GameObject.FindWithTag("Player");
@@ -31,60 +28,84 @@ public class AiChase : MonoBehaviour
         }
     }
 
+    private void OnMovement(InputValue value)
+    {
+        movement = value.Get<Vector2>();
+
+        if (movement.x != 0 || movement.y != 0)
+        {
+            animator.SetFloat("X", movement.x);
+            animator.SetFloat("Y", movement.y);
+        }
+    }
+
     void Update()
     {
+        // ⭐ MODIFIÉ : Arrêter le mouvement si touché ou stunné
         if (isTouchingPlayer || isStunned || player == null) 
         {
-            rb.linearVelocity = Vector2.zero;
+            if (rb != null)
+                rb.linearVelocity = Vector2.zero;
             return;
         }
 
-        Vector2 direction = ((Vector2)player.transform.position - rb.position).normalized;
-        float distance = Vector2.Distance(transform.position, player.transform.position);
+        distance = Vector2.Distance(transform.position, player.transform.position);
 
         if (distance < 3f)
         {
-            // Axe dominant pour Blend Tree (animation)
-            Vector2 snapDir = Mathf.Abs(direction.x) > Mathf.Abs(direction.y)
-                ? new Vector2(Mathf.Sign(direction.x), 0)
-                : new Vector2(0, Mathf.Sign(direction.y));
+            Vector2 direction = (player.transform.position - transform.position).normalized;
+            
+            // Utilise le Rigidbody pour un mouvement plus fluide
+            if (rb != null)
+            {
+                rb.linearVelocity = direction * speed;
+            }
+            else
+            {
+                // Fallback si pas de Rigidbody2D
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            }
 
-            currentX = Mathf.SmoothDamp(currentX, snapDir.x, ref velocityX, animationSmooth);
-            currentY = Mathf.SmoothDamp(currentY, snapDir.y, ref velocityY, animationSmooth);
-
-            animator.SetFloat("X", currentX);
-            animator.SetFloat("Y", currentY);
-
-            // Déplacement via velocity
-            rb.linearVelocity = direction * speed;
+            // Met à jour l'animator avec la direction
+            animator.SetFloat("X", direction.x);
+            animator.SetFloat("Y", direction.y);
         }
         else
         {
-            // Trop loin : stop
-            rb.linearVelocity = Vector2.zero;
-
-            // Idle : ramène X/Y à 0
-            currentX = Mathf.SmoothDamp(currentX, 0, ref velocityX, animationSmooth);
-            currentY = Mathf.SmoothDamp(currentY, 0, ref velocityY, animationSmooth);
-
-            animator.SetFloat("X", currentX);
-            animator.SetFloat("Y", currentY);
+            // Arrête le mouvement si trop loin
+            if (rb != null)
+                rb.linearVelocity = Vector2.zero;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
+        {
             isTouchingPlayer = true;
+
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.bodyType = RigidbodyType2D.Kinematic;
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
+        {
             isTouchingPlayer = false;
+
+            if (rb != null)
+            {
+                rb.bodyType = RigidbodyType2D.Dynamic;
+            }
+        }
     }
 
-    // Fonction publique pour hit stun
+    // ⭐ AJOUTÉ : Fonction publique pour le stun
     public void Stun(float duration)
     {
         StartCoroutine(StunRoutine(duration));
@@ -93,8 +114,16 @@ public class AiChase : MonoBehaviour
     private IEnumerator StunRoutine(float duration)
     {
         isStunned = true;
-        rb.linearVelocity = Vector2.zero;
+        
+        // Arrête le mouvement
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+            
+        Debug.Log($"{gameObject.name} stunné pour {duration}s");
+        
         yield return new WaitForSeconds(duration);
+        
         isStunned = false;
+        Debug.Log($"{gameObject.name} n'est plus stunné");
     }
 }

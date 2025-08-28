@@ -1,5 +1,54 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1671361449297757968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7753182782008910077}
+  - component: {fileID: 8947066099205088655}
+  m_Layer: 7
+  m_Name: PlayerAttack
+  m_TagString: PlayerAttack
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7753182782008910077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671361449297757968}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9010275077677706544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8947066099205088655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671361449297757968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8b3a044434bbf48a34f3d65f9fb71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 7979294644157043009}
+  attackDuration: 0.4
+  hitboxActiveDuration: 0.2
+  hitboxObject: {fileID: 6165110858458500595}
+  showDebugLogs: 1
 --- !u!1 &5031831007638486253
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,9 +65,8 @@ GameObject:
   - component: {fileID: 4489334933595901533}
   - component: {fileID: 3112245903356233397}
   - component: {fileID: 7979294644157043009}
-  - component: {fileID: 3010960421984156456}
   - component: {fileID: 7226566392952568119}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -40,6 +88,7 @@ Transform:
   m_Children:
   - {fileID: 6314549002608850361}
   - {fileID: 498854944456398196}
+  - {fileID: 7753182782008910077}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3819502881158425339
@@ -256,24 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d2046ed813532b43901dac61d60de22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
---- !u!114 &3010960421984156456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5031831007638486253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c8b3a044434bbf48a34f3d65f9fb71c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDuration: 0.5
-  hitboxActiveStart: 0.1
-  hitboxActiveDuration: 0.2
-  hitboxObject: {fileID: 6165110858458500595}
-  showDebugLogs: 1
+  moveSpeed: 2
 --- !u!114 &7226566392952568119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6314549002608850361}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -328,9 +360,9 @@ GameObject:
   - component: {fileID: 498854944456398196}
   - component: {fileID: 7860374072463691222}
   - component: {fileID: 2348025291157526027}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackHitbox
-  m_TagString: Player
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -343,8 +375,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6165110858458500595}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.049, y: 0.111, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.049, y: 0.11100006, z: 0}
   m_LocalScale: {x: 0.014494957, y: 0.014494957, z: 0.014494957}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -409,6 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  knockbackForce: 5
   stunDuration: 0.5
   hitboxOffset: 1
   hitboxSize: {x: 1, y: 1}

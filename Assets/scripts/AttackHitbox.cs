@@ -5,6 +5,7 @@ public class AttackHitbox : MonoBehaviour
 {
     [Header("Paramètres de l'attaque")]
     public float damage = 1f;
+    public float knockbackForce = 5f; // Force du knockback
     public float stunDuration = 0.5f;
     public float hitboxOffset = 1f; // Distance de la hitbox par rapport au joueur
     public Vector2 hitboxSize = new Vector2(1f, 1f); // Taille de la hitbox
@@ -14,8 +15,20 @@ public class AttackHitbox : MonoBehaviour
     public bool showDebugLogs = true;
 
     private BoxCollider2D hitboxCollider;
+
+    // Liste pour éviter de toucher le même ennemi plusieurs fois
     private List<GameObject> hitEnemies = new List<GameObject>(); // Évite les hits multiples
     private Vector2 currentDirection;
+
+
+    void OnEnable()
+    {
+        // Réinitialise la liste quand la hitbox est réactivée
+        hitEnemies.Clear();
+        if (showDebugLogs)
+            Debug.Log("AttackHitbox activée - Liste des ennemis réinitialisée");
+    }
+
 
     void Awake()
     {
@@ -53,40 +66,64 @@ public class AttackHitbox : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Vérifier si c'est un ennemi et s'il n'a pas déjà été touché
-        if (other.CompareTag("Enemy") && !hitEnemies.Contains(other.gameObject))
+        if (collision.CompareTag("Enemy") && !hitEnemies.Contains(collision.gameObject))
         {
-            hitEnemies.Add(other.gameObject);
-            
+            // Ajoute l'ennemi à la liste pour éviter les hits multiples
+            hitEnemies.Add(collision.gameObject);
+
             if (showDebugLogs)
-            {
-                Debug.Log($"Ennemi touché: {other.name}");
-            }
-            
-            // Appliquer les dégâts
-            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+                Debug.Log($"Ennemi touché: {collision.name}");
+
+            // 1. APPLIQUER LES DÉGÂTS (LE PLUS IMPORTANT!)
+            EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 enemyHealth.Damage(damage);
+                if (showDebugLogs)
+                    Debug.Log($"Dégâts appliqués: {damage} à {collision.name}");
             }
-            
-            // Appliquer le stun
-            AiChase aiChase = other.GetComponent<AiChase>();
+            else
+            {
+                Debug.LogWarning($"EnemyHealth introuvable sur {collision.name}!");
+            }
+
+            // 2. APPLIQUER LE STUN
+            AiChase aiChase = collision.GetComponent<AiChase>();
             if (aiChase != null)
             {
                 aiChase.Stun(stunDuration);
+                if (showDebugLogs)
+                    Debug.Log($"Stun appliqué: {stunDuration}s à {collision.name}");
             }
-            
-            // Effet de knockback optionnel
-            Rigidbody2D enemyRb = other.GetComponent<Rigidbody2D>();
+
+            // 3. APPLIQUER LE KNOCKBACK
+            Rigidbody2D enemyRb = collision.GetComponent<Rigidbody2D>();
             if (enemyRb != null)
             {
-                Vector2 knockbackForce = currentDirection * 5f; // Ajustez la force selon vos besoins
-                enemyRb.AddForce(knockbackForce, ForceMode2D.Impulse);
+                // Calcul la direction du knockback
+                Vector2 knockbackDir = (collision.transform.position - transform.position).normalized;
+                
+                // S'assure qu'il y a une direction valide
+                if (knockbackDir.sqrMagnitude < 0.1f)
+                {
+                    knockbackDir = Vector2.up; // Direction par défaut
+                }
+                
+                // Applique la force de knockback
+                enemyRb.AddForce(knockbackDir * knockbackForce, ForceMode2D.Impulse);
+                
+                if (showDebugLogs)
+                    Debug.Log($"Knockback appliqué: {knockbackDir} * {knockbackForce} à {collision.name}");
             }
         }
+    }
+
+    // Méthode publique pour réinitialiser la hitbox
+    public void ResetHitbox()
+    {
+        hitEnemies.Clear();
     }
 
     void OnDrawGizmos()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5847293511675470741}
   - component: {fileID: 8201089317000120420}
   - component: {fileID: 2900967457001947230}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 8402357065900769905}
   - component: {fileID: 7445575282117677899}
   - component: {fileID: 7125446000755113093}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,13 +160,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5205004093616881094}
   - component: {fileID: 4012385421217668091}
-  - component: {fileID: 2491458308380044152}
   - component: {fileID: 5910366332605030949}
   - component: {fileID: 5400526340137656282}
   - component: {fileID: 2649252617329352527}
+  - component: {fileID: 2854164565945608402}
   - component: {fileID: 7506728075922659776}
   - component: {fileID: 4716529599406579198}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MiniGollem
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -244,21 +244,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2491458308380044152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3335460189603768478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f3c8f4a433fd174fa8a97a425561e76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 5031831007638486253, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
-  speed: 1
-  animationSmooth: 0.1
 --- !u!61 &5910366332605030949
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -354,6 +339,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2854164565945608402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3335460189603768478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041a0c0234e63f808ad3d7101134a7c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5031831007638486253, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+  speed: 2
 --- !u!114 &7506728075922659776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,7 +388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2882756063090835377}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 78616865131315564}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +462,7 @@ GameObject:
   - component: {fileID: 8486235425009962845}
   - component: {fileID: 2452578542928743774}
   - component: {fileID: 2291113388202994495}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -539,7 +538,7 @@ GameObject:
   - component: {fileID: 4787888687431568567}
   - component: {fileID: 3738869982440052658}
   - component: {fileID: 4752022869380920034}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GollemHealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +639,7 @@ GameObject:
   - component: {fileID: 590082376488610637}
   - component: {fileID: 8129521016893900756}
   - component: {fileID: 9049336811260229406}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HealthbarEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

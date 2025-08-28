@@ -24,9 +24,19 @@ public class EnemyHealth : MonoBehaviour
 
     public void Damage(float damageAmount)
     {
-        if (isDead) return; // si déjà mort, pas de dégâts
+         Debug.Log($"DAMAGE APPELÉ sur {gameObject.name}: {damageAmount} dégâts"); // ⭐ AJOUTÉ
+
+        
+        if (isDead) 
+        {
+            Debug.Log("Ennemi déjà mort, dégâts ignorés"); // ⭐ AJOUTÉ
+            return; 
+        }
+
         currentHealth -= damageAmount;
         healthBar.value = currentHealth;
+
+        Debug.Log($"Nouvelle vie de {gameObject.name}: {currentHealth}/{maxHealth}"); // ⭐ AJOUTÉ
 
         if (currentHealth <= 0)
         {
