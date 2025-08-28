@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 9010275077677706544}
   - component: {fileID: 3819502881158425339}
   - component: {fileID: 7551523579058190315}
-  - component: {fileID: 4884925205209892775}
   - component: {fileID: 2496167563644014240}
+  - component: {fileID: 4884925205209892775}
   - component: {fileID: 4489334933595901533}
   - component: {fileID: 3112245903356233397}
   - component: {fileID: 7979294644157043009}
@@ -124,6 +124,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!95 &2496167563644014240
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031831007638486253}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 02f7b563579f84e4a8b18cef335220f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &4884925205209892775
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -170,28 +192,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.27372095, y: 0.08549023}
   m_EdgeRadius: 0
---- !u!95 &2496167563644014240
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5031831007638486253}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 02f7b563579f84e4a8b18cef335220f8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &4489334933595901533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +270,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDuration: 0.5
+  hitboxActiveStart: 0.1
+  hitboxActiveDuration: 0.2
   hitboxObject: {fileID: 6165110858458500595}
+  showDebugLogs: 1
 --- !u!114 &7226566392952568119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,7 +327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498854944456398196}
   - component: {fileID: 7860374072463691222}
-  - component: {fileID: 6518488208777554977}
+  - component: {fileID: 2348025291157526027}
   m_Layer: 0
   m_Name: AttackHitbox
   m_TagString: Player
@@ -393,7 +396,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 25.012115, y: 25.656258}
   m_EdgeRadius: 0
---- !u!114 &6518488208777554977
+--- !u!114 &2348025291157526027
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -402,15 +405,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6165110858458500595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02992d79184319946a5f0b49becab3c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c8ee771f38571e548bd2fafc1594ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushDistance: 0.5
-  damageAmount: 0.1
-  pushDuration: 0.1
-  verticalSize: {x: 1.5, y: 2}
-  horizontalSize: {x: 2, y: 1.5}
-  offsetRight: {x: 1, y: 0}
-  offsetLeft: {x: -1, y: 0}
-  offsetUp: {x: 0, y: 1}
-  offsetDown: {x: 0, y: -1}
+  damage: 1
+  stunDuration: 0.5
+  hitboxOffset: 1
+  hitboxSize: {x: 1, y: 1}
+  showDebugGizmos: 1
+  showDebugLogs: 1

@@ -11,13 +11,15 @@ public class PlayerAttack : MonoBehaviour
     private PlayerMovement playerMovement;
 
     [Header("Attaque")]
-    public float attackDuration = 0.2f;
+    public float attackDuration = 0.4f;
+    public float hitboxActiveStart = 0.1f; // Délai avant activation de la hitbox
+    public float hitboxActiveDuration = 0.2f; // Durée d'activation de la hitbox
     private float attackTimer;
     private bool isAttacking = false;
 
     [Header("Hitbox")]
     // GameObject qui contient le script AttackHitbox et le BoxCollider2D
-    public GameObject hitboxObject; 
+    public GameObject hitboxObject;
 
     // Game Object contenant le BoxCollider
     private AttackHitbox attackHitbox;
@@ -26,11 +28,14 @@ public class PlayerAttack : MonoBehaviour
     // Distance de décalage de la hitbox par rapport au joueur
     // public float hitboxOffset = 0.5f;
 
+    [Header("Debug")]
+    public bool showDebugLogs = true;
+
     void Awake()
     {
         controls = new PlayerControls();
         animator = GetComponent<Animator>();
-         // On récupère la référence au script de mouvement sur le même GameObject
+        // On récupère la référence au script de mouvement sur le même GameObject
         playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -51,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
         if (hitboxObject != null)
         {
             attackHitbox = hitboxObject.GetComponent<AttackHitbox>();
-            hitboxObject.SetActive(true);
+            hitboxObject.SetActive(true); // Désactivé par défaut
         }
         else
         {
@@ -67,8 +72,7 @@ public class PlayerAttack : MonoBehaviour
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0f)
             {
-                isAttacking = false;
-                animator.SetBool("IsAttacking", false);
+                EndAttack();
             }
         }
     }
@@ -78,36 +82,101 @@ public class PlayerAttack : MonoBehaviour
     /// </summary>
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
-        if (!isAttacking && playerMovement.CurrentMovement.sqrMagnitude > 0.01f)
+        if (isAttacking) return; // Empêche les attaques multiples
+
+        StartAttack();
+    }
+
+    private void StartAttack()
+    {
+        isAttacking = true;
+        attackTimer = attackDuration;
+        animator.SetBool("IsAttacking", true);
+
+        // Direction d'attaque
+        Vector2 attackDirection = playerMovement.CurrentMovement.sqrMagnitude > 0.01f
+            ? playerMovement.CurrentMovement.normalized
+            : playerMovement.LastMovement;
+
+        if (attackDirection.sqrMagnitude < 0.01f)
         {
-            // On peut attaquer même à l'arrêt.
-            if (isAttacking) return;
+            attackDirection = Vector2.down;
+        }
 
-            isAttacking = true;
-            attackTimer = attackDuration;
-            animator.SetBool("IsAttacking", true);
+        // Met à jour l'animator
+        animator.SetFloat("X", attackDirection.x);
+        animator.SetFloat("Y", attackDirection.y);
 
-            // On utilise la dernière direction connue du script de mouvement.
-            // LastMovement conserve la dernière direction même quand le joueur s'arrête.
+        if (showDebugLogs)
+        {
+            Debug.Log($"Attaque lancée dans la direction: {attackDirection}");
+        }
+
+        // Active la hitbox avec un délai
+        StartCoroutine(ActivateHitboxWithDelay(attackDirection));
+    }
+
+    private System.Collections.IEnumerator ActivateHitboxWithDelay(Vector2 direction)
+    {
+        // Attendre le délai avant d'activer la hitbox
+        yield return new WaitForSeconds(hitboxActiveStart);
+
+        if (attackHitbox != null && isAttacking)
+        {
+            hitboxObject.SetActive(true);
+            attackHitbox.Activate(direction);
+
+            if (showDebugLogs)
+            {
+                Debug.Log("Hitbox activée");
+            }
+        }
+
+        // Garder la hitbox active pendant la durée spécifiée
+        yield return new WaitForSeconds(hitboxActiveDuration);
+
+        // Désactiver la hitbox
+        if (hitboxObject != null)
+        {
+            hitboxObject.SetActive(false);
+            if (showDebugLogs)
+            {
+                Debug.Log("Hitbox désactivée");
+            }
+        }
+    }
+
+    private void EndAttack()
+    {
+        isAttacking = false;
+        animator.SetBool("IsAttacking", false);
+
+        // S'assurer que la hitbox est désactivée
+        if (hitboxObject != null)
+        {
+            hitboxObject.SetActive(false);
+        }
+    }
+
+    // Méthode appelée par Animation Event pour un timing précis
+    public void OnAttackHit()
+    {
+        if (attackHitbox != null)
+        {
             Vector2 attackDirection = playerMovement.LastMovement;
+            hitboxObject.SetActive(true);
+            attackHitbox.Activate(attackDirection);
 
-            // S'assure qu'il y a une direction par défaut si le jeu commence sans bouger.
-            if (attackDirection.sqrMagnitude < 0.01f)
-            {
-                attackDirection = Vector2.down; // ou une autre direction par défaut
-            }
-
-            // Met à jour l'animator pour la direction de l'attaque
-            animator.SetFloat("X", attackDirection.x);
-            animator.SetFloat("Y", attackDirection.y);
-            
-            // On appelle la méthode Activate de notre hitbox
-            // en lui passant la direction de l'attaque.
-            if (attackHitbox != null)
-            {
-                attackHitbox.Activate(attackDirection);
-            }
-
+            // Désactiver après un court délai
+            Invoke(nameof(DeactivateHitbox), hitboxActiveDuration);
+        }
+    }
+    
+    private void DeactivateHitbox()
+    {
+        if (hitboxObject != null)
+        {
+            hitboxObject.SetActive(false);
         }
     }
 }
