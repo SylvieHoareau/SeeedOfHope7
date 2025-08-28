@@ -5,6 +5,10 @@ using System.Collections;
 // Ce script gère l'attaque du joueur
 public class PlayerAttack : MonoBehaviour
 {
+    [Header("Dégâts du joueur")]
+    public float baseDamage = 1f;          // dégâts normaux
+    public float damageMultiplier = 1f;   // multiplicateur (cheat = x5 ou x10)
+
     private PlayerControls controls;
     private Animator animator;
 
@@ -103,12 +107,24 @@ public class PlayerAttack : MonoBehaviour
 
     // }
 
-    // void Update()
-    // {
-    //    // Il n'est plus nécessaire de gérer le timer ici si la durée de l'animation le fait déjà.
-    //     // Si vous voulez une "cooldown" indépendant de l'animation, remettez le timer.
-    //     // Pour l'instant, on se fie à l'état isAttacking.
-    // }
+    void Update()
+    {
+       // Cheat code : toggle avec clavier (F12) ou manette (Select/Back)
+        if (Keyboard.current.f12Key.wasPressedThisFrame || 
+            Gamepad.current != null && Gamepad.current.selectButton.wasPressedThisFrame)
+        {
+            if (damageMultiplier == 1f)
+            {
+                damageMultiplier = 5f; // booste les dégâts
+                Debug.Log("Cheat ACTIVÉ : dégâts x5");
+            }
+            else
+            {
+                damageMultiplier = 1f; // revient à la normale
+                Debug.Log("Cheat DÉSACTIVÉ : dégâts normaux");
+            }
+        }
+    }
 
     /// <summary>
     /// Fonction appelée par le système d'input pour l'attaque
@@ -161,6 +177,11 @@ public class PlayerAttack : MonoBehaviour
         if (hitboxObject != null)
         {
             hitboxObject.SetActive(false);
+
+            // Applique le multiplicateur de dégâts
+            attackHitbox.damage = baseDamage * damageMultiplier;
+
+            attackHitbox.Activate(attackDirection);
         }
 
         isAttacking = false;

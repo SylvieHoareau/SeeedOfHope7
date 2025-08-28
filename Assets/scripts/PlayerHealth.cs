@@ -6,6 +6,8 @@ using System.Collections;
 // Ce script gère la vie du joueur dans le jeu
 public class PlayerHealth : MonoBehaviour
 {
+    
+
     // Indique si le joueur est temporairement invincible après avoir été touché
     public bool isInvincible = false;
     // Permet d'afficher le joueur à l'écran (utile pour faire clignoter le joueur quand il est touché)
