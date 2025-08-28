@@ -11610,6 +11610,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2348025291157526027, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: hitboxSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348025291157526027, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: hitboxSize.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348025291157526027, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: stunDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348025291157526027, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: knockbackForce
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2864299748755924808, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -11776,7 +11792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6165110858458500595, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: PlayerAttack
       objectReference: {fileID: 0}
     - target: {fileID: 6518488208777554977, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: m_Enabled
