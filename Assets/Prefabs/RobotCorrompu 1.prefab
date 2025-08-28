@@ -49,9 +49,9 @@ GameObject:
   - component: {fileID: 8580771910579339956}
   - component: {fileID: 545282212116136705}
   - component: {fileID: 3817672945119220632}
-  - component: {fileID: 2748649271482831121}
   - component: {fileID: 5197280304298409071}
   - component: {fileID: 5721572424889414296}
+  - component: {fileID: 8645929895797842063}
   m_Layer: 3
   m_Name: RobotCorrompu 1
   m_TagString: Enemy
@@ -186,7 +186,7 @@ Animator:
   m_GameObject: {fileID: 817847191061955212}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 63fddfa310eb42d4ea5004498ebbfe61, type: 2}
+  m_Controller: {fileID: 9100000, guid: db4e3e2c55105e141b0ca0d2f929fbf7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -225,20 +225,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2748649271482831121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817847191061955212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 041a0c0234e63f808ad3d7101134a7c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 5031831007638486253, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
-  speed: 2
 --- !u!114 &5197280304298409071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,6 +251,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06ba3daad581824286398722893d0bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8645929895797842063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817847191061955212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89c03c1a818e6b40a1999744abb2570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
 --- !u!1 &2032919919521985769
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,10 +532,10 @@ RectTransform:
   - {fileID: 6151493135753297579}
   m_Father: {fileID: 4074377988111388483}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -4.999939, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3679602514333506793
 GameObject:
@@ -647,8 +646,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.8, y: 0}
-  m_SizeDelta: {x: 19.6, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8739565787471192842
 CanvasRenderer:
@@ -720,8 +719,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4074377988111388483}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

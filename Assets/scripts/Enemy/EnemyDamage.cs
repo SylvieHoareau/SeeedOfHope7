@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
+    // Le script qui gère la vie du joueur
     private PlayerHealth playerHealth;
+     // Les dégâts infligés au joueur
+    public int damageAmount = 10;
 
     void Start()
     {
@@ -15,7 +18,7 @@ public class EnemyDamage : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && playerHealth != null)
         {
-            playerHealth.TakeDamage(10);
+            playerHealth.TakeDamage(damageAmount);
         }
     }
 }

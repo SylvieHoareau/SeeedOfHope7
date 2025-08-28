@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Collections;
 
 public class AiChase : MonoBehaviour
@@ -7,12 +6,15 @@ public class AiChase : MonoBehaviour
     public GameObject player;
     public float speed = 2f;
 
+    // Distances
+    public float stickDistance = 0.5f;   // Distance minimale avant d'arrêter l'ennemi
+    public float chaseRange = 10f;       // Distance max de poursuite
+
     private float distance;
     private Animator animator;
-    private Vector2 movement;
-    private bool isTouchingPlayer = false;
-    private bool isStunned = false; // ⭐ AJOUTÉ : État de stun
+    private bool isStunned = false; 
     private Rigidbody2D rb;
+    private Vector2 direction;
 
     private void Awake()
     {
@@ -28,84 +30,52 @@ public class AiChase : MonoBehaviour
         }
     }
 
-    private void OnMovement(InputValue value)
-    {
-        movement = value.Get<Vector2>();
-
-        if (movement.x != 0 || movement.y != 0)
-        {
-            animator.SetFloat("X", movement.x);
-            animator.SetFloat("Y", movement.y);
-        }
-    }
-
     void Update()
     {
-        // ⭐ MODIFIÉ : Arrêter le mouvement si touché ou stunné
-        if (isTouchingPlayer || isStunned || player == null) 
+        // Arrêter le mouvement si touché ou stunné
+        if (isStunned || player == null) 
         {
-            if (rb != null)
-                rb.linearVelocity = Vector2.zero;
+            if (rb != null) rb.velocity = Vector2.zero;
             return;
         }
 
         distance = Vector2.Distance(transform.position, player.transform.position);
 
-        if (distance < 3f)
+        if (distance < chaseRange)
         {
-            Vector2 direction = (player.transform.position - transform.position).normalized;
-            
-            // Utilise le Rigidbody pour un mouvement plus fluide
-            if (rb != null)
+            direction = (player.transform.position - transform.position).normalized;
+
+            // Stop si trop proche (évite les tremblements)
+            if (distance <= stickDistance)
             {
-                rb.linearVelocity = direction * speed;
-            }
-            else
-            {
-                // Fallback si pas de Rigidbody2D
-                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+                if (rb != null) rb.velocity = Vector2.zero;
             }
 
-            // Met à jour l'animator avec la direction
-            animator.SetFloat("X", direction.x);
-            animator.SetFloat("Y", direction.y);
+            // Met à jour l’animator
+            if (animator != null)
+            {
+                animator.SetFloat("X", direction.x);
+                animator.SetFloat("Y", direction.y);
+            }
         }
         else
         {
-            // Arrête le mouvement si trop loin
-            if (rb != null)
-                rb.linearVelocity = Vector2.zero;
+            if (rb != null) rb.velocity = Vector2.zero;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void FixedUpdate()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (!isStunned && player != null && distance > stickDistance && distance < chaseRange)
         {
-            isTouchingPlayer = true;
-
             if (rb != null)
-            {
-                rb.linearVelocity = Vector2.zero;
-                rb.bodyType = RigidbodyType2D.Kinematic;
-            }
+                rb.velocity = direction * speed;
+            else
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.fixedDeltaTime);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isTouchingPlayer = false;
-
-            if (rb != null)
-            {
-                rb.bodyType = RigidbodyType2D.Dynamic;
-            }
-        }
-    }
-
-    // ⭐ AJOUTÉ : Fonction publique pour le stun
+    // ⭐ Stun : l’ennemi s’arrête net et ne suit plus le joueur
     public void Stun(float duration)
     {
         StartCoroutine(StunRoutine(duration));
@@ -114,16 +84,24 @@ public class AiChase : MonoBehaviour
     private IEnumerator StunRoutine(float duration)
     {
         isStunned = true;
-        
-        // Arrête le mouvement
-        if (rb != null)
-            rb.linearVelocity = Vector2.zero;
-            
+        if (rb != null) rb.velocity = Vector2.zero;
         Debug.Log($"{gameObject.name} stunné pour {duration}s");
         
         yield return new WaitForSeconds(duration);
         
         isStunned = false;
         Debug.Log($"{gameObject.name} n'est plus stunné");
+    }
+
+    // ⭐ Gizmos : visualisation des zones dans la Scene View
+    private void OnDrawGizmosSelected()
+    {
+        // 🔵 Zone de détection
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, chaseRange);
+
+        // 🔴 Zone de collage
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, stickDistance);
     }
 }

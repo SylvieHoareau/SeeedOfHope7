@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Ce script s'occupe de la santé de l'ennemi
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 3f;
     [SerializeField] private Slider healthBar;
 
     private float currentHealth;
-    private bool isDead = false;       // <- ajouté
-    private Animator animator;         // <- ajouté
+    private bool isDead = false;   
+    private Animator animator;  
 
     private void Awake()
     {
@@ -24,13 +25,13 @@ public class EnemyHealth : MonoBehaviour
 
     public void Damage(float damageAmount)
     {
-         Debug.Log($"DAMAGE APPELÉ sur {gameObject.name}: {damageAmount} dégâts"); // ⭐ AJOUTÉ
+        Debug.Log($"DAMAGE APPELÉ sur {gameObject.name}: {damageAmount} dégâts"); // ⭐ AJOUTÉ
 
-        
-        if (isDead) 
+
+        if (isDead)
         {
             Debug.Log("Ennemi déjà mort, dégâts ignorés"); // ⭐ AJOUTÉ
-            return; 
+            return;
         }
 
         currentHealth -= damageAmount;
