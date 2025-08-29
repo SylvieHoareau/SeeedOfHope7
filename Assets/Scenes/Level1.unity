@@ -77915,11 +77915,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 443376215}
     - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
+      propertyPath: 'dialogue.sentences.Array.data[0]'
+      value: "[ I.A. LOG ] Bienvenue, explorateur.rice. Utilise les fl\xE8ches du
+        clavier ou le joystick gauche pour te d\xE9placer. Appuie sur E au clavier
+        ou A \xE0 la manette pour interagir avec moi. Avance, et d\xE9couvre ce monde
+        en ruines..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
       propertyPath: 'dialogue.sentences.Array.data[3]'
       value: "[ I.A. LOG ]\_ Le monde rena\xEEt peu \xE0 peu gr\xE2ce \xE0 toi. Les
-        syst\xE8mes de revitalisation sont maintenant activ\xE9s. Bravo, explorateur.
-        Une issue a \xE9t\xE9 localis\xE9e. T\xE9l\xE9porte-toi pour l'aventure suivante.
-        Bonne chance, explorateur."
+        syst\xE8mes de revitalisation sont maintenant activ\xE9s. Bravo ! Une issue
+        a \xE9t\xE9 localis\xE9e. T\xE9l\xE9porte-toi pour l'aventure suivante. Bonne
+        chance, explorateur.rice."
       objectReference: {fileID: 0}
     - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
       propertyPath: 'zonesARevitaliser.Array.data[10]'
