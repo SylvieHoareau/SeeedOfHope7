@@ -35,7 +35,7 @@ public class AiChase : MonoBehaviour
         // Arrêter le mouvement si touché ou stunné
         if (isStunned || player == null) 
         {
-            if (rb != null) rb.velocity = Vector2.zero;
+            if (rb != null) rb.linearVelocity = Vector2.zero;
             return;
         }
 
@@ -48,7 +48,7 @@ public class AiChase : MonoBehaviour
             // Stop si trop proche (évite les tremblements)
             if (distance <= stickDistance)
             {
-                if (rb != null) rb.velocity = Vector2.zero;
+                if (rb != null) rb.linearVelocity = Vector2.zero;
             }
 
             // Met à jour l’animator
@@ -60,7 +60,7 @@ public class AiChase : MonoBehaviour
         }
         else
         {
-            if (rb != null) rb.velocity = Vector2.zero;
+            if (rb != null) rb.linearVelocity = Vector2.zero;
         }
     }
 
@@ -69,7 +69,7 @@ public class AiChase : MonoBehaviour
         if (!isStunned && player != null && distance > stickDistance && distance < chaseRange)
         {
             if (rb != null)
-                rb.velocity = direction * speed;
+                rb.linearVelocity = direction * speed;
             else
                 transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.fixedDeltaTime);
         }
@@ -84,7 +84,7 @@ public class AiChase : MonoBehaviour
     private IEnumerator StunRoutine(float duration)
     {
         isStunned = true;
-        if (rb != null) rb.velocity = Vector2.zero;
+        if (rb != null) rb.linearVelocity = Vector2.zero;
         Debug.Log($"{gameObject.name} stunné pour {duration}s");
         
         yield return new WaitForSeconds(duration);

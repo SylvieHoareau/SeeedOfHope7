@@ -700,7 +700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041a0c0234e63f808ad3d7101134a7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1508202478443059263, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
   speed: 5
   stickDistance: 0.5
   chaseRange: 5

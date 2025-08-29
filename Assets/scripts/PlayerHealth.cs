@@ -66,51 +66,52 @@ public class PlayerHealth : MonoBehaviour
         // Si on appuie sur la touche H, le joueur perd 20 points de vie (pour tester)
         if (Input.GetKeyDown(KeyCode.H))
         {
+            Debug.Log("Touche H pressée. Dégâts de test envoyés.");
             TakeDamage(20);
         }
     }
 
     // Cette fonction enlève de la vie au joueur quand il est touché
-    public void TakeDamage(int damage)
+   public void TakeDamage(int damageAmount)
     {
-        // Si le joueur n'est pas invincible...
-        if (!isInvincible)
-        {
-            // On joue le son de coup reçu
-            if (hitSound != null)
-            {
-                if (audioSource != null)
-                {
-                    Debug.Log("Joue hitSound via audioSource : " + hitSound.name);
-                    audioSource.PlayOneShot(hitSound);
-                }
-                else
-                {
-                    Debug.LogWarning("Pas d'audioSource trouvé sur le Player !");
-                    AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, hitVolume);
-                }
-            }
-            else
-            {
-                Debug.LogWarning("hitSound n’est pas assigné !");
-            }
+        // Log au début de la fonction pour vérifier si elle est appelée
+        Debug.Log($"La fonction TakeDamage est appelée ! Dégâts : {damageAmount}");
 
-            // On enlève les points de vie
-            currentHealth = Math.Max(0, currentHealth - damage);
-            // On met à jour la barre de vie
-            healthBar.SetHealth(currentHealth);
-            // Le joueur devient invincible pendant un moment
-            isInvincible = true;
-            // On fait clignoter le joueur pour montrer qu'il devient invincible
-            StartCoroutine(InvincibilityFlash());
-            // On attend avant de pouvoir être touché à nouveau
-            StartCoroutine(HandleInvincibilityDelay());
+        // On n'inflige pas de dégâts si le joueur est invincible
+        if (isInvincible)
+        {
+            // Log si le joueur est invincible
+            Debug.Log("Le joueur est invincible, les dégâts sont ignorés.");
+            return;
         }
 
-        // Si la vie du joueur tombe à zéro, il meurt
+        // On enlève le nombre de points de vie défini par le script de l'ennemi
+        currentHealth -= damageAmount;
+
+        // On affiche les dégâts infligés et la vie restante
+        Debug.Log($"Le joueur a perdu {damageAmount} point(s) de vie. Vie restante : {currentHealth}");
+
+        // Met à jour la barre de vie du joueur
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
+
+        // Si la vie tombe à zéro, on lance la fonction de mort
         if (currentHealth <= 0)
         {
             Die();
+        }
+
+        // Active l'invincibilité temporaire et les effets visuels
+        isInvincible = true;
+        StartCoroutine(InvincibilityFlash());
+        StartCoroutine(HandleInvincibilityDelay());
+        
+        // Joue un son de dégâts si disponible
+        if (hitSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(hitSound, hitVolume);
         }
     }
 
