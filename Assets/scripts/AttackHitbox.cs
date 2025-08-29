@@ -20,6 +20,9 @@ public class AttackHitbox : MonoBehaviour
     private List<GameObject> hitEnemies = new List<GameObject>(); // Évite les hits multiples
     private Vector2 currentDirection;
 
+    [SerializeField]
+    public int attackDamage = 5;
+
 
     void OnEnable()
     {
@@ -68,6 +71,20 @@ public class AttackHitbox : MonoBehaviour
 
      private void OnTriggerEnter2D(Collider2D collision)
     {
+        
+        // ⚔️  Vérifie si la collision est avec un ennemi
+        if (collision.CompareTag("Enemy"))
+        {
+            Debug.Log("Hit " + collision.name);
+            // 🎯 Cherche le composant EnemyHealth sur l'ennemi
+            EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                // 🔥 Inflige des dégâts à l'ennemi
+                enemyHealth.TakeDamage(attackDamage);
+            }
+        }
+
         if (collision.CompareTag("Enemy") && !hitEnemies.Contains(collision.gameObject))
         {
             // Ajoute l'ennemi à la liste pour éviter les hits multiples
@@ -80,7 +97,7 @@ public class AttackHitbox : MonoBehaviour
             EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.Damage(damage);
+                enemyHealth.TakeDamage(damage);
                 if (showDebugLogs)
                     Debug.Log($"Dégâts appliqués: {damage} à {collision.name}");
             }
@@ -104,16 +121,16 @@ public class AttackHitbox : MonoBehaviour
             {
                 // Calcul la direction du knockback
                 Vector2 knockbackDir = (collision.transform.position - transform.position).normalized;
-                
+
                 // S'assure qu'il y a une direction valide
                 if (knockbackDir.sqrMagnitude < 0.1f)
                 {
                     knockbackDir = Vector2.up; // Direction par défaut
                 }
-                
+
                 // Applique la force de knockback
                 enemyRb.AddForce(knockbackDir * knockbackForce, ForceMode2D.Impulse);
-                
+
                 if (showDebugLogs)
                     Debug.Log($"Knockback appliqué: {knockbackDir} * {knockbackForce} à {collision.name}");
             }

@@ -113,7 +113,7 @@ public class AttackHitboxOld : MonoBehaviour
         EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {
-            enemyHealth.Damage(damageAmount);
+            enemyHealth.TakeDamage(damageAmount);
         }
 
         // Gérer l'etourdissement de l'IA

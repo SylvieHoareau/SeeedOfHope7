@@ -27888,6 +27888,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4489334933595901533, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: healSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c80033248bc895298afde4ce51bd9823, type: 3}
     - target: {fileID: 4884925205209892775, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: m_Size.x
       value: 0.26869678
@@ -77862,6 +77866,10 @@ PrefabInstance:
       propertyPath: messageManager
       value: 
       objectReference: {fileID: 1127724148}
+    - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
+      propertyPath: activationSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b68c45437595b44f8bfc864eab7d5793, type: 3}
     - target: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
       propertyPath: playerInventory
       value: 

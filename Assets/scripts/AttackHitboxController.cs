@@ -44,7 +44,7 @@ public class AttackHitboxController : MonoBehaviour
             if (enemyHealth != null)
             {
                 // On appelle la fonction Damage du script EnemyHealth
-                enemyHealth.Damage(attackDamage);
+                enemyHealth.TakeDamage(attackDamage);
             }
         }
     }

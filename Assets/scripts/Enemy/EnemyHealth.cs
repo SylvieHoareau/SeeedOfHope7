@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
         healthBar.value = currentHealth;
     }
 
-    public void Damage(float damageAmount)
+    public void TakeDamage(float damageAmount)
     {
         Debug.Log($"DAMAGE APPELÉ sur {gameObject.name}: {damageAmount} dégâts"); // ⭐ AJOUTÉ
 
