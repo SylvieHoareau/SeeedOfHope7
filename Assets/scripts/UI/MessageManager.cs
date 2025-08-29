@@ -1,75 +1,91 @@
 using TMPro;
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic; // Important pour utiliser les Queues (files d'attente)
+using System.Collections.Generic;
 
 public class MessageManager : MonoBehaviour
 {
     [Header("UI References")]
     public GameObject messagePanel;
     public TextMeshProUGUI messageText;
-    private Coroutine currentCoroutine; // Pour éviter plusieurs coroutines
+    private Coroutine currentTypingCoroutine;
+    private Queue<string> sentences;
 
-    private Coroutine hideCoroutine;
-    // File d'attente pour les phrases
-    // private Queue<string> sentencesQueue;
     // Pour savoir si un dialogue est en cours
-    // private bool isDialogueActive = false;
+    public bool isDialogueActive { get; private set; } = false;
 
     void Awake()
     {
-        // Par sécutité : on cache le panel au lancement
+        // On cache le panel au lancement pour qu'il ne soit pas visible
         if (messagePanel != null)
             messagePanel.SetActive(false);
+        
+        // On initialise la file d'attente pour les phrases
+        sentences = new Queue<string>();
     }
 
     /// <summary>
-    ///    Affiche un message temporaire pendant X secondes puis le masque 
+    /// Affiche un message simple et temporaire pendant une durée donnée.
+    /// Idéal pour les messages d'erreur, de succès ou d'objectif.
     /// </summary>
-
-    public void ShowMessage(string message, float duration)
+    public void ShowMessage(string message, float duration = 3f)
     {
-        if (messagePanel == null || messageText == null)
+        isDialogueActive = false;
+        
+        if (currentTypingCoroutine != null) 
+            StopCoroutine(currentTypingCoroutine);
+
+        if (messagePanel != null)
+            messagePanel.SetActive(true);
+        
+        if (messageText != null)
         {
-            Debug.LogWarning("[MessageManager] Références UI manquantes");
-            return;
+            messageText.text = message;
         }
 
-        // Si une autre coroutine est en cours, on la stoppe
-        if (currentCoroutine != null)
-            StopCoroutine(currentCoroutine);
-
-        messagePanel.SetActive(true);
-        messageText.text = message;
-
-        // Lance une coroutine pour masquer après X secondes
-        currentCoroutine = StartCoroutine(HideAfterSeconds(duration));
+        StartCoroutine(HideAfterSeconds(duration));
     }
 
     /// <summary>
-    /// Démarre un dialogue basé sur un ScriptableObject Dialogue
-    /// (Ici, on affiche seulement la première phrase pour simplifier)
+    /// Commence une nouvelle conversation avec plusieurs phrases.
     /// </summary>
-    public void StartDialogue(Dialogue dialogue)
+    public void StartConversation(Dialogue dialogue)
     {
-        if (messagePanel == null || messageText == null)
+        isDialogueActive = true;
+        
+        if (currentTypingCoroutine != null) 
+            StopCoroutine(currentTypingCoroutine);
+            
+        sentences.Clear(); 
+
+        foreach (string sentence in dialogue.sentences)
         {
-            Debug.LogWarning("[Message Manager] Références UI manquantes ! ");
+            sentences.Enqueue(sentence);
+        }
+
+        if (messagePanel != null)
+            messagePanel.SetActive(true);
+        
+        DisplayNextSentence();
+    }
+
+    /// <summary>
+    /// Affiche la prochaine phrase de la conversation.
+    /// </summary>
+    public void DisplayNextSentence()
+    {
+        if (sentences.Count == 0)
+        {
+            EndDialogue();
             return;
         }
 
-        if (dialogue == null || dialogue.sentences.Length == 0)
-        {
-            Debug.LogWarning("[MessageManager] Dialogue vide ou non assigné");
-            return;
-        }
-
-        // Si une autre coroutine est en cours, on la stoppe
-        if (currentCoroutine != null)
-            StopCoroutine(currentCoroutine);
-
-        messagePanel.SetActive(true);
-        messageText.text = dialogue.sentences[0]; // Pour l’instant une phrase simple
+        string sentence = sentences.Dequeue();
+        
+        if (currentTypingCoroutine != null)
+            StopCoroutine(currentTypingCoroutine);
+            
+        currentTypingCoroutine = StartCoroutine(TypeSentence(sentence));
     }
 
     /// <summary>
@@ -77,13 +93,37 @@ public class MessageManager : MonoBehaviour
     /// </summary>
     public void HidePanel()
     {
-        if (messagePanel != null)
+        if (messagePanel != null) 
             messagePanel.SetActive(false);
-
+        
         if (messageText != null)
             messageText.text = "";
+        
+        isDialogueActive = false;
+        
+        if (currentTypingCoroutine != null) 
+            StopCoroutine(currentTypingCoroutine);
+    }
 
-        currentCoroutine = null;
+    /// <summary>
+    /// Met fin au dialogue et masque le panneau.
+    /// </summary>
+    void EndDialogue()
+    {
+        HidePanel();
+    }
+
+    /// <summary>
+    /// Coroutine pour taper le texte lettre par lettre.
+    /// </summary>
+    IEnumerator TypeSentence(string sentence)
+    {
+        messageText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            messageText.text += letter;
+            yield return new WaitForSeconds(0.05f); // Vitesse d'écriture
+        }
     }
 
     /// <summary>
@@ -94,22 +134,4 @@ public class MessageManager : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         HidePanel();
     }
-    }
-
-    // void Start()
-    // {
-    //     // On initialise la file d'attente
-    //     sentencesQueue = new Queue<string>();
-    // }
-
-    // void Update()
-    // {
-    //     // Si un dialogue est actif et que le joueur appuie sur la touche d'interaction
-    //     // (ici 'A' sur le clavier ou le bouton Sud de la manette)
-    //     if (isDialogueActive && Input.GetButtonDown("Fire1")) // "Fire1" est souvent mappé au clic gauche ou à une touche d'action
-    //     {
-    //         DisplayNextSentence();
-    //     }
-    // }
-
-    
+}

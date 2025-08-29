@@ -253,6 +253,17 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8db0bfa2-0bb0-488f-b904-6a04f4c538ed",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -280,12 +291,12 @@
                 },
                 {
                     "name": "Navigate",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "4553586c-6a03-4db7-8416-3182e57f3806",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Pause",
@@ -343,70 +354,59 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "618844be-992e-4707-9ceb-988cae1bd3d6",
-                    "path": "<Gamepad>/leftStick/right",
+                    "name": "2D Vector",
+                    "id": "00f3887c-6ce6-4599-89cd-a2d25e23a9aa",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "a8fdb3b6-04cc-4c4d-b768-66e1712a48e0",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Navigate",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "7f0e6327-44df-403b-adae-763bbc631b65",
-                    "path": "<XInputController>/leftStick/right",
+                    "name": "down",
+                    "id": "804ba0cc-7587-4f86-aab7-59ffa690885b",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Navigate",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "6f9d858d-a8a7-428c-b4b2-0b88bc9aaf9e",
+                    "name": "left",
+                    "id": "c7ca58db-a62d-4241-86bb-c72ee9e85e40",
                     "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Navigate",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "88ffa13c-ddeb-4b4f-83b5-056dd4b55276",
-                    "path": "<XInputController>/leftStick/left",
+                    "name": "right",
+                    "id": "f396f058-5be2-485e-a0d7-938dd52e152c",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Navigate",
                     "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1121ad81-39ec-4c38-bf4d-1c8a8c9680ed",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Navigate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1fa7c068-11ae-4f87-b438-08dfbf20d28f",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Navigate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

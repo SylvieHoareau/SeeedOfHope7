@@ -1,15 +1,14 @@
+// Ce script gère la collecte d'objets dans le jeu,
+// comme les gouttes d'eau, les graines ou le fertilisant
 using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    public enum ItemType
-    {
-        WaterDrop,
-        Seed,
-        Fertilizer
-    }
+   
+    public ResourceType resourceType;
 
-    public ItemType itemType = ItemType.WaterDrop;
+    // Le nombre d'unités de cette ressource que le joueur va collecter
+    public int amount = 1;
 
     [Header("Audio")]
     public AudioClip pickupSound; // À assigner dans l'inspecteur
@@ -48,21 +47,13 @@ public class Pickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Récupère l'inventaire du joueur
-            Inventory inventory = other.GetComponent<Inventory>();
-            if (inventory != null)
-            {
-                // Détermine le nom de l'objet ramassé
-                string itemName = ConvertItemTypeToName(itemType);
-                // Ajoute l'objet à l'inventaire
-                inventory.AddItem(itemName);
+            Inventory playerInventory = other.GetComponent<Inventory>();
 
-                // Préviens le terminal IA qu'une ressource a été collectée (pour mettre à jour l'UI)
-                // Utilise la méthode recommandée par Unity pour trouver le terminal IA
-                AITerminal terminal = FindFirstObjectByType<AITerminal>();
-                if (terminal != null)
-                {
-                    terminal.OnResourceCollected();
-                }
+            if (playerInventory != null)
+            {
+                // Ajoute l'objet à l'inventaire
+                playerInventory.AddResource(resourceType, amount);
+
 
                 // Joue le son de ramassage si défini
                 if (pickupSound != null)
@@ -71,23 +62,8 @@ public class Pickup : MonoBehaviour
                 }
 
                 // Supprime l'objet de la scène après ramassage
-                Destroy(gameObject); 
+                Destroy(gameObject);
             }
-        }
-    }
-
-    public string ConvertItemTypeToName(ItemType type)
-    {
-        switch (type)
-        {
-            case ItemType.WaterDrop:
-                return "Water Drop";
-            case ItemType.Seed:
-                return "Seed";
-            case ItemType.Fertilizer:
-                return "Fertilizer";
-            default:
-                return "Unknown";
         }
     }
 }

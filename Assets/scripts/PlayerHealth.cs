@@ -6,6 +6,8 @@ using System.Collections;
 // Ce script gère la vie du joueur dans le jeu
 public class PlayerHealth : MonoBehaviour
 {
+    
+
     // Indique si le joueur est temporairement invincible après avoir été touché
     public bool isInvincible = false;
     // Permet d'afficher le joueur à l'écran (utile pour faire clignoter le joueur quand il est touché)
@@ -21,6 +23,8 @@ public class PlayerHealth : MonoBehaviour
 
     // Son joué quand le joueur est touché
     public AudioClip hitSound; // glisser le son dans l'inspecteur
+    public AudioClip healSound; // glisser le son dans l'inspecteur
+
 
     // Permet de jouer le son
     private AudioSource audioSource;
@@ -35,8 +39,14 @@ public class PlayerHealth : MonoBehaviour
     public void Start()
     {
         // Le joueur commence avec toute sa vie
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+        }
+        else
+        {
+            Debug.LogWarning("HealthBar n'est pas assigné sur PlayerHealth !");
+        }
         // On cache l'interface de Game Over au début
         if (gameOverUI != null)
             gameOverUI.SetActive(false);
@@ -65,23 +75,23 @@ public class PlayerHealth : MonoBehaviour
         if (!isInvincible)
         {
             // On joue le son de coup reçu
-        if (hitSound != null)
-        {
-            if (audioSource != null)
+            if (hitSound != null)
             {
-                Debug.Log("Joue hitSound via audioSource : " + hitSound.name);
-                audioSource.PlayOneShot(hitSound);
+                if (audioSource != null)
+                {
+                    Debug.Log("Joue hitSound via audioSource : " + hitSound.name);
+                    audioSource.PlayOneShot(hitSound);
+                }
+                else
+                {
+                    Debug.LogWarning("Pas d'audioSource trouvé sur le Player !");
+                    AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, hitVolume);
+                }
             }
             else
             {
-                Debug.LogWarning("Pas d'audioSource trouvé sur le Player !");
-                AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, hitVolume);
+                Debug.LogWarning("hitSound n’est pas assigné !");
             }
-        }
-        else
-        {
-            Debug.LogWarning("hitSound n’est pas assigné !");
-        }
 
             // On enlève les points de vie
             currentHealth = Math.Max(0, currentHealth - damage);
@@ -146,10 +156,28 @@ public class PlayerHealth : MonoBehaviour
     }
 
     // Cette fonction gère le soin du joueur pendant le niveau 4
-    public void Heal(int amount)
+    // public void Heal(int amount)
+    // {
+    //     currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+    //     healthBar.SetHealth(currentHealth); // si tu as une barre de vie
+    // }
+    
+    // Ajoute de la vie au joueur, sans dépasser la vie maximale
+    public void AddHealth(int amount)
     {
+        if (amount <= 0)
+            return;
+
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        healthBar.SetHealth(currentHealth); // si tu as une barre de vie
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
+
+        // Joue un son de soin si disponible
+        if (healSound != null && audioSource != null)
+            audioSource.PlayOneShot(healSound);
+
+        Debug.Log("Vie ajoutée : " + amount + " | Vie actuelle : " + currentHealth);
     }
+
 
 }
