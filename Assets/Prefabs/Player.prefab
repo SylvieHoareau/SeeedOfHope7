@@ -44,9 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8b3a044434bbf48a34f3d65f9fb71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseDamage: 1
+  damageMultiplier: 1
   playerMovement: {fileID: 7979294644157043009}
+  attackCooldown: 0.5
   attackDuration: 0.4
-  hitboxActiveDuration: 0.2
   hitboxObject: {fileID: 6165110858458500595}
   showDebugLogs: 1
 --- !u!1 &5031831007638486253
@@ -62,10 +64,11 @@ GameObject:
   - component: {fileID: 7551523579058190315}
   - component: {fileID: 2496167563644014240}
   - component: {fileID: 4884925205209892775}
-  - component: {fileID: 4489334933595901533}
   - component: {fileID: 3112245903356233397}
   - component: {fileID: 7979294644157043009}
   - component: {fileID: 7226566392952568119}
+  - component: {fileID: 304459539370062209}
+  - component: {fileID: 5867613071214563771}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -241,28 +244,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.27372095, y: 0.08549023}
   m_EdgeRadius: 0
---- !u!114 &4489334933595901533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5031831007638486253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5195f25141828084a8ebe3beb78779f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isInvincible: 0
-  graphics: {fileID: 3819502881158425339}
-  maxHealth: 100
-  currentHealth: 0
-  InvincibilityTimeAfterHit: 3
-  healthBar: {fileID: 8518256406807153026, guid: f64e34050ce325b4c827642b7ec5aa42, type: 3}
-  hitSound: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
-  healSound: {fileID: 0}
-  gameOverUI: {fileID: 5057509148430671452, guid: 23738f1558f660945990e000a093b729, type: 3}
-  InvincibilityFlashDelay: 0.15
 --- !u!114 &3112245903356233397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +299,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e33c23206a10c4bbb6e7583f0d04f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &304459539370062209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031831007638486253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5195f25141828084a8ebe3beb78779f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInvincible: 0
+  graphics: {fileID: 5717839171784824346, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+  maxHealth: 100
+  currentHealth: 0
+  InvincibilityTimeAfterHit: 3
+  healthBar: {fileID: 0}
+  hitSound: {fileID: 0}
+  healSound: {fileID: 0}
+  gameOverUI: {fileID: 5057509148430671452, guid: 23738f1558f660945990e000a093b729, type: 3}
+  InvincibilityFlashDelay: 0.2
+--- !u!114 &5867613071214563771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031831007638486253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ec7fee40e7dc8b987c0493f18b2aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalDamage: 1
+  boostedDamage: 5
+  cheatText: {fileID: 0}
+  fireIcon: {fileID: 0}
+  playerAttack: {fileID: 2780680888229841820, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
 --- !u!1 &5815696848494638837
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,3 +467,4 @@ MonoBehaviour:
   hitboxSize: {x: 1, y: 1}
   showDebugGizmos: 1
   showDebugLogs: 1
+  attackDamage: 5

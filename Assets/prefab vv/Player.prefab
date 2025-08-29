@@ -44,12 +44,12 @@ GameObject:
   - component: {fileID: 648955467656386718}
   - component: {fileID: 4409004033304219895}
   - component: {fileID: 8625614598707216518}
-  - component: {fileID: 3413096842673678090}
   - component: {fileID: 7945780037440140198}
   - component: {fileID: 3608819852566299126}
   - component: {fileID: 6643572134504129227}
   - component: {fileID: 2780680888229841820}
   - component: {fileID: 5331736205928356122}
+  - component: {fileID: 7170073241140271490}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -224,28 +224,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.42360994, y: 0.20207071}
   m_EdgeRadius: 0
---- !u!114 &3413096842673678090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508202478443059263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5195f25141828084a8ebe3beb78779f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isInvincible: 0
-  graphics: {fileID: 5717839171784824346}
-  maxHealth: 100
-  currentHealth: 0
-  InvincibilityTimeAfterHit: 3
-  healthBar: {fileID: 0}
-  hitSound: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
-  healSound: {fileID: 8300000, guid: c80033248bc895298afde4ce51bd9823, type: 3}
-  gameOverUI: {fileID: 0}
-  InvincibilityFlashDelay: 0.15
 --- !u!114 &7945780037440140198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +355,28 @@ MonoBehaviour:
   cheatText: {fileID: 0}
   fireIcon: {fileID: 0}
   playerAttack: {fileID: 2780680888229841820}
+--- !u!114 &7170073241140271490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508202478443059263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5195f25141828084a8ebe3beb78779f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInvincible: 0
+  graphics: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 0
+  InvincibilityTimeAfterHit: 3
+  healthBar: {fileID: 0}
+  hitSound: {fileID: 0}
+  healSound: {fileID: 0}
+  gameOverUI: {fileID: 0}
+  InvincibilityFlashDelay: 0.2
 --- !u!1 &8718540614745832356
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,3 +475,4 @@ MonoBehaviour:
   hitboxSize: {x: 1, y: 1}
   showDebugGizmos: 1
   showDebugLogs: 1
+  attackDamage: 5

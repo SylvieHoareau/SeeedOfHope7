@@ -18,8 +18,8 @@ public class PlayerAttack : MonoBehaviour
     [Header("Attaque")]
     public float attackCooldown = 0.5f; // Temps entre chaque attaque
     public float attackDuration = 0.4f; // Durée de l'animation d'attaque
-    // public float hitboxActiveDuration = 0.2f; // Durée d'activation de la hitbox
-    // private float attackTimer;
+    
+    // Le booléen est une variable privée, gérée uniquement par ce script.
     private bool isAttacking = false;
     private float lastAttackTime; // Pour gérer le cooldown
 
@@ -38,11 +38,10 @@ public class PlayerAttack : MonoBehaviour
         controls = new PlayerControls();
         animator = GetComponent<Animator>();
 
-
         if (playerMovement == null)
             Debug.LogError("PlayerMovement non assigné !");
             
-       // Récupère la référence à l'AttackHitbox sur le HitboxObject
+        // Récupère la référence à l'AttackHitbox sur le HitboxObject
         if (hitboxObject != null)
         {
             attackHitbox = hitboxObject.GetComponent<AttackHitbox>();
@@ -53,7 +52,6 @@ public class PlayerAttack : MonoBehaviour
         {
             Debug.LogError("L'objet de la hitbox n'est pas assigné dans l'inspecteur !");
         }
-
     }
 
     void OnEnable()
@@ -67,45 +65,6 @@ public class PlayerAttack : MonoBehaviour
         controls.Player.Attack.performed -= OnAttackPerformed;
         controls.Player.Disable();
     }
-
-    // void Start()
-    // {
-    //     // On s'assure que toutes les références requises sont bien là
-    //     animator = GetComponent<Animator>();
-    //     if (animator == null)
-    //     {
-    //         Debug.LogError("Composant Animator manquant sur " + gameObject.name + " !");
-    //         return;
-    //     }
-
-    //     // Si playerMovement n'est pas assigné via l'Inspector, on tente de le récupérer
-    //     // Note : Cette méthode est moins fiable si les scripts sont sur des objets différents
-    //     if (playerMovement == null)
-    //     {
-    //         playerMovement = GetComponent<PlayerMovement>();
-    //         if (playerMovement == null)
-    //         {
-    //             Debug.LogError("Le script PlayerMovement est manquant sur " + gameObject.name + ". Veuillez l'ajouter ou l'assigner dans l'Inspector.");
-    //             return; // On arrête le Start() pour éviter les erreurs
-    //         }
-    //     }
-
-    //     // Initialisation de la hitbox
-    //     if (hitboxObject != null)
-    //     {
-    //         attackHitbox = hitboxObject.GetComponent<AttackHitbox>();
-    //         // La hitBox doit être désactivé au démarrage
-    //         hitboxObject.SetActive(false);
-
-    //         if (showDebugLogs)
-    //             Debug.Log("AttackHitbox trouvée et désactivée");
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("L'objet de la hitbox n'est pas assigné dans l'inspecteur !");
-    //     }
-
-    // }
 
     void Update()
     {
@@ -131,17 +90,17 @@ public class PlayerAttack : MonoBehaviour
     /// </summary>
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
-        // Vérifie si le cooldown est terminé
-        if (Time.time > lastAttackTime + attackCooldown)
-        {
-            StartCoroutine(AttackRoutine());
-            lastAttackTime = Time.time;
-        }
-        else
+        // Vérifie si le joueur est déjà en train d'attaquer ou si le cooldown n'est pas terminé
+        if (isAttacking || Time.time < lastAttackTime + attackCooldown)
         {
             if (showDebugLogs)
                 Debug.Log("Attaque impossible, cooldown actif.");
+            return;
         }
+        
+        // Si le cooldown est terminé et le joueur n'est pas déjà en train d'attaquer
+        StartCoroutine(AttackRoutine());
+        lastAttackTime = Time.time;
     }
 
     private IEnumerator AttackRoutine()
@@ -161,12 +120,10 @@ public class PlayerAttack : MonoBehaviour
         animator.SetFloat("X", attackDirection.x);
         animator.SetFloat("Y", attackDirection.y);
 
-        // 3. Active la hitbox
+        // Active la hitbox
         if (attackHitbox != null)
         {
-            // Applique le multiplicateur de dégâts
             attackHitbox.damage = baseDamage * damageMultiplier;
-
             hitboxObject.SetActive(true);
             attackHitbox.Activate(attackDirection);
         }
@@ -174,10 +131,10 @@ public class PlayerAttack : MonoBehaviour
         if (showDebugLogs)
             Debug.Log("Hitbox activée dans la direction: " + attackDirection);
 
-        // 4. Attend la fin de l'animation d'attaque
+        // Attend la fin de l'animation d'attaque
         yield return new WaitForSeconds(attackDuration);
 
-        // 5. Désactive la hitbox et met fin à l'attaque
+        // Désactive la hitbox et met fin à l'attaque
         if (hitboxObject != null)
         {
             hitboxObject.SetActive(false);
@@ -187,71 +144,6 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("IsAttacking", false);
         
         if (showDebugLogs)
-            Debug.Log("Attaque terminée.");
-    
-        if (showDebugLogs)
-            Debug.Log($"Attaque lancée dans la direction: {attackDirection}");
-        
+            Debug.Log($"Attaque terminée.");
     }
-
-    //  // ✅ SIMPLIFIÉ: Méthode unique pour activer la hitbox
-    // private void ActivateHitbox(Vector2 direction)
-    // {
-    //     if (attackHitbox != null)
-    //     {
-    //         hitboxObject.SetActive(true);
-    //         attackHitbox.Activate(direction);
-
-    //         if (showDebugLogs)
-    //             Debug.Log("Hitbox activée immédiatement");
-
-    //         // Désactiver après la durée
-    //         StartCoroutine(HitboxDeactivationRoutine()); // ⭐ AMÉLIORATION : On utilise la coroutine
-    //     }
-    // }
-    
-//     // Coroutine pour gérer l'activation/désactivation de la hitbox
-//     private IEnumerator HitboxActivationRoutine()
-//     {
-//         // La hitbox est déjà activée avant d'appeler la coroutine
-//         yield return new WaitForSeconds(hitboxActiveDuration);
-//         StartCoroutine(HitboxDeactivationRoutine());
-//     }
-
-//      private IEnumerator HitboxDeactivationRoutine()
-//     {
-//         yield return new WaitForSeconds(hitboxActiveDuration);
-//         if (hitboxObject != null)
-//         {
-//             hitboxObject.SetActive(false);
-//             if (showDebugLogs)
-//                 Debug.Log("Hitbox désactivée par la coroutine");
-//         }
-//     }
-
-//     private void EndAttack()
-//     {
-//         isAttacking = false;
-//         animator.SetBool("IsAttacking", false);
-
-//         // S'assurer que la hitbox est désactivée
-//         StartCoroutine(HitboxDeactivationRoutine());
-//     }
-
-//    // ✅ OPTIONNEL: Pour Animation Events si vous en avez besoin
-//     public void OnAttackHit()
-//     {
-//         // On s'assure que playerMovement n'est pas null avant de l'utiliser
-//         if (playerMovement == null) {
-//             Debug.LogError("playerMovement est null ! Impossible de gérer le hit d'attaque.");
-//             return;
-//         }
-
-//         Vector2 attackDirection = playerMovement.LastMovement;
-//         if (attackDirection.sqrMagnitude < 0.01f)
-//             attackDirection = Vector2.down;
-            
-//         ActivateHitbox(attackDirection);
-//     }
-    
 }
