@@ -73,17 +73,17 @@ public class AttackHitbox : MonoBehaviour
     {
         
         // ⚔️  Vérifie si la collision est avec un ennemi
-        if (collision.CompareTag("Enemy"))
-        {
-            Debug.Log("Hit " + collision.name);
-            // 🎯 Cherche le composant EnemyHealth sur l'ennemi
-            EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                // 🔥 Inflige des dégâts à l'ennemi
-                enemyHealth.TakeDamage(attackDamage);
-            }
-        }
+        // if (collision.CompareTag("Enemy"))
+        // {
+        //     Debug.Log("Hit " + collision.name);
+        //     // 🎯 Cherche le composant EnemyHealth sur l'ennemi
+        //     EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
+        //     if (enemyHealth != null)
+        //     {
+        //         // 🔥 Inflige des dégâts à l'ennemi
+        //         enemyHealth.TakeDamage(attackDamage);
+        //     }
+        // }
 
         if (collision.CompareTag("Enemy") && !hitEnemies.Contains(collision.gameObject))
         {
