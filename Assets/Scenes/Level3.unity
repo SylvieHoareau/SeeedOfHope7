@@ -187,6 +187,26 @@ PrefabInstance:
       propertyPath: cheatText
       value: 
       objectReference: {fileID: 1194345127}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: graphics
+      value: 
+      objectReference: {fileID: 1156213}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: healSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c80033248bc895298afde4ce51bd9823, type: 3}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 2019197966}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: gameOverUI
+      value: 
+      objectReference: {fileID: 193075413}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -208,6 +228,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e33c23206a10c4bbb6e7583f0d04f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &1156213 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5717839171784824346, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+  m_PrefabInstance: {fileID: 1156210}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1156222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2294443082242059381, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
@@ -7772,9 +7797,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5962423310161579673, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
+      propertyPath: m_margin.x
+      value: -1.3818359
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962423310161579673, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
+      propertyPath: m_margin.y
+      value: 1.0383224
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962423310161579673, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
+      propertyPath: m_margin.z
+      value: 3.2330332
+      objectReference: {fileID: 0}
     - target: {fileID: 7031605693666268333, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
       propertyPath: m_Name
       value: MessagesCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405803214695817773, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 572.9288
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405803214695817773, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 96.7536
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405803214695817773, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 4.3405
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405803214695817773, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5.3768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

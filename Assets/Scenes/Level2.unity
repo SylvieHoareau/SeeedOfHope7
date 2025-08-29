@@ -52078,11 +52078,36 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: graphics
+      value: 
+      objectReference: {fileID: 6175380262894692702}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: healSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c80033248bc895298afde4ce51bd9823, type: 3}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1224503542}
+    - target: {fileID: 7170073241140271490, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+      propertyPath: gameOverUI
+      value: 
+      objectReference: {fileID: 812959282}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+--- !u!212 &6175380262894692702 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5717839171784824346, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
+  m_PrefabInstance: {fileID: 6175380262894692701}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6195353338828851929
 PrefabInstance:
   m_ObjectHideFlags: 0
