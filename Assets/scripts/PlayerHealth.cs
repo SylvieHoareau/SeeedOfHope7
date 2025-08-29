@@ -38,10 +38,12 @@ public class PlayerHealth : MonoBehaviour
     // Cette fonction est appelé au début du jeu
     public void Start()
     {
+        currentHealth = maxHealth;
         // Le joueur commence avec toute sa vie
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(maxHealth);
+            healthBar.SetHealth(currentHealth);
         }
         else
         {
