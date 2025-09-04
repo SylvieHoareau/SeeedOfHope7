@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3a4c5ddab766e5646ae6b1c2932b4acb
+guid: 9b43937e138d58447bc0affc191bbb52
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5327402585253708592
-    second: Background-Seed-Of-Hope_0
+      213: 2817420581529472128
+    second: Background-Level3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Background-Seed-Of-Hope_0
+      name: Background-Level3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1340
-        height: 893
+        width: 1248
+        height: 832
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0338b8dec6cbee940800000000000000
-      internalID: 5327402585253708592
+      spriteID: 08c40f0771d791720800000000000000
+      internalID: 2817420581529472128
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Background-Seed-Of-Hope_0: 5327402585253708592
+      Background-Level3_0: 2817420581529472128
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

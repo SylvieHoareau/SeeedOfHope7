@@ -12,11 +12,20 @@ EditorBuildSettings:
     path: Assets/Scenes/IntroScene.unity
     guid: 65e50c0ed3366d54192be5f59d03bb9e
   - enabled: 1
+    path: Assets/Scenes/Level1Intro.unity
+    guid: 670fa88eb09b6084c98579a6fcb517ae
+  - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: b80aeea372c0a274e8b21732fe5f60f1
   - enabled: 1
+    path: Assets/Scenes/Level2Intro.unity
+    guid: 35a09577de9d1de45aef62aada10eddb
+  - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Level3Intro.unity
+    guid: 47273446863a2fe4bafe2041571d1d0d
   - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: 26a90edc37e315ccc88072cd3f71d70b
@@ -27,8 +36,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Level3 1.unity
     guid: 5281113e2e0f97547bec83443f19d507
   - enabled: 1
+    path: Assets/Scenes/Level4Intro.unity
+    guid: d33932a510732244d8a6d27b4990ade3
+  - enabled: 1
     path: Assets/Scenes/Level4.unity
-    guid: 703d8de0e9dc3f24ca202c0c9ad006cf
+    guid: 3cc6222f920ce61a280440a136ad34ed
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: a905111b3d0bc6d4f989cbdccf0d73c1
