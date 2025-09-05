@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
    
-    public ResourceType resourceType;
+    public ItemData itemData;
 
     // Le nombre d'unités de cette ressource que le joueur va collecter
     public int amount = 1;
@@ -52,7 +52,7 @@ public class Pickup : MonoBehaviour
             if (playerInventory != null)
             {
                 // Ajoute l'objet à l'inventaire
-                playerInventory.AddResource(resourceType, amount);
+                playerInventory.AddResource(itemData, amount);
 
 
                 // Joue le son de ramassage si défini

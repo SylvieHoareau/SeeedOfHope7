@@ -70,19 +70,19 @@ public class ResourceUI : MonoBehaviour
             return;
         }
 
-        int w = inventory.GetWaterDropCount();
-        int s = inventory.GetSeedCount();
-        int f = inventory.GetFertilizerCount();
+        // int w = inventory.GetWaterDropCount();
+        // int s = inventory.GetSeedCount();
+        // int f = inventory.GetFertilizerCount();
 
-        if (waterText != null)
-            waterText.text = $"Eau : {w} / {terminalIA.besoinEau}";
+        // if (waterText != null)
+        //     waterText.text = $"Eau : {w} / {terminalIA.besoinEau}";
 
-        if (seedText != null)
-            seedText.text = $"Graines : {s} / {terminalIA.besoinGraines}";
+        // if (seedText != null)
+        //     seedText.text = $"Graines : {s} / {terminalIA.besoinGraines}";
 
-        if (fertilizerText != null)
-            fertilizerText.text = $"Engrais : {f} / {terminalIA.besoinFertilisant}";
+        // if (fertilizerText != null)
+        //     fertilizerText.text = $"Engrais : {f} / {terminalIA.besoinFertilisant}";
 
-        Debug.Log($"ResourceUI: UI mis à jour -> Eau:{w}/{terminalIA.besoinEau} Graines:{s}/{terminalIA.besoinGraines} Engrais:{f}/{terminalIA.besoinFertilisant}");
+        // Debug.Log($"ResourceUI: UI mis à jour -> Eau:{w}/{terminalIA.besoinEau} Graines:{s}/{terminalIA.besoinGraines} Engrais:{f}/{terminalIA.besoinFertilisant}");
     }
 }

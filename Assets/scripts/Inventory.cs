@@ -59,7 +59,7 @@ public class Inventory : MonoBehaviour
             resources[item] = amount;
         }
 
-        Debug.Log($"[Inventaire] {item} ajouté. Quantité actuelle : {resources[type]}");
+        Debug.Log($"[Inventaire] {item} ajouté. Quantité actuelle : {resources[item]}");
 
         // On déclenche l'événement pour que les autres scripts soient informés du changement
         onResourceChanged?.Invoke();

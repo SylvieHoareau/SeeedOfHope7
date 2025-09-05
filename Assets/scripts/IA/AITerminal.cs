@@ -15,6 +15,14 @@ using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System;
+using UnityEngine.AI;
+
+[System.Serializable]
+public class ResourceRequirement
+{
+    public ItemData item;
+    public int requiredAmount;
+}
 
 [RequireComponent(typeof(AudioSource))]
 public class AITerminal : MonoBehaviour
@@ -43,9 +51,7 @@ public class AITerminal : MonoBehaviour
     [Header("Ressources requises")]
     // Combien d'unités de chaque ressource sont nécessaires pour activer l'IA.
     // Ces valeurs sont définies par le concepteur du niveau dans l'inspecteur.
-    public int besoinEau;
-    public int besoinGraines;
-    public int besoinFertilisant;
+    public List<ResourceRequirement> requirements;
 
     [Header("Audio")]
     private AudioSource audioSource;
@@ -142,6 +148,28 @@ public class AITerminal : MonoBehaviour
         }
     }
 
+    // Nouvelle méthode pour vérifier de manière générique si toutes les ressources ont été collectées
+    private bool CheckAllResourcesMet()
+    {
+        if(playerInventory == null) return false;
+
+        foreach (ResourceRequirement req in requirements)
+        {
+            // On s'assure que l'ItemData est bien assigné pour éviter
+            if (req.item != null)
+            {
+                int currentAmount = playerInventory.GetResourceCount(req.item);
+                // Si la quantité actuelle est inférieure à la quantité
+                if (currentAmount < req.requiredAmount)
+                {
+                    return false;
+                }
+            }
+        }
+        // Si la boucle se termine, cela signifie que toutes les conditions sont remplies
+            return true;
+    }
+
     /// <summary>
     /// Vérifie si l'objectif est atteint et affiche le dialogue approprié.
     /// Ce dialogue est passif, il n'y a pas besoin d'interaction du joueur.
@@ -151,21 +179,13 @@ public class AITerminal : MonoBehaviour
         // Si l'objectif est déjà atteint ou le dialogue déjà affiché, on ne fait rien
         if (objectifAtteint || dialogueObjectifAffiche) return;
 
-        int eau = playerInventory.GetWaterDropCount();
-        int graines = playerInventory.GetSeedCount();
-        int fertil = playerInventory.GetFertilizerCount();
-
-        bool aToutesLesRessources = eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant;
-
-        // Si le joueur a toutes les ressources, on affiche le dialogue 3
-        if (aToutesLesRessources)
+        // On utilise la nouvelle générique pour vérifier 
+        if (CheckAllResourcesMet())
         {
-            // On s'assure que le MessageManager et le texte existent avant d'afficher
             if (messageManager != null && dialogue != null && dialogue.sentences.Length > 2)
             {
-                // Affiche le troisième message (par convention dans ce projet)
                 messageManager.ShowMessage(dialogue.sentences[2]);
-                dialogueObjectifAffiche = true; // évite de réafficher le même message
+                dialogueObjectifAffiche = true;
             }
         }
     }
@@ -177,12 +197,6 @@ public class AITerminal : MonoBehaviour
     {
         if (playerInventory == null) return;
         
-        int eau = playerInventory.GetWaterDropCount();
-        int graines = playerInventory.GetSeedCount();
-        int fertil = playerInventory.GetFertilizerCount();
-
-        bool aToutesLesRessources = eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant;
-
         // Si l'objectif est déjà atteint, on affiche le dialogue 4 et on sort
         if (objectifAtteint)
         {
@@ -194,7 +208,7 @@ public class AITerminal : MonoBehaviour
             return;
         }
         // Sinon, si les ressources sont suffisantes (on vient de le vérifier)
-        else if (aToutesLesRessources)
+        else if (CheckAllResourcesMet())
         {
             // CAS DE SUCCÈS : Le joueur a tout ce qu'il faut pour activer l'IA
             // Nous jouons un son, activons les zones prévues et marquons
