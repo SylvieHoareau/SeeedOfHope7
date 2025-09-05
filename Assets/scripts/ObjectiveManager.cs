@@ -26,6 +26,7 @@ public class ObjectiveManager : MonoBehaviour
     public List<ResourceRequirement> requirements;
 
     [Header("Terminal IA")]
+    public AITerminal terminal;
     public TextMeshProUGUI terminalText; // texte affiché par le Terminal
 
     [Header("Porte de sortie")]
@@ -41,6 +42,8 @@ public class ObjectiveManager : MonoBehaviour
             var player = GameObject.FindWithTag("Player");
             if (player != null) inventory = player.GetComponent<Inventory>();
         }
+
+
 
         // On s'abonne à l'événement de changement d'inventaire
         if (inventory != null)

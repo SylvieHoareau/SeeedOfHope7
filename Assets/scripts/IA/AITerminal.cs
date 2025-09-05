@@ -135,7 +135,6 @@ public class AITerminal : MonoBehaviour
             // dès que le joueur ramasse quelque chose (sans attendre une interaction).
             playerInventory.onResourceChanged += CheckForObjectives;
         }
-        
 
     }
 
