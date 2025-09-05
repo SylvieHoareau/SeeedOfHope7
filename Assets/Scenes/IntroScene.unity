@@ -1150,13 +1150,15 @@ MonoBehaviour:
   lignesIntro:
   - Bienvenue, gardien(ne). Je suis GaIA, ce qui reste de la conscience de la Terre.
     ...
-  - "La Rouille a d\xE9truit notre monde, mais la vie ne s'\xE9teint jamais compl\xE8tement.
-    Elle s'est fragment\xE9e en \xC9clats de Vie. ..."
+  - "Le r\xE9chauffement a d\xE9truit notre monde. Les calottes glaciaires ont fondu,
+    les oc\xE9ans ont bouilli et la terre a durci, mais la vie ne s'\xE9teint jamais
+    compl\xE8tement. Elle s'est fragment\xE9e en \xC9clats de Vie. ...\r\n"
   - "Votre mission est de les collecter et de les ramener \xE0 mon terminal. Chaque
     \xE9clat que vous rapportez nous aide \xE0 r\xE9g\xE9n\xE9rer la nature. ..."
-  - "Le chemin est sem\xE9 de dangers. Des cr\xE9atures de pierre et des robots,
-    engendr\xE9s par la Rouille, cherchent \xE0 nous arr\xEAter. Vous devez les \xE9viter.
-    ..."
+  - "Le chemin est sem\xE9 de dangers. Des cr\xE9atures de pierre, form\xE9es par
+    la terre dess\xE9ch\xE9e, et des robots qui avaient pour mission de r\xE9parer
+    notre monde sont devenus fous. Ils cherchent \xE0 nous arr\xEAter. Vous devez
+    les \xE9viter. ..."
   - "La survie de la Terre d\xE9pend de vous. Cherchez l'espoir. Cherchez les \xC9clats
     de Vie. ..."
   - Vous pouvez commencer l'aventure !

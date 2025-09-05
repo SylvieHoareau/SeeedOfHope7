@@ -5,31 +5,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-// L'enum (énumération) nous permet de définir des types de ressources
-// prédéfinis pour éviter les erreurs de frappe.
-public enum ResourceType
-{
-    WaterDrop,
-    Seed,
-    Fertilizer
-}
 
 public class Inventory : MonoBehaviour
 {
-    // Le dictionnaire qui stocke les ressources.
-    // La "clé" est le type de ressource, et la "valeur" est la quantité.
-    private Dictionary<ResourceType, int> resources = new Dictionary<ResourceType, int>();
+    // Le dictionnaire stocke maintenant des ItemData
+    // comme clés, et des entiers pour les quantités
+    private Dictionary<ItemData, int> resources = new Dictionary<ItemData, int>();
+
+    // Cette liste sera affichée dans l'inspecteur Unity pour confirmer
+    [SerializeField]
+    private List<ItemData> initialResources = new List<ItemData>();
 
     // Cette action permet de prévenir d'autres scripts quand une ressource est ajoutée
     public event Action onResourceChanged;
 
     void Start()
     {
-        // On initialise l'inventaire en ajoutant les types de ressources
-        // avec une quantité de 0 pour commencer.
-        foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
+        // On initialise l'inventaire en se basant sur la liste
+        InitializeInventory();
+    }
+
+    private void InitializeInventory()
+    {
+        foreach (ItemData item in initialResources)
         {
-            resources[type] = 0;
+            if (item != null && !resources.ContainsKey(item))
+            {
+                resources[item] = 0;
+            }
         }
     }
 
@@ -39,44 +42,44 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="type">Le type de ressource à ajouter (ex: WaterDrop, Seed)</param>
     /// <param name="amount">La quantité à ajouter</param>
-    public void AddResource(ResourceType type, int amount)
+    public void AddResource(ItemData item, int amount)
     {
         // On s'assure que la quantité est positive
         if (amount <= 0) return;
 
         // On vérifie si la ressource est déjà dans le dictionnaire
-        if (resources.ContainsKey(type))
+        if (resources.ContainsKey(item))
         {
             // Si oui, on ajoute la nouvelle quantité à l'ancienne
-            resources[type] += amount;
+            resources[item] += amount;
         }
         else
         {
             // Sinon, on ajoute la nouvelle ressource avec la quantité donnée
-            resources[type] = amount;
+            resources[item] = amount;
         }
 
-        Debug.Log($"[Inventaire] {type} ajouté. Quantité actuelle : {resources[type]}");
-        
+        Debug.Log($"[Inventaire] {item} ajouté. Quantité actuelle : {resources[type]}");
+
         // On déclenche l'événement pour que les autres scripts soient informés du changement
         onResourceChanged?.Invoke();
     }
 
-    // Vous pouvez ajouter d'autres fonctions pour obtenir le compte des ressources si vous en avez besoin.
-    // Par exemple, pour que le Terminal IA puisse vérifier si l'objectif est atteint.
-
-    public int GetWaterDropCount()
+    /// <summary>
+    /// Obtient la quantité d'une ressource
+    /// </summary>
+    /// <param name="item">L'itemData dont on veut la quantité.</param>
+    public int GetResourceCount(ItemData item)
     {
-        return resources.GetValueOrDefault(ResourceType.WaterDrop, 0);
+        return resources.GetValueOrDefault(item, 0);
     }
 
-    public int GetSeedCount()
+    /// <summary>
+    /// Retourne le dictionnaire des ressources pour un affichage 
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<ItemData, int> GetAllResources()
     {
-        return resources.GetValueOrDefault(ResourceType.Seed, 0);
-    }
-
-    public int GetFertilizerCount()
-    {
-        return resources.GetValueOrDefault(ResourceType.Fertilizer, 0);
+        return resources;
     }
 }
