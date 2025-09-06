@@ -11,11 +11,8 @@
 // Les commentaires ci-dessous expliquent chaque section en termes non techniques.
 
 using UnityEngine;
-using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using System;
-using UnityEngine.AI;
 
 [System.Serializable]
 public class ResourceRequirement

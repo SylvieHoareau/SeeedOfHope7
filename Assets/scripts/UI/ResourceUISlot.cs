@@ -5,36 +5,40 @@ using TMPro;
 // Ce script gère l'affichage d'une seule ressource
 public class ResourceUISlot : MonoBehaviour
 {
-    // Références aux composants UI dans le GameObject parent
+    // Image qui représente l'icône de la ressource
     public Image iconImage;
+    // Texte qui affiche le nombre de ressources possédées
     public TextMeshProUGUI countText;
 
-    // La référence à l'ItemData que ce slot doit afficher
+    // Inofmrations sur la ressources à afficher
     private ItemData item;
 
-    // Met à jour le slot avec une nouvelle ressource et sa quantité
+    // Cette fonction permet de mettre à jour l'affichage du slot avec une nouvelle ressource et sa quantité
     public void Setup(ItemData newItem, int count)
     {
+        // On garde en mémoire la ressource à afficher
         item = newItem;
 
-        // Si l'icône existe, on l'affiche
+        // Si une icône existe pour la ressource, on l'affiche
         if (iconImage != null && item.icon != null)
         {
-            iconImage.sprite = item.icon;
-            iconImage.enabled = true; // S'assurer que l'image est visible
+            iconImage.sprite = item.icon; // On met l'image de la ressource
+            iconImage.enabled = true; // on rend l'imge visible
         }
+        // Si aucune icône n'est disponible, on cache l'image
         else if (iconImage != null)
         {
             iconImage.enabled = false; // Cacher l'image s'il n'y a pas de sprite
         }
 
-        // Mettre à jour le texte avec la quantité
+        // On met à jour le texte pour afficher la quantité de la ressource
         UpdateCount(count);
     }
 
-    // Met à jour uniquement la quantité, utile quand le joueur en
+    // Cette fonction met à jour uniquement le nombre affiché (utile si la quantité change)
     public void UpdateCount(int newCount)
     {
+        // SI le composant texte existe, on affiche le nouveau nombre
         if (countText != null)
         {
             countText.text = $"{newCount}";

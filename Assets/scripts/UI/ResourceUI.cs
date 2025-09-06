@@ -1,14 +1,19 @@
 using UnityEngine;
-using TMPro;
+using System.Collections.Generic;
 
 public class ResourceUI : MonoBehaviour
 {
     public Inventory inventory; // à lier dans l'inspecteur
-    public TextMeshProUGUI waterText;
-    public TextMeshProUGUI seedText;
-    public TextMeshProUGUI fertilizerText;
-    // Référence au terminal IA
-    public AITerminal terminalIA;
+
+    // Le préfab de l'UI d'un seul solt de ressource
+    public GameObject resourceSlotPrefab;
+
+    // Le conteneur où les slots seront instanciés
+    public Transform container;
+
+    // Un dictionnaire pour garder une trace des slots déjà crées
+    private Dictionary<ItemData, ResourceUISlot> resourceSlots = new Dictionary<ItemData, ResourceUISlot>();
+
     void Start()
     {
         // Si une référence n'est pas assignée dans l'inspecteur, on tente de la trouver automatiquement
@@ -19,31 +24,22 @@ public class ResourceUI : MonoBehaviour
             if (player != null)
             {
                 inventory = player.GetComponent<Inventory>();
-                if (inventory != null)
-                    Debug.Log("ResourceUI: Inventory trouvé sur l'objet Player.");
             }
 
             // Si pas trouvé via le tag, on essaie la méthode générique
             if (inventory == null)
+            {
                 inventory = FindFirstObjectByType<Inventory>();
+            }
             if (inventory == null)
+            {
                 Debug.LogWarning("ResourceUI: aucun Inventory trouvé. Assignez-le dans l'inspecteur.");
-            else
-                Debug.Log("ResourceUI: Inventory trouvé automatiquement.");
-        }
-
-        if (terminalIA == null)
-        {
-            terminalIA = FindFirstObjectByType<AITerminal>();
-            if (terminalIA == null)
-                Debug.LogWarning("ResourceUI: aucun AITerminal trouvé. Assignez-le dans l'inspecteur.");
-            else
-                Debug.Log("ResourceUI: AITerminal trouvé automatiquement.");
+                return;
+            }
         }
 
         // S'abonner à l'événement pour mettre à jour l'UI quand l'inventaire change
-        if (inventory != null)
-            inventory.onResourceChanged += UpdateUI;
+        inventory.onResourceChanged += UpdateUI;
 
         // Mettre à jour l'UI immédiatement au démarrage
         UpdateUI();
@@ -52,7 +48,9 @@ public class ResourceUI : MonoBehaviour
     void OnDisable()
     {
         if (inventory != null)
+        {
             inventory.onResourceChanged -= UpdateUI;
+        }
     }
 
     // Méthode centrée : met à jour les trois champs d'UI avec la forme "collecté / objectif"
@@ -64,25 +62,29 @@ public class ResourceUI : MonoBehaviour
             Debug.LogWarning("ResourceUI: UpdateUI appelé mais Inventory est null.");
             return;
         }
-        if (terminalIA == null)
+
+        // On parcourt toutes les ressources de l'inventaire
+        foreach (var resource in inventory.GetAllResources())
         {
-            Debug.LogWarning("ResourceUI: UpdateUI appelé mais AITerminal est null.");
-            return;
+            ItemData item = resource.Key;
+            int count = resource.Value;
+
+            // On vérifie si un slot existe déjà pour cette ressource
+            if (!resourceSlots.ContainsKey(item))
+            {
+                // Si non, on crée un nouveau slot à partir du préfabriqué
+                GameObject newSlotObject = Instantiate(resourceSlotPrefab, container);
+                ResourceUISlot newSlot = newSlotObject.GetComponent<ResourceUISlot>();
+
+                // On configure et on ajoute le nouveau slot au dictionnaire
+                newSlot.Setup(item, count);
+                resourceSlots.Add(item, newSlot);
+            }
+            else
+            {
+                // Si oui, on met simplement à jour le nombre affiché
+                resourceSlots[item].UpdateCount(count);
+            }
         }
-
-        // int w = inventory.GetWaterDropCount();
-        // int s = inventory.GetSeedCount();
-        // int f = inventory.GetFertilizerCount();
-
-        // if (waterText != null)
-        //     waterText.text = $"Eau : {w} / {terminalIA.besoinEau}";
-
-        // if (seedText != null)
-        //     seedText.text = $"Graines : {s} / {terminalIA.besoinGraines}";
-
-        // if (fertilizerText != null)
-        //     fertilizerText.text = $"Engrais : {f} / {terminalIA.besoinFertilisant}";
-
-        // Debug.Log($"ResourceUI: UI mis à jour -> Eau:{w}/{terminalIA.besoinEau} Graines:{s}/{terminalIA.besoinGraines} Engrais:{f}/{terminalIA.besoinFertilisant}");
     }
 }
