@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c6f6850db22324da5d3325e707fe62, type: 3}
   m_Name: ItemDataPapillon
   m_EditorClassIdentifier: 
-  displayName: 
-  icon: {fileID: 0}
+  displayName: Papillon
+  icon: {fileID: 209896234222439510, guid: 8ef9a8c1617d76f4a9d3b989b65de905, type: 3}

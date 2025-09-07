@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4933109763669976067}
   - component: {fileID: 791952284251075950}
-  - component: {fileID: 9092572492811633211}
   m_Layer: 0
   m_Name: WaterDrop
   m_TagString: Collectible
@@ -85,27 +84,6 @@ SpriteRenderer:
   m_Size: {x: 9.89, y: 9.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!135 &9092572492811633211
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5824555235509306051}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 4.945
-  m_Center: {x: 0.0000038146973, y: -0.0000019073486, z: 0}

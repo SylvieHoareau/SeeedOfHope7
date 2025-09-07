@@ -13,57 +13,34 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 
-[System.Serializable]
-public class ResourceRequirement
-{
-    public ItemData item;
-    public int requiredAmount;
-}
+// [System.Serializable]
+// public class ResourceRequirement
+// {
+//     public ItemData item;
+//     public int requiredAmount;
+// }
 
 [RequireComponent(typeof(AudioSource))]
 public class AITerminal : MonoBehaviour
 {
-    [Header("Inventaire du joueur")]
-    // Référence à l'inventaire du joueur.
-    // Contient les nombres d'objets que le joueur a ramassés (eau, graines, engrais).
-    // Vous pouvez glisser ici l'objet "Player" dans l'inspecteur Unity pour le lier.
-    public Inventory playerInventory;
+    [Header("Manager")]
+    public ObjectiveManager objectiveManager;
 
-    [Header("Zones à revitaliser")]
-    // Liste des objets/éléments de la scène qui seront activés quand
-    // le terminal sera déclenché (ex : portes, lumières, mécanismes).
-    public GameObject[] zonesARevitaliser;
-    public GameObject porte;
-
-    [Header("UI")]
-    // Composant qui affiche les messages à l'écran (fenêtre, bulles de texte, etc.).
+    [Header("Dialogue et UI")]
     public MessageManager messageManager;
-
-    [Header("Dialogues")]
-    // Contient plusieurs lignes de texte que l'IA peut prononcer.
-    // Par exemple : introduction, ressources insuffisantes, succès, etc.
     public Dialogue dialogue;
 
-    [Header("Ressources requises")]
-    // Combien d'unités de chaque ressource sont nécessaires pour activer l'IA.
-    // Ces valeurs sont définies par le concepteur du niveau dans l'inspecteur.
-    public List<ResourceRequirement> requirements;
-
-    [Header("Audio")]
-    private AudioSource audioSource;
-    // Son joué quand l'activation réussit
+    [Header("Porte de sortie")]
+    public GameObject porte;
     public AudioClip activationSound;
-    // Son joué quand le joueur n'a pas assez de ressources
     public AudioClip ressourcesInsuffisantesSound;
+
+    public AudioSource audioSource;
 
     // Indique si le joueur est à portée pour interagir avec le terminal
     private bool joueurDansZone = false;
-    // Indique si l'objectif principal a déjà été rempli
-    private bool objectifAtteint = false;
-    // Flags pour éviter d'afficher plusieurs fois le même dialogue
-    private bool dialogueInitialAffiche = false;
-    private bool dialogueObjectifAffiche = false;
 
     // Objet généré par le système d'Input (clavier/manette).
     // Permet de détecter quand le joueur appuie sur la touche d'interaction.
@@ -111,79 +88,19 @@ public class AITerminal : MonoBehaviour
         if (messageManager != null && dialogue != null && dialogue.sentences.Length > 0)
         {
             // Affiche la première phrase d'introduction et la garde 20 secondes.
-            messageManager.ShowMessage(dialogue.sentences[0], 20f); 
+            messageManager.ShowMessage(dialogue.sentences[0], 20f);
         }
 
-        if (playerInventory == null)
+        // On trouve l'ObjectiveManager s'il n'est pas assigné
+        if (objectiveManager == null)
         {
-            var player = GameObject.FindWithTag("Player");
-            if (player != null) playerInventory = player.GetComponent<Inventory>();
-
-            if (playerInventory == null)
+            objectiveManager = FindFirstObjectByType<ObjectiveManager>();
+            if (objectiveManager == null)
             {
-                Debug.LogWarning("[AITerminal] Aucun inventaire de joueur trouvé. Assignez l'Inventory du joueur dans l'inspecteur.");
+                Debug.LogWarning("[AITerminal] Aucun ObjectiveManager trouvé. Assurez-vous qu'il y en a un dans la scène.");
             }
         }
 
-        // On s'abonne à l'événement de changement d'inventaire
-        if (playerInventory != null)
-        {
-            // Cela permet de mettre à jour l'état du terminal automatiquement
-            // dès que le joueur ramasse quelque chose (sans attendre une interaction).
-            playerInventory.onResourceChanged += CheckForObjectives;
-        }
-
-    }
-
-    void OnDestroy()
-    {
-        // On se désabonne pour éviter les erreurs
-        if (playerInventory != null)
-        {
-            playerInventory.onResourceChanged -= CheckForObjectives;
-        }
-    }
-
-    // Nouvelle méthode pour vérifier de manière générique si toutes les ressources ont été collectées
-    private bool CheckAllResourcesMet()
-    {
-        if(playerInventory == null) return false;
-
-        foreach (ResourceRequirement req in requirements)
-        {
-            // On s'assure que l'ItemData est bien assigné pour éviter
-            if (req.item != null)
-            {
-                int currentAmount = playerInventory.GetResourceCount(req.item);
-                // Si la quantité actuelle est inférieure à la quantité
-                if (currentAmount < req.requiredAmount)
-                {
-                    return false;
-                }
-            }
-        }
-        // Si la boucle se termine, cela signifie que toutes les conditions sont remplies
-            return true;
-    }
-
-    /// <summary>
-    /// Vérifie si l'objectif est atteint et affiche le dialogue approprié.
-    /// Ce dialogue est passif, il n'y a pas besoin d'interaction du joueur.
-    /// </summary>
-    private void CheckForObjectives()
-    {
-        // Si l'objectif est déjà atteint ou le dialogue déjà affiché, on ne fait rien
-        if (objectifAtteint || dialogueObjectifAffiche) return;
-
-        // On utilise la nouvelle générique pour vérifier 
-        if (CheckAllResourcesMet())
-        {
-            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 2)
-            {
-                messageManager.ShowMessage(dialogue.sentences[2]);
-                dialogueObjectifAffiche = true;
-            }
-        }
     }
 
     /// <summary>
@@ -191,11 +108,23 @@ public class AITerminal : MonoBehaviour
     /// </summary>
     void ActiverIA()
     {
-        if (playerInventory == null) return;
+        if (objectiveManager == null) return;
         
         // Si l'objectif est déjà atteint, on affiche le dialogue 4 et on sort
-        if (objectifAtteint)
+        if (objectiveManager.objectivesCompleted)
         {
+            Debug.Log("Terminal utilisé, objectifs atteints !");
+
+            // Jouer le son de succès
+            if (audioSource != null && activationSound != null)
+            {
+                audioSource.PlayOneShot(activationSound);
+            }
+
+            // Activer la porte de sortie
+            if (porte != null) porte.SetActive(true);
+            
+            // Affiche le dialogue de succès
             if (messageManager != null && dialogue != null && dialogue.sentences.Length > 3)
             {
                 // Affiche le 4ème dialogue
@@ -203,52 +132,20 @@ public class AITerminal : MonoBehaviour
             }
             return;
         }
-        // Sinon, si les ressources sont suffisantes (on vient de le vérifier)
-        else if (CheckAllResourcesMet())
-        {
-            // CAS DE SUCCÈS : Le joueur a tout ce qu'il faut pour activer l'IA
-            // Nous jouons un son, activons les zones prévues et marquons
-            // l'objectif comme atteint pour ne pas répéter l'opération.
-            // On joue le son de succès
-            if (audioSource != null && activationSound != null)
-            {
-                audioSource.PlayOneShot(activationSound);
-            }
-            
-            // On active les zones
-            foreach (GameObject zone in zonesARevitaliser)
-            {
-                if (zone != null) zone.SetActive(true);
-            }
-
-            if (porte != null) porte.SetActive(true);
-            
-            // On met à jour le statut de l'objectif
-            objectifAtteint = true;
-            
-            // On désactive ce script, car le terminal a déjà été activé
-            this.enabled = false;
-
-            // Affiche le 4ème dialogue
-            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 3)
-            {
-                messageManager.ShowMessage(dialogue.sentences[3]);
-            }
-        }
         else
         {
             // CAS D'ÉCHEC : Le joueur n'a pas encore toutes les ressources requises.
             // On informe le joueur et on joue un son d'alerte si disponible.
+              // Jouer le son d'échec
+            if (audioSource != null && ressourcesInsuffisantesSound != null)
+            {
+                audioSource.PlayOneShot(ressourcesInsuffisantesSound);
+            }
+
             // Sinon, les ressources sont insuffisantes, on affiche le dialogue 2
             if (messageManager != null && dialogue != null && dialogue.sentences.Length > 1)
             {
                 messageManager.ShowMessage(dialogue.sentences[1]);
-            }
-            
-            // On joue le son d'échec
-            if (audioSource != null && ressourcesInsuffisantesSound != null)
-            {
-                audioSource.PlayOneShot(ressourcesInsuffisantesSound);
             }
         }
     }
@@ -259,15 +156,6 @@ public class AITerminal : MonoBehaviour
         {
             // Le joueur est entré dans la zone d'interaction du terminal.
             joueurDansZone = true;
-
-            // Si l'introduction n'a pas encore été affichée pour ce terminal,
-            // on la montre (ex : "Bienvenue, explorateur...").
-            if (!dialogueInitialAffiche && messageManager != null && dialogue != null && dialogue.sentences.Length > 0)
-            {
-                // Affiche la première phrase d'introduction
-                messageManager.ShowMessage(dialogue.sentences[0]);
-                dialogueInitialAffiche = true;
-            }
         }
     }
 

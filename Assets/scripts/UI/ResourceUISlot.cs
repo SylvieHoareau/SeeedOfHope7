@@ -12,12 +12,14 @@ public class ResourceUISlot : MonoBehaviour
 
     // Inofmrations sur la ressources à afficher
     private ItemData item;
+    private int requiredAmount; // Pour stocker la quantité requise
 
     // Cette fonction permet de mettre à jour l'affichage du slot avec une nouvelle ressource et sa quantité
-    public void Setup(ItemData newItem, int count)
+    public void Setup(ItemData newItem, int count, int required)
     {
         // On garde en mémoire la ressource à afficher
         item = newItem;
+        requiredAmount = required; // Stocke la quantité requise
 
         // Si une icône existe pour la ressource, on l'affiche
         if (iconImage != null && item.icon != null)
@@ -38,10 +40,11 @@ public class ResourceUISlot : MonoBehaviour
     // Cette fonction met à jour uniquement le nombre affiché (utile si la quantité change)
     public void UpdateCount(int newCount)
     {
-        // SI le composant texte existe, on affiche le nouveau nombre
+        // Si le composant texte existe, on affiche le nouveau nombre
         if (countText != null)
         {
-            countText.text = $"{newCount}";
+            // Affichage de la quantité actuelle ET de la quantité requise
+            countText.text = $"{newCount} / {requiredAmount}";
         }
     }
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c6f6850db22324da5d3325e707fe62, type: 3}
   m_Name: ItemDataSolarPanel
   m_EditorClassIdentifier: 
-  displayName: 
-  icon: {fileID: 0}
+  displayName: Panneau Solaire
+  icon: {fileID: -5457159388852991497, guid: 2cd355eac36f2d54980cd3f750b146f2, type: 3}

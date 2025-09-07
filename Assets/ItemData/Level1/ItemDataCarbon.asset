@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c6f6850db22324da5d3325e707fe62, type: 3}
   m_Name: ItemDataCarbon
   m_EditorClassIdentifier: 
-  displayName: 
-  icon: {fileID: 0}
+  displayName: Charbon
+  icon: {fileID: -8601299012013414400, guid: 873f6d59d5fa7bc4e990a86112bad48f, type: 3}

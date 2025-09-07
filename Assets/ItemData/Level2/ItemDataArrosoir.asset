@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c6f6850db22324da5d3325e707fe62, type: 3}
   m_Name: ItemDataArrosoir
   m_EditorClassIdentifier: 
-  displayName: 
-  icon: {fileID: 0}
+  displayName: Arrosoir
+  icon: {fileID: 5904259468540876864, guid: 1e140cecc2dca4e49929b2aaa8dff05f, type: 3}

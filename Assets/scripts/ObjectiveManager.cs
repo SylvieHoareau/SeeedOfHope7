@@ -2,9 +2,8 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
 
-
+// Manager Central qui va s'assurer que le joueur a collecté toutes les ressources nécessaires pour le niveau 
 public class ObjectiveManager : MonoBehaviour
 {
     // On réutilise la classe de données que nous avons créés
@@ -26,14 +25,18 @@ public class ObjectiveManager : MonoBehaviour
     public List<ResourceRequirement> requirements;
 
     [Header("Terminal IA")]
-    public AITerminal terminal;
-    public TextMeshProUGUI terminalText; // texte affiché par le Terminal
+    public TextMeshProUGUI terminalText;
 
     [Header("Porte de sortie")]
     public GameObject exitPortal;
 
-    private bool objectivesCompleted = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Sons")]
+    public AudioClip victorySound;
+    public AudioSource audioSource; // pour jouer le son
+
+    public bool objectivesCompleted = false;
+
+    // Au démarrage du jeu
     void Start()
     {
         // On s'assure d'avoir l'inventaire
@@ -41,22 +44,25 @@ public class ObjectiveManager : MonoBehaviour
         {
             var player = GameObject.FindWithTag("Player");
             if (player != null) inventory = player.GetComponent<Inventory>();
+            if (inventory == null)
+            {
+                inventory = FindFirstObjectByType<Inventory>();
+                Debug.LogWarning("ResourceUI: aucun Inventory trouvé.");
+            }
         }
-
-
 
         // On s'abonne à l'événement de changement d'inventaire
-        if (inventory != null)
-        {
-            inventory.onResourceChanged += CheckObjectivesAndUI;
-        }
+            if (inventory != null)
+            {
+                inventory.onResourceChanged += CheckObjectivesAndUI;
+            }
 
         // On vérifie une fois au démarrage pour intialiser l'UI
         CheckObjectivesAndUI();
     }
 
-    // Se désabonner pour éviter les fuites de mémoire
-    private void OnDestroy()
+    // Se désabonner pour éviter les fuites de mémoire et les erreurs quand le script est désactivé
+    private void OnDisable()
     {
         if (inventory != null)
         {
@@ -67,11 +73,14 @@ public class ObjectiveManager : MonoBehaviour
     // On remplace la logique de l'Update par une méthode déclenchée
     private void CheckObjectivesAndUI()
     {
-        if (inventory == null || objectiveText == null || objectivesCompleted) return;
+        // Si les objactifs sot déjà complétés, on ne fait rien
+        if (objectivesCompleted) return;
 
-        // Chaîne de caractères pour construire le texte d'objectifs
-        string objectiveDisplay = "Objectifs:\n";
         bool allObjectivesMet = true;
+        string objectiveDisplay = "Objectifs :\n";
+
+        // Met à jour le texte de l'UI
+        // objectiveText.text = objectiveDisplay;
 
         // On parcourt la liste des objectifs requis
         foreach (ResourceRequirement req in requirements)
@@ -88,44 +97,55 @@ public class ObjectiveManager : MonoBehaviour
                 {
                     allObjectivesMet = false;
                 }
-
-                // Met à jour le texte de l'UI
-                objectiveText.text = objectiveDisplay;
-
-                // Si tous les objectifs sont atteints, on déclenche la logique
-                if (allObjectivesMet)
-                {
-                    objectivesCompleted = true;
-                    OnObjectivesCompleted();
-                }
             }
         }
-
-    }
-
-    void OnObjectivesCompleted()
-    {
-        Debug.Log("Tous les objectifs atteints !");
-        // 1. Message du Terminal IA 
-        if (terminalText != null)
+        // Met à jour le texte de l'UI en une seule fois
+        if (objectiveText != null)
         {
-            terminalText.text = "Objectifs atteints. Trouver la porte de sortie.";
+            objectiveText.text = objectiveDisplay;
         }
 
-        // 2. Activer la porte de sortie (téléporteur)
+        // SI tous les objectifs sont atteints, on déclenche la logique
+        if (allObjectivesMet)
+        {
+            objectivesCompleted = true;
+            OnObjectivesCompleted();
+        }
+    }
+
+    // Cette méthode sera appelée quand les objectifs sont complétés
+    private void OnObjectivesCompleted()
+    {
+        Debug.Log("Tous les objectifs atteints !");
+
+
+        // Changer le message du terminal IA
+        if (terminalText != null)
+        {
+            // Lance la coroutine pour afficher un message temporaire
+            StartCoroutine(ShowTerminalMessage("Objectifs atteints. Trouver la porte de sortie.", 10f));
+        }
+
+        // Activer la porte de sortie
         if (exitPortal != null)
         {
             exitPortal.SetActive(true);
         }
 
-        StartCoroutine(ShowTerminalMessage("Objectifs atteints. Trouver la porte de sortie.", 5f));
+        // Jouer un son de victoire
+        if (audioSource != null && victorySound != null)
+        {
+            audioSource.PlayOneShot(victorySound);
+        }
 
     }
 
+    // Coroutine pour afficher un message sur le terminal pendant un court laps de temps
     IEnumerator ShowTerminalMessage(string message, float duration)
     {
         terminalText.text = message;
         yield return new WaitForSeconds(duration);
         terminalText.text = "";
     }
+
 }
