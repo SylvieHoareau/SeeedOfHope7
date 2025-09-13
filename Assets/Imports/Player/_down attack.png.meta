@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: c30fba2a623bed049a59cff5f19a5efd
+guid: 846257ba802e9db279599faf35796f2a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6164395428596610570
-    second: _down idle_0
+      213: -7714797751209533692
+    second: _down attack_0
   - first:
-      213: -3309867728790833485
-    second: _down idle_1
+      213: 1820883775968006718
+    second: _down attack_1
   - first:
-      213: -5655026159441074747
-    second: _down idle_2
+      213: -2984725830462103684
+    second: _down attack_2
   - first:
-      213: 3453392835537053846
-    second: _down idle_3
-  - first:
-      213: 6639338315080358543
-    second: _down idle_4
+      213: -8271311819544423972
+    second: _down attack_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -87,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -125,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _down idle_0
+      name: _down attack_0
       rect:
         serializedVersion: 2
-        x: 25
-        y: 78
-        width: 14
-        height: 34
+        x: 15
+        y: 67
+        width: 34
+        height: 41
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a06fa806bf45c8550800000000000000
-      internalID: 6164395428596610570
+      spriteID: 40f5c2de1588fe490800000000000000
+      internalID: -7714797751209533692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _down idle_1
+      name: _down attack_1
       rect:
         serializedVersion: 2
-        x: 89
-        y: 78
-        width: 39
-        height: 50
+        x: 80
+        y: 70
+        width: 31
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,20 +159,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b6b4eb46dcf012d0800000000000000
-      internalID: -3309867728790833485
+      spriteID: e3258d39524154910800000000000000
+      internalID: 1820883775968006718
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _down idle_2
+      name: _down attack_2
       rect:
         serializedVersion: 2
-        x: 153
-        y: 78
-        width: 43
-        height: 50
+        x: 17
+        y: 10
+        width: 23
+        height: 37
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,20 +181,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5c529fa6baf4581b0800000000000000
-      internalID: -5655026159441074747
+      spriteID: c7f9f53cbaf1496d0800000000000000
+      internalID: -2984725830462103684
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _down idle_3
+      name: _down attack_3
       rect:
         serializedVersion: 2
-        x: 196
-        y: 78
-        width: 35
-        height: 50
+        x: 36
+        y: 10
+        width: 9
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,52 +203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 698a010bc7aecef20800000000000000
-      internalID: 3453392835537053846
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _down idle_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 14
-        width: 52
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f8a5106550ba32c50800000000000000
-      internalID: 6639338315080358543
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _down idle_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 28
-        width: 8
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8375b5f5f01b8043815a8efb63c3629
-      internalID: 921296662
+      spriteID: cd1909139b5663d80800000000000000
+      internalID: -8271311819544423972
       vertices: []
       indices: 
       edges: []
@@ -260,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 938b373ebab48f248816946d1e146af6
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -268,16 +221,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      _down idle_0: 6164395428596610570
-      _down idle_1: -3309867728790833485
-      _down idle_2: -5655026159441074747
-      _down idle_3: 3453392835537053846
-      _down idle_4: 6639338315080358543
-      _down idle_5: 921296662
+      _down attack_0: -7714797751209533692
+      _down attack_1: 1820883775968006718
+      _down attack_2: -2984725830462103684
+      _down attack_3: -8271311819544423972
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

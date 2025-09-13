@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - AITerminal
   - PlayerAttack
+  - Ground
   layers:
   - Default
   - TransparentFX

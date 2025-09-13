@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c30fba2a623bed049a59cff5f19a5efd
+guid: 322a3b0af9dde9446bdadf275b0e7a46
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -49,7 +49,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -87,7 +87,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -128,10 +128,10 @@ TextureImporter:
       name: _down idle_0
       rect:
         serializedVersion: 2
-        x: 25
-        y: 78
-        width: 14
-        height: 34
+        x: 24
+        y: 77
+        width: 16
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +150,10 @@ TextureImporter:
       name: _down idle_1
       rect:
         serializedVersion: 2
-        x: 89
-        y: 78
-        width: 39
-        height: 50
+        x: 88
+        y: 77
+        width: 16
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +172,10 @@ TextureImporter:
       name: _down idle_2
       rect:
         serializedVersion: 2
-        x: 153
-        y: 78
-        width: 43
-        height: 50
+        x: 152
+        y: 77
+        width: 16
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +194,10 @@ TextureImporter:
       name: _down idle_3
       rect:
         serializedVersion: 2
-        x: 196
-        y: 78
-        width: 35
-        height: 50
+        x: 216
+        y: 77
+        width: 16
+        height: 35
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,10 +216,10 @@ TextureImporter:
       name: _down idle_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 14
-        width: 52
-        height: 48
+        x: 24
+        y: 13
+        width: 16
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,33 +234,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: _down idle_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 28
-        width: 8
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8375b5f5f01b8043815a8efb63c3629
-      internalID: 921296662
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 938b373ebab48f248816946d1e146af6
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -268,16 +246,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
       _down idle_0: 6164395428596610570
       _down idle_1: -3309867728790833485
       _down idle_2: -5655026159441074747
       _down idle_3: 3453392835537053846
       _down idle_4: 6639338315080358543
-      _down idle_5: 921296662
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
