@@ -51680,8 +51680,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2662514283021649859, guid: 8501d0945d9a19d45ba83c86a40d8dc5, type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 803390141347071789}
+    - targetCorrespondingSourceObject: {fileID: 2662514283021649859, guid: 8501d0945d9a19d45ba83c86a40d8dc5, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 803390141347071794}
   m_SourcePrefab: {fileID: 100100000, guid: 8501d0945d9a19d45ba83c86a40d8dc5, type: 3}
 --- !u!1 &803390141347071788 stripped
 GameObject:
@@ -51785,6 +51788,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &803390141347071794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803390141347071788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb07033d45bdfb4a9ddbe66e77ae1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 9010275076332069252}
+  timeOffset: 0.2
+  posOffset: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1001 &1164499998284011305
 PrefabInstance:
   m_ObjectHideFlags: 0
