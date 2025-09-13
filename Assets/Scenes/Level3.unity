@@ -2214,6 +2214,10 @@ PrefabInstance:
       value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 6605120816056227870, guid: df6b52a4d0669b54fbd2c8f56da8c2c4, type: 3}
+      propertyPath: m_text
+      value: 'Eolienne : 0/1'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6605120816056227870, guid: df6b52a4d0669b54fbd2c8f56da8c2c4, type: 3}
       propertyPath: m_fontSize
       value: 39.95
       objectReference: {fileID: 0}
@@ -4317,6 +4321,10 @@ PrefabInstance:
     - target: {fileID: 6159487590626142770, guid: df6b52a4d0669b54fbd2c8f56da8c2c4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6605120816056227870, guid: df6b52a4d0669b54fbd2c8f56da8c2c4, type: 3}
+      propertyPath: m_text
+      value: 'Panneau solaire : 0/1'
       objectReference: {fileID: 0}
     - target: {fileID: 6605120816056227870, guid: df6b52a4d0669b54fbd2c8f56da8c2c4, type: 3}
       propertyPath: m_fontSize
@@ -7945,6 +7953,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1203933854717232840, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
+      propertyPath: m_Name
+      value: SolarPanelPickup
+      objectReference: {fileID: 0}
     - target: {fileID: 2009092456371454990, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.37
@@ -7985,6 +7997,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2827013157286675034, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
+      propertyPath: m_Name
+      value: EnergieBleuePickup
+      objectReference: {fileID: 0}
     - target: {fileID: 3718432240792659098, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -8002,6 +8018,10 @@ PrefabInstance:
       value: 21.2
       objectReference: {fileID: 0}
     - target: {fileID: 4499917039663978601, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
+      propertyPath: itemData
+      value: 
+      objectReference: {fileID: 11400000, guid: d851d8572e5c1324aac3f17fc1050b31, type: 2}
+    - target: {fileID: 4499917039663978601, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
       propertyPath: pickupSound
       value: 
       objectReference: {fileID: 8300000, guid: 789ac5b6f3514f39baabb93be3fe70cd, type: 3}
@@ -8012,6 +8032,10 @@ PrefabInstance:
     - target: {fileID: 4499917039663978601, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
       propertyPath: resourceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5355053639632448704, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
+      propertyPath: m_Name
+      value: EoliennePickup
       objectReference: {fileID: 0}
     - target: {fileID: 5376265780512452965, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
       propertyPath: m_Size.x
@@ -8054,6 +8078,10 @@ PrefabInstance:
       value: -7.46
       objectReference: {fileID: 0}
     - target: {fileID: 7726402436989850849, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
+      propertyPath: itemData
+      value: 
+      objectReference: {fileID: 11400000, guid: b103b20201bd2704d8f1e24db9137e72, type: 2}
+    - target: {fileID: 7726402436989850849, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
       propertyPath: pickupSound
       value: 
       objectReference: {fileID: 8300000, guid: 789ac5b6f3514f39baabb93be3fe70cd, type: 3}
@@ -8069,6 +8097,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pickup
       objectReference: {fileID: 0}
+    - target: {fileID: 8909441412276154136, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
+      propertyPath: itemData
+      value: 
+      objectReference: {fileID: 11400000, guid: f179c4ec582561d438804c2d234fdeb6, type: 2}
     - target: {fileID: 8909441412276154136, guid: 8d30da15cb443df4986a457beff6c9da, type: 3}
       propertyPath: pickupSound
       value: 
@@ -8110,6 +8142,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3910654313975514376, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -855298285791758126, guid: da491a95ac3faad43ba52ef7189b0377, type: 3}
     - target: {fileID: 5712868671270766988, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -10418,79 +10454,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bbce09f4ee39c64081e1cc016e0edfc, type: 3}
---- !u!1001 &1327145930
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1135032467489006457, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: seedText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1135032467489006457, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1135032467489006457, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: waterText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1135032467489006457, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: fertilizerText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 5.58628
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.95819
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692034362084931022, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6177941655250753987, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
-      propertyPath: m_Name
-      value: UI
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cfd91ec51c9941744b557b33ecb23922, type: 3}
 --- !u!4 &1343644171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2184004460185007727, guid: 5bbce09f4ee39c64081e1cc016e0edfc, type: 3}
@@ -154288,7 +154251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6605120816056227870, guid: df6b52a4d0669b54fbd2c8f56da8c2c4, type: 3}
       propertyPath: m_text
-      value: Energie Bleue
+      value: 'Energie Bleue : 0/1'
       objectReference: {fileID: 0}
     - target: {fileID: 6605120816056227870, guid: df6b52a4d0669b54fbd2c8f56da8c2c4, type: 3}
       propertyPath: m_fontSize
@@ -157299,7 +157262,6 @@ SceneRoots:
   - {fileID: 762594983}
   - {fileID: 1156210}
   - {fileID: 4784787126819111944}
-  - {fileID: 1327145930}
   - {fileID: 981219278}
   - {fileID: 6521370253913032127}
   - {fileID: 2073577360}
