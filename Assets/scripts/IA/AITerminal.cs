@@ -19,11 +19,23 @@ using System;
 [RequireComponent(typeof(AudioSource))]
 public class AITerminal : MonoBehaviour
 {
+    // Référence au Scriptable Object
+    // [Header("Configuration du niveau")]
+    // public LevelData donneesDeNiveau;
+
     [Header("Inventaire du joueur")]
     // Référence à l'inventaire du joueur.
     // Contient les nombres d'objets que le joueur a ramassés (eau, graines, engrais).
     // Vous pouvez glisser ici l'objet "Player" dans l'inspecteur Unity pour le lier.
     public Inventory playerInventory;
+
+    [Header("UI")]
+    // Composant qui affiche les messages à l'écran (fenêtre, bulles de texte, etc.).
+
+    public MessageManager messageManager;
+
+    // La référence directe au LevelData est remplacée par la récupération via le GameManager.
+    private LevelData donneesDeNiveau;
 
     [Header("Zones à revitaliser")]
     // Liste des objets/éléments de la scène qui seront activés quand
@@ -31,21 +43,10 @@ public class AITerminal : MonoBehaviour
     public GameObject[] zonesARevitaliser;
     public GameObject porte;
 
-    [Header("UI")]
-    // Composant qui affiche les messages à l'écran (fenêtre, bulles de texte, etc.).
-    public MessageManager messageManager;
-
     [Header("Dialogues")]
     // Contient plusieurs lignes de texte que l'IA peut prononcer.
     // Par exemple : introduction, ressources insuffisantes, succès, etc.
     public Dialogue dialogue;
-
-    [Header("Ressources requises")]
-    // Combien d'unités de chaque ressource sont nécessaires pour activer l'IA.
-    // Ces valeurs sont définies par le concepteur du niveau dans l'inspecteur.
-    public int besoinEau;
-    public int besoinGraines;
-    public int besoinFertilisant;
 
     [Header("Audio")]
     private AudioSource audioSource;
@@ -103,14 +104,7 @@ public class AITerminal : MonoBehaviour
     void Start()
     {
 
-        // Affiche le message de bienvenue dès le lancement du niveau
-        // Le dialogue.sentences[0] doit contenir le message de bienvenue dans l'inspecteur.
-        if (messageManager != null && dialogue != null && dialogue.sentences.Length > 0)
-        {
-            // Affiche la première phrase d'introduction et la garde 20 secondes.
-            messageManager.ShowMessage(dialogue.sentences[0], 20f); 
-        }
-
+        // S'abonne à l'événement de changement d'inventaire
         if (playerInventory == null)
         {
             var player = GameObject.FindWithTag("Player");
@@ -122,12 +116,28 @@ public class AITerminal : MonoBehaviour
             }
         }
 
+        // Obtenir les données de niveau du GameManager au démarrage
+        LevelData donneesDeNiveau = GameManager.Instance.GetCurrentLevelData();
+        if (donneesDeNiveau == null)
+        {
+            Debug.LogError("AITerminal: Impossible d'obtenir les données de niveau du GameManager.");
+            return;
+        }
+
         // On s'abonne à l'événement de changement d'inventaire
         if (playerInventory != null)
         {
             // Cela permet de mettre à jour l'état du terminal automatiquement
             // dès que le joueur ramasse quelque chose (sans attendre une interaction).
             playerInventory.onResourceChanged += CheckForObjectives;
+        }
+        
+        // Affiche le message de bienvenue dès le lancement du niveau
+        // Le dialogue.sentences[0] doit contenir le message de bienvenue dans l'inspecteur.
+        if (messageManager != null && dialogue != null && dialogue.sentences.Length > 0)
+        {
+            // Affiche la première phrase d'introduction et la garde 20 secondes.
+            messageManager.ShowMessage(dialogue.sentences[0], 20f); 
         }
         
 
@@ -149,22 +159,24 @@ public class AITerminal : MonoBehaviour
     private void CheckForObjectives()
     {
         // Si l'objectif est déjà atteint ou le dialogue déjà affiché, on ne fait rien
-        if (objectifAtteint || dialogueObjectifAffiche) return;
-
-        int eau = playerInventory.GetWaterDropCount();
-        int graines = playerInventory.GetSeedCount();
-        int fertil = playerInventory.GetFertilizerCount();
-
-        bool aToutesLesRessources = eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant;
-
-        // Si le joueur a toutes les ressources, on affiche le dialogue 3
+        if (objectifAtteint || dialogueObjectifAffiche || donneesDeNiveau == null) return;
+        
+        bool aToutesLesRessources = true;
+        foreach(ResourceGoal goal in donneesDeNiveau.objectifs)
+        {
+            if (playerInventory.GetResourceCount(goal.type) < goal.amount)
+            {
+                aToutesLesRessources = false;
+                break; // Sort de la boucle dès qu'un objectif n'est pas atteint
+            }
+        }
+        
+        // Si le joueur a toutes les ressources, on affiche le dialogue de succès
         if (aToutesLesRessources)
         {
-            // On s'assure que le MessageManager et le texte existent avant d'afficher
-            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 2)
+            if (messageManager != null && donneesDeNiveau.dialogueObjectifAtteint != null)
             {
-                // Affiche le troisième message (par convention dans ce projet)
-                messageManager.ShowMessage(dialogue.sentences[2]);
+                messageManager.ShowMessage(donneesDeNiveau.dialogueObjectifAtteint.sentences[0]);
                 dialogueObjectifAffiche = true; // évite de réafficher le même message
             }
         }
@@ -175,67 +187,58 @@ public class AITerminal : MonoBehaviour
     /// </summary>
     void ActiverIA()
     {
-        if (playerInventory == null) return;
+        if (playerInventory == null || donneesDeNiveau == null) return;
+
+        bool aToutesLesRessources = true;
+        foreach(ResourceGoal goal in donneesDeNiveau.objectifs)
+        {
+            if (playerInventory.GetResourceCount(goal.type) < goal.amount)
+            {
+                aToutesLesRessources = false;
+                break;
+            }
+        }
         
-        int eau = playerInventory.GetWaterDropCount();
-        int graines = playerInventory.GetSeedCount();
-        int fertil = playerInventory.GetFertilizerCount();
-
-        bool aToutesLesRessources = eau >= besoinEau && graines >= besoinGraines && fertil >= besoinFertilisant;
-
-        // Si l'objectif est déjà atteint, on affiche le dialogue 4 et on sort
         if (objectifAtteint)
         {
-            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 3)
+            if (messageManager != null && donneesDeNiveau.dialogueObjectifDejaAtteint != null)
             {
-                // Affiche le 4ème dialogue
-                messageManager.ShowMessage(dialogue.sentences[3]);
+                messageManager.ShowMessage(donneesDeNiveau.dialogueObjectifDejaAtteint.sentences[0]);
             }
             return;
         }
-        // Sinon, si les ressources sont suffisantes (on vient de le vérifier)
         else if (aToutesLesRessources)
         {
-            // CAS DE SUCCÈS : Le joueur a tout ce qu'il faut pour activer l'IA
-            // Nous jouons un son, activons les zones prévues et marquons
-            // l'objectif comme atteint pour ne pas répéter l'opération.
-            // On joue le son de succès
+            // CAS DE SUCCÈS
             if (audioSource != null && activationSound != null)
             {
                 audioSource.PlayOneShot(activationSound);
             }
             
-            // On active les zones
+           // On active les zones référencées dans ce script
             foreach (GameObject zone in zonesARevitaliser)
             {
                 if (zone != null) zone.SetActive(true);
             }
-
-            if (porte != null) porte.SetActive(true);
             
-            // On met à jour le statut de l'objectif
             objectifAtteint = true;
-            
-            // On désactive ce script, car le terminal a déjà été activé
             this.enabled = false;
 
-            // Affiche le 4ème dialogue
-            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 3)
+            if (messageManager != null && donneesDeNiveau.dialogueObjectifAtteint != null)
             {
-                messageManager.ShowMessage(dialogue.sentences[3]);
+                messageManager.ShowMessage(donneesDeNiveau.dialogueObjectifAtteint.sentences[0]);
             }
+            
+            GameManager.Instance.LoadNextLevel();
         }
         else
         {
-            // CAS D'ÉCHEC : Le joueur n'a pas encore toutes les ressources requises.
-            // On informe le joueur et on joue un son d'alerte si disponible.
-            // Sinon, les ressources sont insuffisantes, on affiche le dialogue 2
-            if (messageManager != null && dialogue != null && dialogue.sentences.Length > 1)
+            // CAS D'ÉCHEC
+            if (messageManager != null && donneesDeNiveau.dialogueObjectifEchec != null)
             {
-                messageManager.ShowMessage(dialogue.sentences[1]);
+                messageManager.ShowMessage(donneesDeNiveau.dialogueObjectifEchec.sentences[0]);
             }
             
-            // On joue le son d'échec
             if (audioSource != null && ressourcesInsuffisantesSound != null)
             {
                 audioSource.PlayOneShot(ressourcesInsuffisantesSound);
@@ -252,10 +255,10 @@ public class AITerminal : MonoBehaviour
 
             // Si l'introduction n'a pas encore été affichée pour ce terminal,
             // on la montre (ex : "Bienvenue, explorateur...").
-            if (!dialogueInitialAffiche && messageManager != null && dialogue != null && dialogue.sentences.Length > 0)
+            if (!dialogueInitialAffiche && messageManager != null && donneesDeNiveau.dialogueBienvenue != null)
             {
                 // Affiche la première phrase d'introduction
-                messageManager.ShowMessage(dialogue.sentences[0]);
+                messageManager.ShowMessage(donneesDeNiveau.dialogueBienvenue.sentences[0]);
                 dialogueInitialAffiche = true;
             }
         }

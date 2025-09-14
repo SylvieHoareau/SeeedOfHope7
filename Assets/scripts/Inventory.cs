@@ -11,7 +11,10 @@ public enum ResourceType
 {
     WaterDrop,
     Seed,
-    Fertilizer
+    Fertilizer,
+    Flower,
+    Bee,
+    Mushroom
 }
 
 public class Inventory : MonoBehaviour
@@ -57,7 +60,7 @@ public class Inventory : MonoBehaviour
         }
 
         Debug.Log($"[Inventaire] {type} ajouté. Quantité actuelle : {resources[type]}");
-        
+
         // On déclenche l'événement pour que les autres scripts soient informés du changement
         onResourceChanged?.Invoke();
     }
@@ -65,18 +68,29 @@ public class Inventory : MonoBehaviour
     // Vous pouvez ajouter d'autres fonctions pour obtenir le compte des ressources si vous en avez besoin.
     // Par exemple, pour que le Terminal IA puisse vérifier si l'objectif est atteint.
 
-    public int GetWaterDropCount()
+    /// <summary>
+    /// Retourne le nombre d'unités d'une ressource donnée.
+    /// </summary>
+    /// <param name="type">Le type de ressource à vérifier.</param>
+    /// <returns>La quantité de la ressource dans l'inventaire.</returns>
+    public int GetResourceCount(ResourceType type)
     {
-        return resources.GetValueOrDefault(ResourceType.WaterDrop, 0);
+        // Utilise la méthode GetValueOrDefault pour retourner 0 si la clé n'existe pas
+        return resources.GetValueOrDefault(type, 0);
     }
+    
+    // public int GetWaterDropCount()
+    // {
+    //     return resources.GetValueOrDefault(ResourceType.WaterDrop, 0);
+    // }
 
-    public int GetSeedCount()
-    {
-        return resources.GetValueOrDefault(ResourceType.Seed, 0);
-    }
+    // public int GetSeedCount()
+    // {
+    //     return resources.GetValueOrDefault(ResourceType.Seed, 0);
+    // }
 
-    public int GetFertilizerCount()
-    {
-        return resources.GetValueOrDefault(ResourceType.Fertilizer, 0);
-    }
+    // public int GetFertilizerCount()
+    // {
+    //     return resources.GetValueOrDefault(ResourceType.Fertilizer, 0);
+    // }
 }

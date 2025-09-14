@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03feb4ba11c321e21bef18c8120ffcb6, type: 3}
+  m_Name: LevelData_Level3
+  m_EditorClassIdentifier: 
+  objectifs:
+  - type: 0
+    amount: 1
+  - type: 1
+    amount: 1
+  - type: 2
+    amount: 1
+  - type: 3
+    amount: 1
+  - type: 4
+    amount: 1
+  dialogueBienvenue:
+    sentences:
+    - "[ I.A. LOG ] Bienvenue, explorateur. Utilise les fl\xE8ches du clavier ou
+      le joystick gauche pour te d\xE9placer. Appuie sur E au clavier ou A \xE0 la
+      manette pour interagir avec moi. La touche R2 sert \xE0 te d\xE9fendre. Avance,
+      et d\xE9couvre ce monde en ruines..."
+  dialogueObjectifAtteint:
+    sentences:
+    - "[ I.A. LOG ] Objectifs atteints. Ressources suffisantes d\xE9tect\xE9es. Va
+      les apporter \xE0 mon terminal."
+  dialogueObjectifEchec:
+    sentences:
+    - "[ I.A. LOG ] Analyse en cours... Ressources insuffisantes. Continue ton exploration
+      et collecte davantage d\u2019eau, de graines et d\u2019engrais. Tu es sur la
+      bonne voie."
+  dialogueObjectifDejaAtteint:
+    sentences:
+    - "[ I.A. LOG ]\_ Le monde rena\xEEt peu \xE0 peu gr\xE2ce \xE0 toi. Les syst\xE8mes
+      de revitalisation sont maintenant activ\xE9s. Bravo, explorateur. Une issue
+      a \xE9t\xE9 localis\xE9e. Trouve la porte de sortie. Bonne chance, explorateur."
