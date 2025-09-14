@@ -359,6 +359,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -4890969658053316441, guid: 63d7a6232060ab74aa67c55d92145d10, type: 3}
+    - target: {fileID: 4693218048404031585, guid: 9ec53e8f2f2656f458a027f5bef993a7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5243436825418668009, guid: 9ec53e8f2f2656f458a027f5bef993a7, type: 3}
       propertyPath: m_Name
       value: Porte
@@ -426,13 +430,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5243436825418668009, guid: 9ec53e8f2f2656f458a027f5bef993a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 328228838}
   m_SourcePrefab: {fileID: 100100000, guid: 9ec53e8f2f2656f458a027f5bef993a7, type: 3}
 --- !u!1 &328228835 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5243436825418668009, guid: 9ec53e8f2f2656f458a027f5bef993a7, type: 3}
   m_PrefabInstance: {fileID: 328228834}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &328228838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328228835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1418f32c2e499af4cb14da29910cc0af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &378608247
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +728,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 6164395428596610570, guid: 322a3b0af9dde9446bdadf275b0e7a46, type: 3}
+    - target: {fileID: 3819502881158425339, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4884925205209892775, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 0.5
@@ -47595,6 +47618,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1597343051490887768, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 2bc8cf5b6c502ee499938ea895277227, type: 3}
     - target: {fileID: 2074281660004575617, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
       propertyPath: m_Name
       value: AITerminal

@@ -5008,7 +5008,19 @@ PrefabInstance:
     - target: {fileID: 1823371646718286678, guid: 0e7ce4ebc0645c09ab645853df8661e1, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6937817954938267909, guid: f446d0f1314d7984d86aeed6929585ed, type: 3}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823371646718286678, guid: 0e7ce4ebc0645c09ab645853df8661e1, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823371646718286678, guid: 0e7ce4ebc0645c09ab645853df8661e1, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823371646718286678, guid: 0e7ce4ebc0645c09ab645853df8661e1, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2085017836349055241, guid: 0e7ce4ebc0645c09ab645853df8661e1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -5302,12 +5314,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9124952994520958090, guid: 0e7ce4ebc0645c09ab645853df8661e1, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 9124952994520958090, guid: 0e7ce4ebc0645c09ab645853df8661e1, type: 3}
       propertyPath: m_Padding.m_Left
-      value: -20
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 9124952994520958090, guid: 0e7ce4ebc0645c09ab645853df8661e1, type: 3}
       propertyPath: m_Padding.m_Bottom
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6697,7 +6713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29298df3f037c3a4b85c4d8cb953a0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceType: 1
+  resourceType: 5
   amount: 1
   pickupSound: {fileID: 8300000, guid: 789ac5b6f3514f39baabb93be3fe70cd, type: 3}
   pickupVolume: 0.25
@@ -9589,7 +9605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5962423310161579673, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
       propertyPath: m_fontSizeMin
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5962423310161579673, guid: bdd85c0fe15339d98a430f8ade8b735c, type: 3}
       propertyPath: m_enableAutoSizing
@@ -9878,6 +9894,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1367470532124497732, guid: 796b8c5e99bde24dd99334737201b130, type: 3}
+      propertyPath: niveaux.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367470532124497732, guid: 796b8c5e99bde24dd99334737201b130, type: 3}
+      propertyPath: 'niveaux.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ec5a6580d8e037c61b08c2b65dedf1cd, type: 2}
     - target: {fileID: 1757968663665203869, guid: 796b8c5e99bde24dd99334737201b130, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -26735,7 +26759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29298df3f037c3a4b85c4d8cb953a0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceType: 1
+  resourceType: 4
   amount: 1
   pickupSound: {fileID: 8300000, guid: 789ac5b6f3514f39baabb93be3fe70cd, type: 3}
   pickupVolume: 0.25
@@ -47516,7 +47540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29298df3f037c3a4b85c4d8cb953a0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceType: 1
+  resourceType: 3
   amount: 1
   pickupSound: {fileID: 8300000, guid: 789ac5b6f3514f39baabb93be3fe70cd, type: 3}
   pickupVolume: 0.25

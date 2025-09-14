@@ -79,7 +79,7 @@ public class AITerminal : MonoBehaviour
             audioSource.playOnAwake = false; // empêche le son de démarrer automatiquement
 
         // Obtenir les données de niveau du GameManager au démarrage
-        LevelData donneesDeNiveau = GameManager.Instance.GetCurrentLevelData();
+        donneesDeNiveau = GameManager.Instance.GetCurrentLevelData();
         if (donneesDeNiveau == null)
         {
             Debug.LogError("AITerminal: Impossible d'obtenir les données de niveau du GameManager.");
@@ -218,6 +218,12 @@ public class AITerminal : MonoBehaviour
             foreach (GameObject zone in zonesARevitaliser)
             {
                 if (zone != null) zone.SetActive(true);
+            }
+
+            // C'est ici que vous activez la porte !
+            if (porte != null)
+            {
+                porte.SetActive(true);
             }
             
             objectifAtteint = true;
