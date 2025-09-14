@@ -22,4 +22,6 @@ public class ResourceGoal
 {
     public ResourceType type;
     public int amount;
+    // Ajout d'une variable pour l'icône de la ressource
+    public Sprite icon; 
 }

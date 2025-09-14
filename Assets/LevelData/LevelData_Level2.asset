@@ -15,18 +15,22 @@ MonoBehaviour:
   objectifs:
   - type: 0
     amount: 1
+    icon: {fileID: -5517062901244319644, guid: 8015d36be6670d848a5cfc1c0848ac5c, type: 3}
   - type: 1
     amount: 1
+    icon: {fileID: -736607301986612232, guid: 2480f4f6d27a06e4c9e16c561f7620e1, type: 3}
   - type: 2
     amount: 1
+    icon: {fileID: -5160539665464245211, guid: 55f0a737e9ffc0543b7f978985390fd3, type: 3}
   - type: 3
     amount: 1
+    icon: {fileID: 4751171760382884168, guid: 8da4efd837a58159aaa6764eed37ac60, type: 3}
   dialogueBienvenue:
     sentences:
-    - "[ I.A. LOG ] Bienvenue, explorateur. Utilise les fl\xE8ches du clavier ou
-      le joystick gauche pour te d\xE9placer. Appuie sur E au clavier ou A \xE0 la
-      manette pour interagir avec moi. La touche R2 sert \xE0 te d\xE9fendre. Avance,
-      et d\xE9couvre ce monde en ruines..."
+    - "[ I.A. LOG ] Dans ce niveau, tu vas cueillir des fleurs. La fleur attire les
+      pollinisateurs comme les abeilles et les papillons. Gr\xE2ce \xE0 elle, les
+      plantes peuvent produire de nouvelles graines et assurer la continuit\xE9 de
+      la vie."
   dialogueObjectifAtteint:
     sentences:
     - "[ I.A. LOG ] Objectifs atteints. Ressources suffisantes d\xE9tect\xE9es. Va

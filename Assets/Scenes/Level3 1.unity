@@ -8132,6 +8132,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 304459539370062209, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ea32e001328c90ea90967422717dda4, type: 3}
+    - target: {fileID: 304459539370062209, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: healSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c80033248bc895298afde4ce51bd9823, type: 3}
+    - target: {fileID: 304459539370062209, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1725977253}
     - target: {fileID: 4489334933595901533, guid: 62ffe31ba12590c4cb0f1a30b408bee3, type: 3}
       propertyPath: healthBar
       value: 

@@ -15,8 +15,7 @@ public class ResourceUI : MonoBehaviour
     public GameObject resourceUIPrefab; // Le préfab de l'élément d'UI d'une ressource
 
     // Dictionnaire pour lier les types de ressources aux Texte de l'UI
-    private Dictionary<ResourceType, TextMeshProUGUI> resourceTexts = new Dictionary<ResourceType, TextMeshProUGUI>();
-    // Référence au terminal IA
+    private Dictionary<ResourceType, ResourceUIElement> resourceElements = new Dictionary<ResourceType, ResourceUIElement>();    // Référence au terminal IA
     public AITerminal terminalIA;
     void Start()
     {
@@ -71,23 +70,26 @@ public class ResourceUI : MonoBehaviour
             return;
         }
 
+        // Ajoute cette ligne pour vérifier le nombre d'objectifs
+        Debug.Log("ResourceUI: " + currentLevelData.objectifs.Count + " objectifs trouvés.");
+
         // Supprimer les anciens éléments d'UI s'il y en a
         foreach (Transform child in contentParent)
         {
             Destroy(child.gameObject);
         }
-        resourceTexts.Clear();
+        resourceElements.Clear();
 
         // Créer un élément d'UI pour chaque ressource demandée par le niveau
         foreach (ResourceGoal goal in currentLevelData.objectifs)
         {
             GameObject uiElement = Instantiate(resourceUIPrefab, contentParent);
-            TextMeshProUGUI textComponent = uiElement.GetComponentInChildren<TextMeshProUGUI>();
-
-            if (textComponent != null)
+            ResourceUIElement elementComponent = uiElement.GetComponent<ResourceUIElement>();
+            if (elementComponent != null)
             {
-                // Stocker la référence pour une mise à jour facile plus tard
-                resourceTexts.Add(goal.type, textComponent);
+                resourceElements.Add(goal.type, elementComponent);
+                // Si vous avez un dictionnaire de sprites pour les icônes
+                // elementComponent.UpdateUI(GetIconForType(goal.type), "...");
             }
         }
     }
@@ -117,12 +119,16 @@ public class ResourceUI : MonoBehaviour
         // Parcourir les objectifs pour mettre à jour chaque élément d'UI
         foreach (ResourceGoal goal in currentLevelData.objectifs)
         {
-            if (resourceTexts.ContainsKey(goal.type))
+            if (resourceElements.ContainsKey(goal.type))
             {
                 int collectedAmount = inventory.GetResourceCount(goal.type);
                 string formattedName = FormatResourceName(goal.type.ToString());
 
-                resourceTexts[goal.type].text = $"{formattedName} : {collectedAmount} / {goal.amount}";
+                // Accède à l'icône via l'objectif
+                Sprite icon = goal.icon; 
+
+                // On met à jour le texte via la nouvelle méthode du script
+                resourceElements[goal.type].UpdateUI(icon, $"{formattedName} : {collectedAmount} / {goal.amount}");
             }
         }
     }

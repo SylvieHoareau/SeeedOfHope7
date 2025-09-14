@@ -77,6 +77,15 @@ public class AITerminal : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (audioSource != null)
             audioSource.playOnAwake = false; // empêche le son de démarrer automatiquement
+
+        // Obtenir les données de niveau du GameManager au démarrage
+        LevelData donneesDeNiveau = GameManager.Instance.GetCurrentLevelData();
+        if (donneesDeNiveau == null)
+        {
+            Debug.LogError("AITerminal: Impossible d'obtenir les données de niveau du GameManager.");
+            this.enabled = false; // Désactive le script pour éviter d'autres erreurs
+            return;
+        }
     }
 
     private void OnEnable()
@@ -116,14 +125,6 @@ public class AITerminal : MonoBehaviour
             }
         }
 
-        // Obtenir les données de niveau du GameManager au démarrage
-        LevelData donneesDeNiveau = GameManager.Instance.GetCurrentLevelData();
-        if (donneesDeNiveau == null)
-        {
-            Debug.LogError("AITerminal: Impossible d'obtenir les données de niveau du GameManager.");
-            return;
-        }
-
         // On s'abonne à l'événement de changement d'inventaire
         if (playerInventory != null)
         {
@@ -139,8 +140,6 @@ public class AITerminal : MonoBehaviour
             // Affiche la première phrase d'introduction et la garde 20 secondes.
             messageManager.ShowMessage(dialogue.sentences[0], 20f); 
         }
-        
-
     }
 
     void OnDestroy()
@@ -270,7 +269,13 @@ public class AITerminal : MonoBehaviour
         {
             // Le joueur quitte la zone d'interaction ; on cache le panneau éventuel.
             joueurDansZone = false;
-            if (messageManager != null) messageManager.HidePanel();
+            
+            // Vérifie si la référence est valide avant d'y accéder.
+            if (!dialogueInitialAffiche && messageManager != null && donneesDeNiveau != null && donneesDeNiveau.dialogueBienvenue != null)
+            {
+                messageManager.ShowMessage(donneesDeNiveau.dialogueBienvenue.sentences[0]);
+                dialogueInitialAffiche = true;
+            }
         }
     }
 }

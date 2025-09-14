@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 1
-  damageMultiplier: 5
+  damageMultiplier: 1
   playerMovement: {fileID: 3608819852566299126}
   attackCooldown: 0.5
   attackDuration: 0.4

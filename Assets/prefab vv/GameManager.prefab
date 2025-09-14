@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8995525559587511673
+--- !u!1 &1757968663665203869
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8105521720537942455}
-  - component: {fileID: 2290174607141458430}
+  - component: {fileID: 3207143629941556262}
+  - component: {fileID: 1367470532124497732}
   m_Layer: 0
-  m_Name: ResourceUI
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8105521720537942455
+--- !u!4 &3207143629941556262
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8995525559587511673}
+  m_GameObject: {fileID: 1757968663665203869}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 158.76874, y: 139.42278, z: 0}
+  m_LocalPosition: {x: 30.71399, y: -9.67076, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2290174607141458430
+--- !u!114 &1367470532124497732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8995525559587511673}
+  m_GameObject: {fileID: 1757968663665203869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1a395917dc64641827cb15ec5126dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 84fd83789b3d8978586946cba48c986a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 6643572134504129227, guid: 59c5f677ea0675839b63bc02eca8e0c7, type: 3}
-  contentParent: {fileID: 1674814613361746090, guid: e6e2324aa1080f8678d4f3caba155fe1, type: 3}
-  resourceUIPrefab: {fileID: 7134933922278324682, guid: fa51473dae01665e88ebce78c8cd28ad, type: 3}
-  terminalIA: {fileID: 8146037821824680971, guid: db0cc3ae03ab2bb4985609accb4ec199, type: 3}
+  niveaux:
+  - {fileID: 11400000, guid: 18d664caf300c8d2b8235f2856b0befa, type: 2}
+  - {fileID: 11400000, guid: f55fcf7daf62220719cd5b8afcbd3ec9, type: 2}
+  - {fileID: 11400000, guid: 64368a9c3f7f76d868edf6137e6ec35f, type: 2}
+  - {fileID: 11400000, guid: ec5a6580d8e037c61b08c2b65dedf1cd, type: 2}
