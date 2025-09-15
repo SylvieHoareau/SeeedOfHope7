@@ -306,7 +306,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Merci d'avoir jou\xE9 \xE0 notre jeu.\nA bient\xF4t pour de nouvelles
+  m_text: "\nMerci d'avoir jou\xE9 \xE0 notre jeu.\nA bient\xF4t pour de nouvelles
     aventures !"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1361,6 +1361,7 @@ MonoBehaviour:
     Chat GPT
 
     - Lucas CLAIN
+
 
 
 '
